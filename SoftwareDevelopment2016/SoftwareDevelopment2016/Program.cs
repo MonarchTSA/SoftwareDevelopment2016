@@ -12,6 +12,7 @@ namespace SoftwareDevelopment2016
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
+        //comment
         static void Main()
         {
             Application.EnableVisualStyles();
