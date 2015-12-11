@@ -260,7 +260,7 @@ namespace SoftwareDevelopment2016
                 solutions[n] =  Determinant(newMatrix, order + 1) / determinant;
             }
             Polynomial p = new Polynomial(solutions);
-            Console.WriteLine(CalculateRSquared(p));
+            //Console.WriteLine(CalculateRSquared(p));
             return new Polynomial(solutions);
         }
         
