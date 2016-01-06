@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SoftwareDevelopment2016
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
         }
@@ -59,34 +59,16 @@ namespace SoftwareDevelopment2016
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            //Sample test data set
             DataSet ds = new DataSet();
-            ds.Data.Add(new DataPoint(-1, -1));
+            ds.Data.Add(new DataPoint(-1, -1    ));
             ds.Data.Add(new DataPoint(0, 3));
             ds.Data.Add(new DataPoint(1, 2.5));
             ds.Data.Add(new DataPoint(2, 5));
             ds.Data.Add(new DataPoint(3, 4));
             ds.Data.Add(new DataPoint(5, 2));
             ds.Data.Add(new DataPoint(7, 5));
-            ds.Data.Add(new DataPoint(9, 4));
-
-            DataSet ds1 = new DataSet();
-            ds1.Data.Add(new DataPoint(-1, 1));
-            ds1.Data.Add(new DataPoint(0, 3));
-            ds1.Data.Add(new DataPoint(1, 2.5));
-            ds1.Data.Add(new DataPoint(2, 5));
-            ds1.Data.Add(new DataPoint(3, 4));
-            ds1.Data.Add(new DataPoint(5, 2));
-            ds1.Data.Add(new DataPoint(7, 5));
-            ds1.Data.Add(new DataPoint(9, 4));
-            //ds1.CalculateNthPolynomialRegression(4);
-            List<double> l = (from dp in ds1.Data from fdp in ds1.Data select dp.Y - fdp.Y).ToList();
-            
-            foreach (double d in l)
-            {
-                Console.Write(d + " ");
-            }
-            //label1.Text = "Clicked";
-            
+            ds.Data.Add(new DataPoint(9, 4));            
 
         }
 
@@ -108,7 +90,8 @@ namespace SoftwareDevelopment2016
             PointF[] points = new PointF[panel1.Width];
             for(int i = 0; i < panel1.Width; ++i)
             {
-                float functionValue =  (float)Math.Sin(i * xstep - xmax);
+                float x = i * xstep - xmax;
+                float functionValue =  (float)Math.Pow(x,2) + x;
                 graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(yaxis, 0), new PointF(yaxis, panel1.Height));
                 graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, xaxis), new PointF(panel1.Width, xaxis));
                 points[i] = new PointF(i,-1 + (float)(xaxis - functionValue / ystep));
@@ -134,6 +117,42 @@ namespace SoftwareDevelopment2016
                 --ymax;
             }
             panel1.Refresh();
+        }
+
+        private void buttonCreateDataSet_Click(object sender, EventArgs e)
+        {
+            FormCreateDataSet form = new FormCreateDataSet();
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                int index = 0;
+                string name = form.DataSetName;
+                if (comboBoxDataSets.Items.Count == 0)
+                {
+                    comboBoxDataSets.Items.Add(name);
+                } 
+                else
+                {
+                    for(int i = 0; i < comboBoxDataSets.Items.Count; ++i)
+                    {
+                        string s = comboBoxDataSets.Items[i].ToString();
+                        //01234
+                        //bed
+                        if (name.CompareTo(s) <= 0)
+                        {
+                            comboBoxDataSets.Items.Insert(i, name);
+                            index = i;
+                            break;
+                        }
+                        if(i == comboBoxDataSets.Items.Count - 1)
+                        {
+                            comboBoxDataSets.Items.Add(name);
+                            index = comboBoxDataSets.Items.Count - 1;
+                            break;
+                        }
+                    }
+                }
+                comboBoxDataSets.SelectedIndex = index;
+            }
         }
     }
 }
