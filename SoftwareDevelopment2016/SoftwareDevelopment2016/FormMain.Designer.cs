@@ -348,6 +348,7 @@
             // comboBoxDataSets
             // 
             this.comboBoxDataSets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDataSets.Enabled = false;
             this.comboBoxDataSets.FormattingEnabled = true;
             this.comboBoxDataSets.Location = new System.Drawing.Point(6, 19);
             this.comboBoxDataSets.Name = "comboBoxDataSets";
@@ -397,6 +398,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "Form1";
+            this.Click += new System.EventHandler(this.OnClick);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

@@ -7,27 +7,14 @@ using System.Threading.Tasks;
 namespace SoftwareDevelopment2016
 {
 
-    public struct DataPoint
-    {
-        public double X;
-        public double Y;
-        public DataPoint(double x, double y)
-        {
-            X = x;
-            Y = y;
-        }
-    }
-
     public struct Interval
     {
-        public double Min;
-        public double Max;
-        public double Length;
+        public double Min { get; set; }
+        public double Max { get; set; }
         public Interval(double min, double max)
         {
             Min = min;
             Max = max;
-            Length = Math.Abs(Max - min);
         }
     }
 
@@ -55,157 +42,87 @@ namespace SoftwareDevelopment2016
         }
     }
 
-    public class DataSet
+    public abstract class DataSet
+    {
+        public string Name { get; set; }
+    }
+
+    public class NumericalDataSet : DataSet
     {
 
-        public List<DataPoint> Data { get; set; }
+        public List<NumericPoint> Data { get; set; }
 
-        public double MeanX
+        public NumericalDataSet(string name)
         {
-            get
-            {
-                return (from dp in Data select dp.X).Average();
-            }
+            Data = new List<NumericPoint>();
+            Name = name;
         }
-        public double MeanY
+
+        public double getMean()
         {
-            get
-            {
-                return (from dp in Data select dp.Y).Average();
-            }
+            return (from dp in Data select dp.Y).Average();
         }
-        public double StandardDeviationX
+
+        public double getMedian()
         {
-            get
+            List<double> sorted = (from dp in Data orderby dp.X select dp.X).ToList();
+            if (sorted.Count % 2 == 0)
             {
-                return Math.Sqrt((from dp in Data select Math.Pow(dp.X - MeanX, 2)).Average());
+                return (sorted[sorted.Count / 2] + sorted[sorted.Count / 2 - 1]) / 2;
             }
-        }
-        public double StandardDeviationY
-        {
-            get
+            else
             {
-                return Math.Sqrt((from dp in Data select Math.Pow(dp.Y - MeanY, 2)).Average());
-            }
-        }
-        public double ModeX
-        {
-            get
-            {
-                List<double> xvals = (from dp in Data orderby dp.X ascending select dp.X).ToList();
-                int maxCount = 0, currentCount = 1;
-                double currentMode = 0, maxMode = 0;
-                for(int i = 0; i < xvals.Count; ++i)
-                {
-                    if (i == 0)
-                    {
-                        currentMode = 0;
-                    }
-                    else
-                    {
-                        if(xvals[i] == currentMode)
-                        {
-                            ++currentCount;
-                        } 
-                        else
-                        {
-                            currentMode = xvals[i];
-                            currentCount = 1;
-                        }
-                        if(currentCount > maxCount)
-                        {
-                            maxCount = currentCount;
-                            maxMode = xvals[i];
-                        }
-                    }
-                }
-                return maxMode;
-            }
-        }
-        public double ModeY
-        {
-            get
-            {
-                List<double> yvals = (from dp in Data orderby dp.Y ascending select dp.Y).ToList();
-                int maxCount = 0, currentCount = 1;
-                double currentMode = 0, maxMode = 0;
-                for (int i = 0; i < yvals.Count; ++i)
-                {
-                    if (i == 0)
-                    {
-                        currentMode = 0;
-                    }
-                    else
-                    {
-                        if (yvals[i] == currentMode)
-                        {
-                            ++currentCount;
-                        }
-                        else
-                        {
-                            currentMode = yvals[i];
-                            currentCount = 1;
-                        }
-                        if (currentCount > maxCount)
-                        {
-                            maxCount = currentCount;
-                            maxMode = yvals[i];
-                        }
-                    }
-                }
-                return maxMode;
-            }
-        }
-        public double MedianX
-        {
-            get
-            {
-                List<double> sorted = (from dp in Data orderby dp.X select dp.X).ToList();
-                if(sorted.Count % 2 == 0)
-                {
-                    return (sorted[sorted.Count / 2] + sorted[sorted.Count / 2 - 1]) / 2;
-                }
-                else
-                {
-                    return sorted[(sorted.Count + 1) / 2 - 1];
-                }
-            }
-        }
-        public double MedianY
-        {
-            get
-            {
-                List<double> sorted = (from dp in Data orderby dp.Y select dp.Y).ToList();
-                if (sorted.Count % 2 == 0)
-                {
-                    return (sorted[sorted.Count / 2] + sorted[sorted.Count / 2 - 1]) / 2;
-                }
-                else
-                {
-                    return sorted[(sorted.Count + 1) / 2 - 1];
-                }
-            }
-        }
-        public Interval Range
-        {
-            get
-            {
-                List<double> sorted = (from dp in Data orderby dp.Y ascending select dp.Y).ToList();
-                return new Interval(sorted.First(), sorted.Last());
-            }
-        }
-        public Interval Domain
-        {
-            get
-            {
-                List<double> sorted = (from dp in Data orderby dp.X ascending select dp.X).ToList();
-                return new Interval(sorted.First(), sorted.Last());
+                return sorted[(sorted.Count + 1) / 2 - 1];
             }
         }
 
-        public DataSet()
+        public double getMode()
         {
-            Data = new List<DataPoint>();
+            List<double> yvals = (from dp in Data orderby dp.Y ascending select dp.Y).ToList();
+            int maxCount = 0, currentCount = 1;
+            double currentMode = 0, maxMode = 0;
+            for (int i = 0; i < yvals.Count; ++i)
+            {
+                if (i == 0)
+                {
+                    currentMode = 0;
+                }
+                else
+                {
+                    if (yvals[i] == currentMode)
+                    {
+                        ++currentCount;
+                    }
+                    else
+                    {
+                        currentMode = yvals[i];
+                        currentCount = 1;
+                    }
+                    if (currentCount > maxCount)
+                    {
+                        maxCount = currentCount;
+                        maxMode = yvals[i];
+                    }
+                }
+            }
+            return maxMode;
+        }
+
+        public Interval getDomain()
+        {
+            var list = from dp in Data select dp.X;
+            return new Interval(list.Min(), list.Max());
+        }
+
+        public Interval getRange()
+        {
+            var list = from dp in Data select dp.Y;
+            return new Interval(list.Min(), list.Max());
+        }
+
+        public double getStandardDeviation()
+        {
+            return Math.Sqrt((from dp in Data select Math.Pow(dp.Y - getMean(), 2)).Average());
         }
 
         public Polynomial CalculateNthPolynomialRegression(int order)
@@ -214,7 +131,7 @@ namespace SoftwareDevelopment2016
             double[] sums = new double[order*2 + 1];
             for(int i = 0; i < order*2 + 1; ++i)
             {
-                foreach(DataPoint dp in Data)
+                foreach(NumericPoint dp in Data)
                 {
                     sums[i] += Math.Pow(dp.X, i);
                 }
@@ -223,7 +140,7 @@ namespace SoftwareDevelopment2016
             double[] augments = new double[order + 1];
             for(int i = 0; i < order + 1; ++i)
             {
-                foreach(DataPoint dp in Data)
+                foreach(NumericPoint dp in Data)
                 {
                     augments[i] += dp.Y * Math.Pow(dp.X, i);
                 }
@@ -312,5 +229,27 @@ namespace SoftwareDevelopment2016
             list[element2] = temp;
         }
 
+    }
+
+    public class LabeledDataSet : DataSet
+    {
+        public List<LabeledPoint> data { get; set; }
+
+        public LabeledDataSet(string name)
+        {
+            Name = name;
+            data = new List<LabeledPoint>();
+        }
+
+        public double getMode()
+        {
+            return (from dp in data select dp.Y).Max();
+        }
+
+        public Interval getRange()
+        {
+            var list = from dp in data select dp.Y;
+            return new Interval(list.Min(), list.Max());
+        }
     }
 }

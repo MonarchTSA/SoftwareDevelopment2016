@@ -27,12 +27,12 @@ namespace SoftwareDevelopment2016
             Button b = (Button)sender;
             if(b.Text == "Done")
             {
-                if(textBoxName.Text != "")
+                if (textBoxName.Text != "")
                 {
                     this.DialogResult = DialogResult.OK;
                     DataSetName = textBoxName.Text;
                     Labeled = checkBoxLabel.CheckState == CheckState.Checked ? true : false;
-                } 
+                }
                 else
                 {
                     MessageBox.Show("Please enter a name.");

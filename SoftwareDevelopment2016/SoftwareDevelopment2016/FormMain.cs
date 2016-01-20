@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,35 +13,39 @@ namespace SoftwareDevelopment2016
 {
     public partial class FormMain : Form
     {
+        public List<DataSet> dataSets;
+
         public FormMain()
         {
+            dataSets = new List<DataSet>();
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DataSet ds = new DataSet();
-            ds.Data.Add(new DataPoint(-1,-1));
-            ds.Data.Add(new DataPoint(0, 3));
-            ds.Data.Add(new DataPoint(1, 2.5));
-            ds.Data.Add(new DataPoint(2, 5));
-            ds.Data.Add(new DataPoint(3, 4));
-            ds.Data.Add(new DataPoint(5, 2));
-            ds.Data.Add(new DataPoint(7, 5));
-            ds.Data.Add(new DataPoint(9, 4));
 
-            DataSet ds1 = new DataSet();
-            ds1.Data.Add(new DataPoint(-1, -1));
-            ds1.Data.Add(new DataPoint(0, 3));
-            ds1.Data.Add(new DataPoint(1, 2.5));
-            ds1.Data.Add(new DataPoint(2, 5));
-            ds1.Data.Add(new DataPoint(3, 4));
-            ds1.Data.Add(new DataPoint(5, 2));
-            ds1.Data.Add(new DataPoint(7, 5));
-            ds1.Data.Add(new DataPoint(9, 4));
+            NumericalDataSet ds = new NumericalDataSet("test");
+            ds.Data.Add(new NumericPoint(-1,-1));
+            ds.Data.Add(new NumericPoint(0, 3));
+            ds.Data.Add(new NumericPoint(1, 2.5));
+            ds.Data.Add(new NumericPoint(2, 5));
+            ds.Data.Add(new NumericPoint(3, 4));
+            ds.Data.Add(new NumericPoint(5, 2));
+            ds.Data.Add(new NumericPoint(7, 5));
+            ds.Data.Add(new NumericPoint(9, 4));
+
+            NumericalDataSet ds1 = new NumericalDataSet("test");
+            ds1.Data.Add(new NumericPoint(-1, -1));
+            ds1.Data.Add(new NumericPoint(0, 3));
+            ds1.Data.Add(new NumericPoint(1, 2.5));
+            ds1.Data.Add(new NumericPoint(2, 5));
+            ds1.Data.Add(new NumericPoint(3, 4));
+            ds1.Data.Add(new NumericPoint(5, 2));
+            ds1.Data.Add(new NumericPoint(7, 5));
+            ds1.Data.Add(new NumericPoint(9, 4));
             //ds1.CalculateNthPolynomialRegression(4);
             Console.WriteLine((from dp in ds1.Data from fdp in ds1.Data select dp.Y - fdp.Y).Sum());
-            foreach(DataPoint dp in ds.Data)
+            foreach(NumericPoint dp in ds.Data)
             {
 
             }
@@ -60,15 +65,15 @@ namespace SoftwareDevelopment2016
         private void button1_Click_1(object sender, EventArgs e)
         {
             //Sample test data set
-            DataSet ds = new DataSet();
-            ds.Data.Add(new DataPoint(-1, -1    ));
-            ds.Data.Add(new DataPoint(0, 3));
-            ds.Data.Add(new DataPoint(1, 2.5));
-            ds.Data.Add(new DataPoint(2, 5));
-            ds.Data.Add(new DataPoint(3, 4));
-            ds.Data.Add(new DataPoint(5, 2));
-            ds.Data.Add(new DataPoint(7, 5));
-            ds.Data.Add(new DataPoint(9, 4));            
+            NumericalDataSet ds = new NumericalDataSet("test");
+            ds.Data.Add(new NumericPoint(-1, -1    ));
+            ds.Data.Add(new NumericPoint(0, 3));
+            ds.Data.Add(new NumericPoint(1, 2.5));
+            ds.Data.Add(new NumericPoint(2, 5));
+            ds.Data.Add(new NumericPoint(3, 4));
+            ds.Data.Add(new NumericPoint(5, 2));
+            ds.Data.Add(new NumericPoint(7, 5));
+            ds.Data.Add(new NumericPoint(9, 4));            
 
         }
 
@@ -126,17 +131,17 @@ namespace SoftwareDevelopment2016
             {
                 int index = 0;
                 string name = form.DataSetName;
+                bool labeled = form.Labeled;
                 if (comboBoxDataSets.Items.Count == 0)
                 {
                     comboBoxDataSets.Items.Add(name);
+                    comboBoxDataSets.Enabled = true;
                 } 
                 else
                 {
                     for(int i = 0; i < comboBoxDataSets.Items.Count; ++i)
                     {
                         string s = comboBoxDataSets.Items[i].ToString();
-                        //01234
-                        //bed
                         if (name.CompareTo(s) <= 0)
                         {
                             comboBoxDataSets.Items.Insert(i, name);
@@ -152,6 +157,30 @@ namespace SoftwareDevelopment2016
                     }
                 }
                 comboBoxDataSets.SelectedIndex = index;
+                if(labeled)
+                {
+                    dataSets.Add(new LabeledDataSet(name));
+                    dataGridView.Columns[0].HeaderText = "Label";
+                }
+                else
+                {
+                    dataSets.Add(new NumericalDataSet(name));
+                    dataGridView.Columns[0].HeaderText = "X";
+                }
+            }
+        }
+
+        private void OnClick(object sender, EventArgs e)
+        {
+            var p = PointToClient(Cursor.Position);
+            var c = GetChildAtPoint(p);
+            if (c != null && c.Enabled == false)
+            {
+                if (dataSets.Count == 0)
+                {
+                    SystemSounds.Asterisk.Play();
+                    MessageBox.Show("No class is created. Please create one first.");
+                }
             }
         }
     }
