@@ -211,9 +211,9 @@ namespace SoftwareDevelopment2016
                 {
                     foreach(DataGridViewRow row in dataGridView.Rows)
                     {
-                        ((NumericalDataSet)getCurrentDataSet()).Data.Clear();
-                        ((LabeledDataSet)getCurrentDataSet()).Data[e.RowIndex] = new LabeledPoint(row.Cells[0].Value == null ? null : Convert.ToString(dataGridView.Rows[e.RowIndex].Cells[0].Value),
-                                                                                                  row.Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[e.RowIndex].Cells[1].Value));
+                        ((LabeledDataSet)getCurrentDataSet()).Data.Clear();
+                        ((LabeledDataSet)getCurrentDataSet()).Data.Add(new LabeledPoint(row.Cells[0].Value == null ? null : Convert.ToString(row.Cells[0].Value),
+                                                                                        row.Cells[1].Value == null ? (double?)null : Convert.ToDouble(row.Cells[1].Value)));
                     }
                 }
             } 
