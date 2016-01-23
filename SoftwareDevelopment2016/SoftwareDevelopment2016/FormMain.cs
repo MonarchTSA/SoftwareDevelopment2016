@@ -13,11 +13,12 @@ namespace SoftwareDevelopment2016
 {
     public partial class FormMain : Form
     {
-        public List<DataSet> dataSets;
+        public List<DataSet> DataSets { get; set; }
+        private int currentDataSetIndex;
 
         public FormMain()
         {
-            dataSets = new List<DataSet>();
+            DataSets = new List<DataSet>();
             InitializeComponent();
         }
 
@@ -134,6 +135,7 @@ namespace SoftwareDevelopment2016
                 bool labeled = form.Labeled;
                 if (comboBoxDataSets.Items.Count == 0)
                 {
+                    currentDataSetIndex = index;
                     comboBoxDataSets.Items.Add(name);
                     comboBoxDataSets.Enabled = true;
                 } 
@@ -146,12 +148,14 @@ namespace SoftwareDevelopment2016
                         {
                             comboBoxDataSets.Items.Insert(i, name);
                             index = i;
+                            currentDataSetIndex = index;
                             break;
                         }
                         if(i == comboBoxDataSets.Items.Count - 1)
                         {
                             comboBoxDataSets.Items.Add(name);
                             index = comboBoxDataSets.Items.Count - 1;
+                            currentDataSetIndex = index;
                             break;
                         }
                     }
@@ -159,12 +163,12 @@ namespace SoftwareDevelopment2016
                 comboBoxDataSets.SelectedIndex = index;
                 if(labeled)
                 {
-                    dataSets.Add(new LabeledDataSet(name));
+                    DataSets.Add(new LabeledDataSet(name));
                     dataGridView.Columns[0].HeaderText = "Label";
                 }
                 else
                 {
-                    dataSets.Add(new NumericalDataSet(name));
+                    DataSets.Add(new NumericalDataSet(name));
                     dataGridView.Columns[0].HeaderText = "X";
                 }
             }
@@ -176,12 +180,116 @@ namespace SoftwareDevelopment2016
             var c = GetChildAtPoint(p);
             if (c != null && c.Enabled == false)
             {
-                if (dataSets.Count == 0)
+                if (DataSets.Count == 0)
                 {
                     SystemSounds.Asterisk.Play();
                     MessageBox.Show("No class is created. Please create one first.");
                 }
             }
+        }
+
+        private DataSet getCurrentDataSet()
+        {
+            return DataSets[currentDataSetIndex];
+        }
+
+        private void onCellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if(ValidateEntry(e))
+            {
+                if(getCurrentDataSet().GetType() == typeof(NumericalDataSet))
+                {
+                    ((NumericalDataSet)getCurrentDataSet()).Data.Clear();
+                    foreach (DataGridViewRow row in dataGridView.Rows)
+                    { 
+
+                        ((NumericalDataSet)getCurrentDataSet()).Data.Add(new NumericPoint(row.Cells[0].Value == null ? (double?)null : Convert.ToDouble(row.Cells[0].Value),
+                                                                                          row.Cells[1].Value == null ? (double?)null : Convert.ToDouble(row.Cells[1].Value)));
+                    }
+                }
+                else
+                {
+                    foreach(DataGridViewRow row in dataGridView.Rows)
+                    {
+                        ((NumericalDataSet)getCurrentDataSet()).Data.Clear();
+                        ((LabeledDataSet)getCurrentDataSet()).Data[e.RowIndex] = new LabeledPoint(row.Cells[0].Value == null ? null : Convert.ToString(dataGridView.Rows[e.RowIndex].Cells[0].Value),
+                                                                                                  row.Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[e.RowIndex].Cells[1].Value));
+                    }
+                }
+            } 
+        }
+        
+        //if the cell is not null, the current data set is numerical, and 
+        private bool ValidateEntry(DataGridViewCellEventArgs e)
+        {
+            if (dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex] != null)
+            {
+                if (getCurrentDataSet().GetType() == typeof(NumericalDataSet))
+                {
+                    double temp;
+                    if(!Double.TryParse(dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out temp))
+                    {
+                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
+                        bool rowIsEmpty = true;
+                        foreach (DataGridViewCell cell in dataGridView.Rows[e.RowIndex].Cells)
+                        {
+                            if (cell.Value != null)
+                            {
+                                rowIsEmpty = false;
+                                break;
+                            }
+                        }
+                        if (rowIsEmpty)
+                        {
+                            dataGridView.CancelEdit();
+                            try
+                            {
+                                dataGridView.Rows.Remove(dataGridView.Rows[e.RowIndex]);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Something went wrong. Try again.", "Error");
+                            }
+                        }
+                        SystemSounds.Asterisk.Play();
+                        MessageBox.Show("Please enter only numbers.");
+                        return false; ;
+                    }
+                }
+                else
+                {
+                    double temp;
+                    if(e.ColumnIndex != 0 && (!Double.TryParse(dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out temp)))
+                    {
+                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
+                        bool rowIsEmpty = true;
+                        foreach (DataGridViewCell cell in dataGridView.Rows[e.RowIndex].Cells)
+                        {
+                            if (cell.Value != null)
+                            {
+                                rowIsEmpty = false;
+                                break;
+                            }
+                        }
+                        if (rowIsEmpty)
+                        {
+                            dataGridView.CancelEdit();
+                            try
+                            {
+                                dataGridView.Rows.Remove(dataGridView.Rows[e.RowIndex]);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Something went wrong. Try again.", "Error");
+                            }
+                        }
+                        SystemSounds.Asterisk.Play();
+                        MessageBox.Show("Please enter only numbers.");
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }

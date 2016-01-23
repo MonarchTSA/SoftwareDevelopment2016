@@ -334,6 +334,7 @@
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.Size = new System.Drawing.Size(209, 221);
             this.dataGridView.TabIndex = 6;
+            this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.onCellEndEdit);
             // 
             // ColumnX
             // 

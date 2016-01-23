@@ -60,12 +60,12 @@ namespace SoftwareDevelopment2016
 
         public double getMean()
         {
-            return (from dp in Data select dp.Y).Average();
+            return (from dp in Data where !dp.isNull() select dp.Y.Value).Average();
         }
 
         public double getMedian()
         {
-            List<double> sorted = (from dp in Data orderby dp.X select dp.X).ToList();
+            List<double> sorted = (from dp in Data where !dp.isNull() orderby dp.X select dp.X.Value).ToList();
             if (sorted.Count % 2 == 0)
             {
                 return (sorted[sorted.Count / 2] + sorted[sorted.Count / 2 - 1]) / 2;
@@ -78,7 +78,7 @@ namespace SoftwareDevelopment2016
 
         public double getMode()
         {
-            List<double> yvals = (from dp in Data orderby dp.Y ascending select dp.Y).ToList();
+            List<double> yvals = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
             int maxCount = 0, currentCount = 1;
             double currentMode = 0, maxMode = 0;
             for (int i = 0; i < yvals.Count; ++i)
@@ -108,21 +108,29 @@ namespace SoftwareDevelopment2016
             return maxMode;
         }
 
-        public Interval getDomain()
+        public Interval? getDomain()
         {
             var list = from dp in Data select dp.X;
-            return new Interval(list.Min(), list.Max());
+            if(list.Min() == null || list.Max() == null)
+            {
+                return null;
+            }
+            return new Interval(list.Min().Value, list.Max().Value);
         }
 
-        public Interval getRange()
+        public Interval? getRange()
         {
             var list = from dp in Data select dp.Y;
-            return new Interval(list.Min(), list.Max());
+            if (list.Min() == null || list.Max() == null)
+            {
+                return null;
+            }
+            return new Interval(list.Min().Value, list.Max().Value);
         }
 
         public double getStandardDeviation()
         {
-            return Math.Sqrt((from dp in Data select Math.Pow(dp.Y - getMean(), 2)).Average());
+            return Math.Sqrt((from dp in Data where !dp.isNull() select Math.Pow(dp.Y.Value - getMean(), 2)).Average());
         }
 
         public Polynomial CalculateNthPolynomialRegression(int order)
@@ -131,18 +139,18 @@ namespace SoftwareDevelopment2016
             double[] sums = new double[order*2 + 1];
             for(int i = 0; i < order*2 + 1; ++i)
             {
-                foreach(NumericPoint dp in Data)
+                foreach(NumericPoint dp in (from dp in Data where !dp.isNull() select dp))
                 {
-                    sums[i] += Math.Pow(dp.X, i);
+                    sums[i] += Math.Pow(dp.X.Value, i);
                 }
             }
             //Calculate the augmented part of the matrix
             double[] augments = new double[order + 1];
             for(int i = 0; i < order + 1; ++i)
             {
-                foreach(NumericPoint dp in Data)
+                foreach(NumericPoint dp in (from dp in Data where !dp.isNull() select dp))
                 {
-                    augments[i] += dp.Y * Math.Pow(dp.X, i);
+                    augments[i] += dp.Y.Value * Math.Pow(dp.X.Value, i);
                 }
             }
             //Distrubute the terms into the matrix
@@ -233,23 +241,30 @@ namespace SoftwareDevelopment2016
 
     public class LabeledDataSet : DataSet
     {
-        public List<LabeledPoint> data { get; set; }
+        public List<LabeledPoint> Data { get; set; }
 
         public LabeledDataSet(string name)
         {
             Name = name;
-            data = new List<LabeledPoint>();
+            Data = new List<LabeledPoint>();
         }
 
         public double getMode()
         {
-            return (from dp in data select dp.Y).Max();
+            return (from dp in Data where !dp.isNull() select dp.Y).Max().Value;
         }
 
-        public Interval getRange()
+        public Interval? getRange()
         {
-            var list = from dp in data select dp.Y;
-            return new Interval(list.Min(), list.Max());
+            var list = from dp in Data select dp.Y;
+            if(list.Min() == null || list.Max() == null)
+            {
+                return null;
+            }
+            else
+            {
+               return new Interval(list.Min().Value, list.Max().Value);
+            }
         }
     }
 }
