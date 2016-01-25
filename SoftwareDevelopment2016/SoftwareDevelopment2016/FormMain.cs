@@ -138,6 +138,7 @@ namespace SoftwareDevelopment2016
                     currentDataSetIndex = index;
                     comboBoxDataSets.Items.Add(name);
                     comboBoxDataSets.Enabled = true;
+                    dataGridView.Enabled = true;
                 } 
                 else
                 {
@@ -171,6 +172,7 @@ namespace SoftwareDevelopment2016
                     DataSets.Add(new NumericalDataSet(name));
                     dataGridView.Columns[0].HeaderText = "X";
                 }
+                dataGridView.Rows.Clear();
             }
         }
 
@@ -200,26 +202,24 @@ namespace SoftwareDevelopment2016
                 if(getCurrentDataSet().GetType() == typeof(NumericalDataSet))
                 {
                     ((NumericalDataSet)getCurrentDataSet()).Data.Clear();
-                    foreach (DataGridViewRow row in dataGridView.Rows)
-                    { 
-
-                        ((NumericalDataSet)getCurrentDataSet()).Data.Add(new NumericPoint(row.Cells[0].Value == null ? (double?)null : Convert.ToDouble(row.Cells[0].Value),
-                                                                                          row.Cells[1].Value == null ? (double?)null : Convert.ToDouble(row.Cells[1].Value)));
+                    for(int i = 0; i < dataGridView.Rows.Count - 1; ++i)
+                    {
+                        ((NumericalDataSet)getCurrentDataSet()).Data.Add(new NumericPoint(dataGridView.Rows[i].Cells[0].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[0].Value),
+                                                                                          dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                     }
                 }
                 else
                 {
-                    foreach(DataGridViewRow row in dataGridView.Rows)
+                    for (int i = 0; i < dataGridView.Rows.Count -1; ++i) 
                     {
                         ((LabeledDataSet)getCurrentDataSet()).Data.Clear();
-                        ((LabeledDataSet)getCurrentDataSet()).Data.Add(new LabeledPoint(row.Cells[0].Value == null ? null : Convert.ToString(row.Cells[0].Value),
-                                                                                        row.Cells[1].Value == null ? (double?)null : Convert.ToDouble(row.Cells[1].Value)));
+                        ((LabeledDataSet)getCurrentDataSet()).Data.Add(new LabeledPoint(dataGridView.Rows[i].Cells[0].Value == null ? null : Convert.ToString(dataGridView.Rows[i].Cells[0].Value),
+                                                                                        dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                     }
                 }
             } 
         }
         
-        //if the cell is not null, the current data set is numerical, and 
         private bool ValidateEntry(DataGridViewCellEventArgs e)
         {
             if (dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex] != null)
@@ -290,6 +290,28 @@ namespace SoftwareDevelopment2016
                 }
             }
             return true;
+        }
+
+        private void onDataSetChange(object sender, EventArgs e)
+        {
+            currentDataSetIndex = comboBoxDataSets.SelectedIndex;
+            dataGridView.Rows.Clear();
+            if(getCurrentDataSet().GetType() == typeof(NumericalDataSet))
+            {
+                dataGridView.Columns[0].HeaderText = "X";
+                foreach(NumericPoint dp in ((NumericalDataSet)getCurrentDataSet()).Data)
+                {
+                    dataGridView.Rows.Add(dp.X, dp.Y);
+                }
+            }
+            else
+            {
+                dataGridView.Columns[0].HeaderText = "Label";
+                foreach (LabeledPoint dp in ((LabeledDataSet)getCurrentDataSet()).Data)
+                {
+                    dataGridView.Rows.Add(dp.Label, dp.Y);
+                }
+            }
         }
     }
 }

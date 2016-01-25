@@ -329,6 +329,7 @@
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnX,
             this.ColumnY});
+            this.dataGridView.Enabled = false;
             this.dataGridView.Location = new System.Drawing.Point(6, 46);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersVisible = false;
@@ -355,6 +356,7 @@
             this.comboBoxDataSets.Name = "comboBoxDataSets";
             this.comboBoxDataSets.Size = new System.Drawing.Size(104, 21);
             this.comboBoxDataSets.TabIndex = 7;
+            this.comboBoxDataSets.SelectionChangeCommitted += new System.EventHandler(this.onDataSetChange);
             // 
             // plotBox
             // 
