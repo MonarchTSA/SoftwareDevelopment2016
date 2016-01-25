@@ -222,7 +222,7 @@ namespace SoftwareDevelopment2016
         
         private bool ValidateEntry(DataGridViewCellEventArgs e)
         {
-            if (dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex] != null)
+            if (dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 if (getCurrentDataSet().GetType() == typeof(NumericalDataSet))
                 {
