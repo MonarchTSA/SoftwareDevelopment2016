@@ -78,34 +78,31 @@ namespace SoftwareDevelopment2016
 
         }
 
-        int zoom = 0;
-        float xmin = 0;
-        float xmax = 2 * (float)Math.PI;
-        float ymin = -1;
-        float ymax = 1;
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             System.Drawing.Graphics graphics = panel1.CreateGraphics();
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            
-            float xstep = (xmax - xmin) / panel1.Width;
-            float ystep = (ymax - ymin) / panel1.Height;
-            float xaxis = ymax / ystep;
-            float yaxis = panel1.Width - xmax / xstep;
-            PointF[] points = new PointF[panel1.Width];
-            for(int i = 0; i < panel1.Width; ++i)
+            double xmin = -4 * Math.PI;
+            double xmax = 3 * Math.PI;
+            double ymin = -10;
+            double ymax = 2;
+            double xstep = (xmax - xmin) / panel1.Width;
+            double ystep = (ymax - ymin) / panel1.Height;
+            double xaxis = ymax / ystep;
+            double yaxis = -xmin / xstep;
+            List<PointF> points = new List<PointF>();
+            for (double x = xmin; x <= xmax; x += xstep)
             {
-                float x = i * xstep - xmax;
-                float functionValue =  (float)Math.Pow(x,2) + x;
-                graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(yaxis, 0), new PointF(yaxis, panel1.Height));
-                graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, xaxis), new PointF(panel1.Width, xaxis));
-                points[i] = new PointF(i,-1 + (float)(xaxis - functionValue / ystep));
+                points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - Math.Sin(x) / ystep)));
             }
-            graphics.DrawLines(new Pen(Color.Black, 1f), points);
+            //PointF[] points = new PointF[panel1.Width];
+            Pen p = new Pen(Color.Black, 1f);
+            graphics.DrawLine(p, new PointF(0, (float)xaxis), new PointF(panel1.Width, (float)xaxis));
+            graphics.DrawLine(p, new PointF((float)yaxis, 0), new PointF((float)yaxis, panel1.Height));
+            graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
         }
 
-        private void buttonZoom(object sender, EventArgs e)
+        /*private void buttonZoom(object sender, EventArgs e)
         {
             Button b = (Button)sender;
             if(b.Text == "+")
@@ -123,7 +120,7 @@ namespace SoftwareDevelopment2016
                 --ymax;
             }
             panel1.Refresh();
-        }
+        }*/
 
         private void buttonCreateDataSet_Click(object sender, EventArgs e)
         {

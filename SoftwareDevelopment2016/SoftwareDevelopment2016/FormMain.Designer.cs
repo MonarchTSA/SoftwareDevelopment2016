@@ -313,9 +313,9 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.Window;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(22, 26);
+            this.panel1.Location = new System.Drawing.Point(33, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(247, 228);
+            this.panel1.Size = new System.Drawing.Size(225, 225);
             this.panel1.TabIndex = 5;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
