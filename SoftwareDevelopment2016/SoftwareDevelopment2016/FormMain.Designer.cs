@@ -1,4 +1,6 @@
-﻿namespace SoftwareDevelopment2016
+﻿using System;
+
+namespace SoftwareDevelopment2016
 {
     partial class FormMain
     {
@@ -29,9 +31,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,30 +71,36 @@
             this.comboBoxDataSets = new System.Windows.Forms.ComboBox();
             this.plotBox = new System.Windows.Forms.GroupBox();
             this.dataBox = new System.Windows.Forms.GroupBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxPlotRegression = new System.Windows.Forms.CheckBox();
-            this.checkBoxPlotPoints = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.labelDomain = new System.Windows.Forms.Label();
             this.labelRange = new System.Windows.Forms.Label();
             this.labelStdDev = new System.Windows.Forms.Label();
             this.labelMode = new System.Windows.Forms.Label();
             this.labelMedian = new System.Windows.Forms.Label();
             this.labelMean = new System.Windows.Forms.Label();
+            this.labelOrder = new System.Windows.Forms.Label();
+            this.numericUpDownOrder = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxPlotRegression = new System.Windows.Forms.CheckBox();
+            this.checkBoxPlotPoints = new System.Windows.Forms.CheckBox();
+            this.divider2 = new System.Windows.Forms.Label();
+            this.divider3 = new System.Windows.Forms.Label();
+            this.divider4 = new System.Windows.Forms.Label();
+            this.divider5 = new System.Windows.Forms.Label();
+            this.divider6 = new System.Windows.Forms.Label();
+            this.divider7 = new System.Windows.Forms.Label();
+            this.divider8 = new System.Windows.Forms.Label();
+            this.divider1 = new System.Windows.Forms.Label();
+            this.labelDomainText = new System.Windows.Forms.Label();
+            this.labelRangeText = new System.Windows.Forms.Label();
+            this.labelStdDevText = new System.Windows.Forms.Label();
+            this.labelModeText = new System.Windows.Forms.Label();
+            this.labelMedianText = new System.Windows.Forms.Label();
+            this.labelMeanText = new System.Windows.Forms.Label();
             this.buttonCreateDataSet = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.plotBox.SuspendLayout();
             this.dataBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOrder)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -344,37 +352,37 @@
             // dataGridView
             // 
             this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnX,
             this.ColumnY});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView.Enabled = false;
             this.dataGridView.Location = new System.Drawing.Point(6, 46);
             this.dataGridView.Name = "dataGridView";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.Size = new System.Drawing.Size(209, 221);
             this.dataGridView.TabIndex = 6;
@@ -413,24 +421,30 @@
             // 
             // dataBox
             // 
-            this.dataBox.Controls.Add(this.label9);
-            this.dataBox.Controls.Add(this.numericUpDown1);
-            this.dataBox.Controls.Add(this.checkBoxPlotRegression);
-            this.dataBox.Controls.Add(this.checkBoxPlotPoints);
-            this.dataBox.Controls.Add(this.label8);
-            this.dataBox.Controls.Add(this.label7);
-            this.dataBox.Controls.Add(this.label6);
-            this.dataBox.Controls.Add(this.label5);
-            this.dataBox.Controls.Add(this.label4);
-            this.dataBox.Controls.Add(this.label3);
-            this.dataBox.Controls.Add(this.label2);
-            this.dataBox.Controls.Add(this.label1);
             this.dataBox.Controls.Add(this.labelDomain);
             this.dataBox.Controls.Add(this.labelRange);
             this.dataBox.Controls.Add(this.labelStdDev);
             this.dataBox.Controls.Add(this.labelMode);
             this.dataBox.Controls.Add(this.labelMedian);
             this.dataBox.Controls.Add(this.labelMean);
+            this.dataBox.Controls.Add(this.labelOrder);
+            this.dataBox.Controls.Add(this.numericUpDownOrder);
+            this.dataBox.Controls.Add(this.checkBoxPlotRegression);
+            this.dataBox.Controls.Add(this.checkBoxPlotPoints);
+            this.dataBox.Controls.Add(this.divider2);
+            this.dataBox.Controls.Add(this.divider3);
+            this.dataBox.Controls.Add(this.divider4);
+            this.dataBox.Controls.Add(this.divider5);
+            this.dataBox.Controls.Add(this.divider6);
+            this.dataBox.Controls.Add(this.divider7);
+            this.dataBox.Controls.Add(this.divider8);
+            this.dataBox.Controls.Add(this.divider1);
+            this.dataBox.Controls.Add(this.labelDomainText);
+            this.dataBox.Controls.Add(this.labelRangeText);
+            this.dataBox.Controls.Add(this.labelStdDevText);
+            this.dataBox.Controls.Add(this.labelModeText);
+            this.dataBox.Controls.Add(this.labelMedianText);
+            this.dataBox.Controls.Add(this.labelMeanText);
             this.dataBox.Controls.Add(this.buttonCreateDataSet);
             this.dataBox.Controls.Add(this.dataGridView);
             this.dataBox.Controls.Add(this.comboBoxDataSets);
@@ -441,16 +455,87 @@
             this.dataBox.TabStop = false;
             this.dataBox.Text = "Data";
             // 
-            // numericUpDown1
+            // labelDomain
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(438, 20);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(31, 20);
-            this.numericUpDown1.TabIndex = 25;
+            this.labelDomain.Enabled = false;
+            this.labelDomain.Location = new System.Drawing.Point(352, 238);
+            this.labelDomain.Name = "labelDomain";
+            this.labelDomain.Size = new System.Drawing.Size(116, 13);
+            this.labelDomain.TabIndex = 31;
+            this.labelDomain.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // labelRange
+            // 
+            this.labelRange.Enabled = false;
+            this.labelRange.Location = new System.Drawing.Point(352, 203);
+            this.labelRange.Name = "labelRange";
+            this.labelRange.Size = new System.Drawing.Size(116, 13);
+            this.labelRange.TabIndex = 30;
+            this.labelRange.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // labelStdDev
+            // 
+            this.labelStdDev.Enabled = false;
+            this.labelStdDev.Location = new System.Drawing.Point(352, 168);
+            this.labelStdDev.Name = "labelStdDev";
+            this.labelStdDev.Size = new System.Drawing.Size(116, 13);
+            this.labelStdDev.TabIndex = 29;
+            this.labelStdDev.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // labelMode
+            // 
+            this.labelMode.Enabled = false;
+            this.labelMode.Location = new System.Drawing.Point(352, 133);
+            this.labelMode.Name = "labelMode";
+            this.labelMode.Size = new System.Drawing.Size(116, 13);
+            this.labelMode.TabIndex = 28;
+            this.labelMode.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // labelMedian
+            // 
+            this.labelMedian.Enabled = false;
+            this.labelMedian.Location = new System.Drawing.Point(352, 98);
+            this.labelMedian.Name = "labelMedian";
+            this.labelMedian.Size = new System.Drawing.Size(116, 13);
+            this.labelMedian.TabIndex = 27;
+            this.labelMedian.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // labelMean
+            // 
+            this.labelMean.Enabled = false;
+            this.labelMean.Location = new System.Drawing.Point(352, 63);
+            this.labelMean.Name = "labelMean";
+            this.labelMean.Size = new System.Drawing.Size(116, 13);
+            this.labelMean.TabIndex = 26;
+            this.labelMean.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // labelOrder
+            // 
+            this.labelOrder.AutoSize = true;
+            this.labelOrder.Enabled = false;
+            this.labelOrder.Location = new System.Drawing.Point(398, 22);
+            this.labelOrder.Name = "labelOrder";
+            this.labelOrder.Size = new System.Drawing.Size(36, 13);
+            this.labelOrder.TabIndex = 10;
+            this.labelOrder.Text = "Order:";
+            // 
+            // numericUpDownOrder
+            // 
+            this.numericUpDownOrder.Enabled = false;
+            this.numericUpDownOrder.Location = new System.Drawing.Point(434, 20);
+            this.numericUpDownOrder.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.numericUpDownOrder.Name = "numericUpDownOrder";
+            this.numericUpDownOrder.Size = new System.Drawing.Size(35, 20);
+            this.numericUpDownOrder.TabIndex = 25;
             // 
             // checkBoxPlotRegression
             // 
             this.checkBoxPlotRegression.AutoSize = true;
+            this.checkBoxPlotRegression.Enabled = false;
             this.checkBoxPlotRegression.Location = new System.Drawing.Point(299, 21);
             this.checkBoxPlotRegression.Name = "checkBoxPlotRegression";
             this.checkBoxPlotRegression.Size = new System.Drawing.Size(95, 17);
@@ -461,6 +546,7 @@
             // checkBoxPlotPoints
             // 
             this.checkBoxPlotPoints.AutoSize = true;
+            this.checkBoxPlotPoints.Enabled = false;
             this.checkBoxPlotPoints.Location = new System.Drawing.Point(220, 21);
             this.checkBoxPlotPoints.Name = "checkBoxPlotPoints";
             this.checkBoxPlotPoints.Size = new System.Drawing.Size(75, 17);
@@ -468,131 +554,145 @@
             this.checkBoxPlotPoints.Text = "Plot points";
             this.checkBoxPlotPoints.UseVisualStyleBackColor = true;
             // 
-            // label8
+            // divider2
             // 
-            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label8.Location = new System.Drawing.Point(220, 261);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(248, 2);
-            this.label8.TabIndex = 23;
-            this.label8.Text = "label8";
+            this.divider2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.divider2.Enabled = false;
+            this.divider2.Location = new System.Drawing.Point(220, 261);
+            this.divider2.Name = "divider2";
+            this.divider2.Size = new System.Drawing.Size(248, 2);
+            this.divider2.TabIndex = 23;
+            this.divider2.Text = "label8";
             // 
-            // label7
+            // divider3
             // 
-            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label7.Location = new System.Drawing.Point(221, 226);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(248, 2);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "label7";
+            this.divider3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.divider3.Enabled = false;
+            this.divider3.Location = new System.Drawing.Point(221, 226);
+            this.divider3.Name = "divider3";
+            this.divider3.Size = new System.Drawing.Size(248, 2);
+            this.divider3.TabIndex = 22;
+            this.divider3.Text = "label7";
             // 
-            // label6
+            // divider4
             // 
-            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label6.Location = new System.Drawing.Point(221, 191);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(248, 2);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "label6";
+            this.divider4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.divider4.Enabled = false;
+            this.divider4.Location = new System.Drawing.Point(221, 191);
+            this.divider4.Name = "divider4";
+            this.divider4.Size = new System.Drawing.Size(248, 2);
+            this.divider4.TabIndex = 21;
+            this.divider4.Text = "label6";
             // 
-            // label5
+            // divider5
             // 
-            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label5.Location = new System.Drawing.Point(221, 156);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(248, 2);
-            this.label5.TabIndex = 20;
-            this.label5.Text = "label5";
+            this.divider5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.divider5.Enabled = false;
+            this.divider5.Location = new System.Drawing.Point(221, 156);
+            this.divider5.Name = "divider5";
+            this.divider5.Size = new System.Drawing.Size(248, 2);
+            this.divider5.TabIndex = 20;
+            this.divider5.Text = "label5";
             // 
-            // label4
+            // divider6
             // 
-            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label4.Location = new System.Drawing.Point(221, 121);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(248, 2);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "label4";
+            this.divider6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.divider6.Enabled = false;
+            this.divider6.Location = new System.Drawing.Point(221, 121);
+            this.divider6.Name = "divider6";
+            this.divider6.Size = new System.Drawing.Size(248, 2);
+            this.divider6.TabIndex = 19;
+            this.divider6.Text = "label4";
             // 
-            // label3
+            // divider7
             // 
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label3.Location = new System.Drawing.Point(221, 86);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(248, 2);
-            this.label3.TabIndex = 18;
-            this.label3.Text = "label3";
+            this.divider7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.divider7.Enabled = false;
+            this.divider7.Location = new System.Drawing.Point(221, 86);
+            this.divider7.Name = "divider7";
+            this.divider7.Size = new System.Drawing.Size(248, 2);
+            this.divider7.TabIndex = 18;
+            this.divider7.Text = "label3";
             // 
-            // label2
+            // divider8
             // 
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label2.Location = new System.Drawing.Point(221, 51);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(248, 2);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "label2";
+            this.divider8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.divider8.Enabled = false;
+            this.divider8.Location = new System.Drawing.Point(221, 51);
+            this.divider8.Name = "divider8";
+            this.divider8.Size = new System.Drawing.Size(248, 2);
+            this.divider8.TabIndex = 17;
+            this.divider8.Text = "label2";
             // 
-            // label1
+            // divider1
             // 
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Location = new System.Drawing.Point(344, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(2, 210);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "label1";
+            this.divider1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.divider1.Enabled = false;
+            this.divider1.Location = new System.Drawing.Point(344, 51);
+            this.divider1.Name = "divider1";
+            this.divider1.Size = new System.Drawing.Size(2, 210);
+            this.divider1.TabIndex = 16;
+            this.divider1.Text = "label1";
             // 
-            // labelDomain
+            // labelDomainText
             // 
-            this.labelDomain.AutoSize = true;
-            this.labelDomain.Location = new System.Drawing.Point(224, 238);
-            this.labelDomain.Name = "labelDomain";
-            this.labelDomain.Size = new System.Drawing.Size(49, 13);
-            this.labelDomain.TabIndex = 15;
-            this.labelDomain.Text = "Domain: ";
+            this.labelDomainText.AutoSize = true;
+            this.labelDomainText.Enabled = false;
+            this.labelDomainText.Location = new System.Drawing.Point(224, 238);
+            this.labelDomainText.Name = "labelDomainText";
+            this.labelDomainText.Size = new System.Drawing.Size(49, 13);
+            this.labelDomainText.TabIndex = 15;
+            this.labelDomainText.Text = "Domain: ";
             // 
-            // labelRange
+            // labelRangeText
             // 
-            this.labelRange.AutoSize = true;
-            this.labelRange.Location = new System.Drawing.Point(224, 203);
-            this.labelRange.Name = "labelRange";
-            this.labelRange.Size = new System.Drawing.Size(42, 13);
-            this.labelRange.TabIndex = 14;
-            this.labelRange.Text = "Range:";
+            this.labelRangeText.AutoSize = true;
+            this.labelRangeText.Enabled = false;
+            this.labelRangeText.Location = new System.Drawing.Point(224, 203);
+            this.labelRangeText.Name = "labelRangeText";
+            this.labelRangeText.Size = new System.Drawing.Size(42, 13);
+            this.labelRangeText.TabIndex = 14;
+            this.labelRangeText.Text = "Range:";
             // 
-            // labelStdDev
+            // labelStdDevText
             // 
-            this.labelStdDev.AutoSize = true;
-            this.labelStdDev.Location = new System.Drawing.Point(224, 168);
-            this.labelStdDev.Name = "labelStdDev";
-            this.labelStdDev.Size = new System.Drawing.Size(101, 13);
-            this.labelStdDev.TabIndex = 13;
-            this.labelStdDev.Text = "Standard Deviation:";
+            this.labelStdDevText.AutoSize = true;
+            this.labelStdDevText.Enabled = false;
+            this.labelStdDevText.Location = new System.Drawing.Point(224, 168);
+            this.labelStdDevText.Name = "labelStdDevText";
+            this.labelStdDevText.Size = new System.Drawing.Size(101, 13);
+            this.labelStdDevText.TabIndex = 13;
+            this.labelStdDevText.Text = "Standard Deviation:";
             // 
-            // labelMode
+            // labelModeText
             // 
-            this.labelMode.AutoSize = true;
-            this.labelMode.Location = new System.Drawing.Point(224, 133);
-            this.labelMode.Name = "labelMode";
-            this.labelMode.Size = new System.Drawing.Size(40, 13);
-            this.labelMode.TabIndex = 12;
-            this.labelMode.Text = "Mode: ";
+            this.labelModeText.AutoSize = true;
+            this.labelModeText.Enabled = false;
+            this.labelModeText.Location = new System.Drawing.Point(224, 133);
+            this.labelModeText.Name = "labelModeText";
+            this.labelModeText.Size = new System.Drawing.Size(40, 13);
+            this.labelModeText.TabIndex = 12;
+            this.labelModeText.Text = "Mode: ";
             // 
-            // labelMedian
+            // labelMedianText
             // 
-            this.labelMedian.AutoSize = true;
-            this.labelMedian.Location = new System.Drawing.Point(224, 98);
-            this.labelMedian.Name = "labelMedian";
-            this.labelMedian.Size = new System.Drawing.Size(48, 13);
-            this.labelMedian.TabIndex = 11;
-            this.labelMedian.Text = "Median: ";
+            this.labelMedianText.AutoSize = true;
+            this.labelMedianText.Enabled = false;
+            this.labelMedianText.Location = new System.Drawing.Point(224, 98);
+            this.labelMedianText.Name = "labelMedianText";
+            this.labelMedianText.Size = new System.Drawing.Size(48, 13);
+            this.labelMedianText.TabIndex = 11;
+            this.labelMedianText.Text = "Median: ";
             // 
-            // labelMean
+            // labelMeanText
             // 
-            this.labelMean.AutoSize = true;
-            this.labelMean.Location = new System.Drawing.Point(224, 63);
-            this.labelMean.Name = "labelMean";
-            this.labelMean.Size = new System.Drawing.Size(40, 13);
-            this.labelMean.TabIndex = 10;
-            this.labelMean.Text = "Mean: ";
+            this.labelMeanText.AutoSize = true;
+            this.labelMeanText.Enabled = false;
+            this.labelMeanText.Location = new System.Drawing.Point(224, 63);
+            this.labelMeanText.Name = "labelMeanText";
+            this.labelMeanText.Size = new System.Drawing.Size(40, 13);
+            this.labelMeanText.TabIndex = 10;
+            this.labelMeanText.Text = "Mean: ";
             // 
             // buttonCreateDataSet
             // 
@@ -603,15 +703,6 @@
             this.buttonCreateDataSet.Text = "Create data set";
             this.buttonCreateDataSet.UseVisualStyleBackColor = true;
             this.buttonCreateDataSet.Click += new System.EventHandler(this.buttonCreateDataSet_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(398, 22);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 13);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "Order:";
             // 
             // FormMain
             // 
@@ -631,7 +722,7 @@
             this.plotBox.ResumeLayout(false);
             this.dataBox.ResumeLayout(false);
             this.dataBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOrder)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -676,24 +767,30 @@
         private System.Windows.Forms.GroupBox plotBox;
         private System.Windows.Forms.GroupBox dataBox;
         private System.Windows.Forms.Button buttonCreateDataSet;
+        private System.Windows.Forms.Label labelDomainText;
+        private System.Windows.Forms.Label labelRangeText;
+        private System.Windows.Forms.Label labelStdDevText;
+        private System.Windows.Forms.Label labelModeText;
+        private System.Windows.Forms.Label labelMedianText;
+        private System.Windows.Forms.Label labelMeanText;
+        private System.Windows.Forms.Label divider1;
+        private System.Windows.Forms.Label divider2;
+        private System.Windows.Forms.Label divider3;
+        private System.Windows.Forms.Label divider4;
+        private System.Windows.Forms.Label divider5;
+        private System.Windows.Forms.Label divider6;
+        private System.Windows.Forms.Label divider7;
+        private System.Windows.Forms.Label divider8;
+        private System.Windows.Forms.NumericUpDown numericUpDownOrder;
+        private System.Windows.Forms.CheckBox checkBoxPlotRegression;
+        private System.Windows.Forms.CheckBox checkBoxPlotPoints;
+        private System.Windows.Forms.Label labelOrder;
+        private System.Windows.Forms.Label labelMean;
         private System.Windows.Forms.Label labelDomain;
         private System.Windows.Forms.Label labelRange;
         private System.Windows.Forms.Label labelStdDev;
         private System.Windows.Forms.Label labelMode;
         private System.Windows.Forms.Label labelMedian;
-        private System.Windows.Forms.Label labelMean;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.CheckBox checkBoxPlotRegression;
-        private System.Windows.Forms.CheckBox checkBoxPlotPoints;
-        private System.Windows.Forms.Label label9;
     }
 }
 

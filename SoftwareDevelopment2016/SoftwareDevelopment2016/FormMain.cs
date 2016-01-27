@@ -15,11 +15,37 @@ namespace SoftwareDevelopment2016
     {
         public List<DataSet> DataSets { get; set; }
         private int currentDataSetIndex;
+        private List<Label> dividers = new List<Label>();
+        private List<Label> descriptiveLabels = new List<Label>();
+        private List<Label> descriptiveLabelText = new List<Label>();
 
         public FormMain()
         {
             DataSets = new List<DataSet>();
             InitializeComponent();
+            
+            dividers.Add(divider1);
+            dividers.Add(divider2);
+            dividers.Add(divider3);
+            dividers.Add(divider4);
+            dividers.Add(divider5);
+            dividers.Add(divider6);
+            dividers.Add(divider7);
+            dividers.Add(divider8);
+
+            descriptiveLabels.Add(labelMean);
+            descriptiveLabels.Add(labelMedian);
+            descriptiveLabels.Add(labelMode);
+            descriptiveLabels.Add(labelStdDev);
+            descriptiveLabels.Add(labelRange);
+            descriptiveLabels.Add(labelDomain);
+
+            descriptiveLabelText.Add(labelMeanText);
+            descriptiveLabelText.Add(labelMedianText);
+            descriptiveLabelText.Add(labelModeText);
+            descriptiveLabelText.Add(labelStdDevText);
+            descriptiveLabelText.Add(labelRangeText);
+            descriptiveLabelText.Add(labelDomainText);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -135,6 +161,22 @@ namespace SoftwareDevelopment2016
                     comboBoxDataSets.Items.Add(name);
                     comboBoxDataSets.Enabled = true;
                     dataGridView.Enabled = true;
+                    foreach(Label d in dividers)
+                    {
+                        d.Enabled = true;
+                    }
+                    foreach(Label l in descriptiveLabels)
+                    {
+                        l.Enabled = true;
+                    }
+                    foreach (Label l in descriptiveLabelText)
+                    {
+                        l.Enabled = true;
+                    }
+                    checkBoxPlotPoints.Enabled = true;
+                    checkBoxPlotRegression.Enabled = true;
+                    labelOrder.Enabled = true;
+                    numericUpDownOrder.Enabled = true;
                 } 
                 else
                 {
@@ -203,6 +245,12 @@ namespace SoftwareDevelopment2016
                         ((NumericalDataSet)getCurrentDataSet()).Data.Add(new NumericPoint(dataGridView.Rows[i].Cells[0].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[0].Value),
                                                                                           dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                     }
+                    labelMean.Text = ((NumericalDataSet)getCurrentDataSet()).getMean().ToString();
+                    labelMedian.Text = ((NumericalDataSet)getCurrentDataSet()).getMedian().ToString();
+                    labelMode.Text = ((NumericalDataSet)getCurrentDataSet()).getMode().ToString();
+                    labelStdDev.Text = ((NumericalDataSet)getCurrentDataSet()).getStandardDeviation().ToString();
+                    labelRange.Text = ((NumericalDataSet)getCurrentDataSet()).getRange().ToString();
+                    labelDomain.Text = ((NumericalDataSet)getCurrentDataSet()).getDomain().ToString();
                 }
                 else
                 {
