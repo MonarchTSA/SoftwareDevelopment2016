@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,11 +69,30 @@
             this.comboBoxDataSets = new System.Windows.Forms.ComboBox();
             this.plotBox = new System.Windows.Forms.GroupBox();
             this.dataBox = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxPlotRegression = new System.Windows.Forms.CheckBox();
+            this.checkBoxPlotPoints = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelDomain = new System.Windows.Forms.Label();
+            this.labelRange = new System.Windows.Forms.Label();
+            this.labelStdDev = new System.Windows.Forms.Label();
+            this.labelMode = new System.Windows.Forms.Label();
+            this.labelMedian = new System.Windows.Forms.Label();
+            this.labelMean = new System.Windows.Forms.Label();
             this.buttonCreateDataSet = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.plotBox.SuspendLayout();
             this.dataBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -82,7 +104,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(717, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(799, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -258,13 +280,13 @@
             // customizeToolStripMenuItem
             // 
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.customizeToolStripMenuItem.Text = "&Customize";
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.customizeToolStripMenuItem.Text = "&Toggle Plots";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // helpToolStripMenuItem
@@ -321,17 +343,38 @@
             // 
             // dataGridView
             // 
-            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnX,
             this.ColumnY});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.Enabled = false;
             this.dataGridView.Location = new System.Drawing.Point(6, 46);
             this.dataGridView.Name = "dataGridView";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.Size = new System.Drawing.Size(209, 221);
             this.dataGridView.TabIndex = 6;
@@ -361,7 +404,7 @@
             // plotBox
             // 
             this.plotBox.Controls.Add(this.panel1);
-            this.plotBox.Location = new System.Drawing.Point(415, 38);
+            this.plotBox.Location = new System.Drawing.Point(493, 38);
             this.plotBox.Name = "plotBox";
             this.plotBox.Size = new System.Drawing.Size(290, 273);
             this.plotBox.TabIndex = 8;
@@ -370,15 +413,186 @@
             // 
             // dataBox
             // 
+            this.dataBox.Controls.Add(this.label9);
+            this.dataBox.Controls.Add(this.numericUpDown1);
+            this.dataBox.Controls.Add(this.checkBoxPlotRegression);
+            this.dataBox.Controls.Add(this.checkBoxPlotPoints);
+            this.dataBox.Controls.Add(this.label8);
+            this.dataBox.Controls.Add(this.label7);
+            this.dataBox.Controls.Add(this.label6);
+            this.dataBox.Controls.Add(this.label5);
+            this.dataBox.Controls.Add(this.label4);
+            this.dataBox.Controls.Add(this.label3);
+            this.dataBox.Controls.Add(this.label2);
+            this.dataBox.Controls.Add(this.label1);
+            this.dataBox.Controls.Add(this.labelDomain);
+            this.dataBox.Controls.Add(this.labelRange);
+            this.dataBox.Controls.Add(this.labelStdDev);
+            this.dataBox.Controls.Add(this.labelMode);
+            this.dataBox.Controls.Add(this.labelMedian);
+            this.dataBox.Controls.Add(this.labelMean);
             this.dataBox.Controls.Add(this.buttonCreateDataSet);
             this.dataBox.Controls.Add(this.dataGridView);
             this.dataBox.Controls.Add(this.comboBoxDataSets);
             this.dataBox.Location = new System.Drawing.Point(12, 38);
             this.dataBox.Name = "dataBox";
-            this.dataBox.Size = new System.Drawing.Size(397, 273);
+            this.dataBox.Size = new System.Drawing.Size(475, 273);
             this.dataBox.TabIndex = 9;
             this.dataBox.TabStop = false;
             this.dataBox.Text = "Data";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(438, 20);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(31, 20);
+            this.numericUpDown1.TabIndex = 25;
+            // 
+            // checkBoxPlotRegression
+            // 
+            this.checkBoxPlotRegression.AutoSize = true;
+            this.checkBoxPlotRegression.Location = new System.Drawing.Point(299, 21);
+            this.checkBoxPlotRegression.Name = "checkBoxPlotRegression";
+            this.checkBoxPlotRegression.Size = new System.Drawing.Size(95, 17);
+            this.checkBoxPlotRegression.TabIndex = 24;
+            this.checkBoxPlotRegression.Text = "Plot regression";
+            this.checkBoxPlotRegression.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPlotPoints
+            // 
+            this.checkBoxPlotPoints.AutoSize = true;
+            this.checkBoxPlotPoints.Location = new System.Drawing.Point(220, 21);
+            this.checkBoxPlotPoints.Name = "checkBoxPlotPoints";
+            this.checkBoxPlotPoints.Size = new System.Drawing.Size(75, 17);
+            this.checkBoxPlotPoints.TabIndex = 10;
+            this.checkBoxPlotPoints.Text = "Plot points";
+            this.checkBoxPlotPoints.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label8.Location = new System.Drawing.Point(220, 261);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(248, 2);
+            this.label8.TabIndex = 23;
+            this.label8.Text = "label8";
+            // 
+            // label7
+            // 
+            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label7.Location = new System.Drawing.Point(221, 226);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(248, 2);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "label7";
+            // 
+            // label6
+            // 
+            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label6.Location = new System.Drawing.Point(221, 191);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(248, 2);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "label6";
+            // 
+            // label5
+            // 
+            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label5.Location = new System.Drawing.Point(221, 156);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(248, 2);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "label5";
+            // 
+            // label4
+            // 
+            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label4.Location = new System.Drawing.Point(221, 121);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(248, 2);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "label4";
+            // 
+            // label3
+            // 
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label3.Location = new System.Drawing.Point(221, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(248, 2);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "label3";
+            // 
+            // label2
+            // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label2.Location = new System.Drawing.Point(221, 51);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(248, 2);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "label2";
+            // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Location = new System.Drawing.Point(344, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(2, 210);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "label1";
+            // 
+            // labelDomain
+            // 
+            this.labelDomain.AutoSize = true;
+            this.labelDomain.Location = new System.Drawing.Point(224, 238);
+            this.labelDomain.Name = "labelDomain";
+            this.labelDomain.Size = new System.Drawing.Size(49, 13);
+            this.labelDomain.TabIndex = 15;
+            this.labelDomain.Text = "Domain: ";
+            // 
+            // labelRange
+            // 
+            this.labelRange.AutoSize = true;
+            this.labelRange.Location = new System.Drawing.Point(224, 203);
+            this.labelRange.Name = "labelRange";
+            this.labelRange.Size = new System.Drawing.Size(42, 13);
+            this.labelRange.TabIndex = 14;
+            this.labelRange.Text = "Range:";
+            // 
+            // labelStdDev
+            // 
+            this.labelStdDev.AutoSize = true;
+            this.labelStdDev.Location = new System.Drawing.Point(224, 168);
+            this.labelStdDev.Name = "labelStdDev";
+            this.labelStdDev.Size = new System.Drawing.Size(101, 13);
+            this.labelStdDev.TabIndex = 13;
+            this.labelStdDev.Text = "Standard Deviation:";
+            // 
+            // labelMode
+            // 
+            this.labelMode.AutoSize = true;
+            this.labelMode.Location = new System.Drawing.Point(224, 133);
+            this.labelMode.Name = "labelMode";
+            this.labelMode.Size = new System.Drawing.Size(40, 13);
+            this.labelMode.TabIndex = 12;
+            this.labelMode.Text = "Mode: ";
+            // 
+            // labelMedian
+            // 
+            this.labelMedian.AutoSize = true;
+            this.labelMedian.Location = new System.Drawing.Point(224, 98);
+            this.labelMedian.Name = "labelMedian";
+            this.labelMedian.Size = new System.Drawing.Size(48, 13);
+            this.labelMedian.TabIndex = 11;
+            this.labelMedian.Text = "Median: ";
+            // 
+            // labelMean
+            // 
+            this.labelMean.AutoSize = true;
+            this.labelMean.Location = new System.Drawing.Point(224, 63);
+            this.labelMean.Name = "labelMean";
+            this.labelMean.Size = new System.Drawing.Size(40, 13);
+            this.labelMean.TabIndex = 10;
+            this.labelMean.Text = "Mean: ";
             // 
             // buttonCreateDataSet
             // 
@@ -390,11 +604,20 @@
             this.buttonCreateDataSet.UseVisualStyleBackColor = true;
             this.buttonCreateDataSet.Click += new System.EventHandler(this.buttonCreateDataSet_Click);
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(398, 22);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(36, 13);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Order:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(717, 323);
+            this.ClientSize = new System.Drawing.Size(799, 323);
             this.Controls.Add(this.dataBox);
             this.Controls.Add(this.plotBox);
             this.Controls.Add(this.menuStrip1);
@@ -407,6 +630,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.plotBox.ResumeLayout(false);
             this.dataBox.ResumeLayout(false);
+            this.dataBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -451,6 +676,24 @@
         private System.Windows.Forms.GroupBox plotBox;
         private System.Windows.Forms.GroupBox dataBox;
         private System.Windows.Forms.Button buttonCreateDataSet;
+        private System.Windows.Forms.Label labelDomain;
+        private System.Windows.Forms.Label labelRange;
+        private System.Windows.Forms.Label labelStdDev;
+        private System.Windows.Forms.Label labelMode;
+        private System.Windows.Forms.Label labelMedian;
+        private System.Windows.Forms.Label labelMean;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.CheckBox checkBoxPlotRegression;
+        private System.Windows.Forms.CheckBox checkBoxPlotPoints;
+        private System.Windows.Forms.Label label9;
     }
 }
 

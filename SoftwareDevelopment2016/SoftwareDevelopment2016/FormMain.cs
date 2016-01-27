@@ -93,9 +93,8 @@ namespace SoftwareDevelopment2016
             List<PointF> points = new List<PointF>();
             for (double x = xmin; x <= xmax; x += xstep)
             {
-                points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - Math.Sin(x) / ystep)));
+                points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - (x*x + 2*x -6) / ystep)));
             }
-            //PointF[] points = new PointF[panel1.Width];
             Pen p = new Pen(Color.Black, 1f);
             graphics.DrawLine(p, new PointF(0, (float)xaxis), new PointF(panel1.Width, (float)xaxis));
             graphics.DrawLine(p, new PointF((float)yaxis, 0), new PointF((float)yaxis, panel1.Height));
