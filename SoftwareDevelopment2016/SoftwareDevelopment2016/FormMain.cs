@@ -104,50 +104,57 @@ namespace SoftwareDevelopment2016
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void drawPlot(object sende = null, PaintEventArgs e = null)
         {
             System.Drawing.Graphics graphics = panel1.CreateGraphics();
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            double xmin = -4 * Math.PI;
-            double xmax = 3 * Math.PI;
-            double ymin = -10;
-            double ymax = 2;
+            double xmin = -2;
+            double xmax = 10;
+            double ymin = -2;
+            double ymax = 6;
             double xstep = (xmax - xmin) / panel1.Width;
             double ystep = (ymax - ymin) / panel1.Height;
             double xaxis = ymax / ystep;
             double yaxis = -xmin / xstep;
-            List<PointF> points = new List<PointF>();
-            for (double x = xmin; x <= xmax; x += xstep)
+
+            graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, (float)xaxis), new PointF(panel1.Width, (float)xaxis));
+            graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, panel1.Height));
+            foreach(DataSet ds in DataSets)
             {
-                points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - (x*x + 2*x -6) / ystep)));
+                if(ds.GetType() == typeof(NumericalDataSet))
+                {
+                    if(ds.IsPlotted)
+                    {
+                        foreach(NumericPoint dp in (from a in ((NumericalDataSet)ds).Data where !a.isNull() select a))
+                        {
+                            PointF p =  new PointF((float)(yaxis + dp.X / xstep), (float)(xaxis - dp.Y / ystep));
+                            graphics.FillEllipse(new SolidBrush(Color.Blue), p.X - 2, p.Y - 2, 4, 4);
+                        }
+                    }
+                    if(((NumericalDataSet)ds).IsRegressionPlotted)
+                    {
+                        Polynomial? p = ((NumericalDataSet)getCurrentDataSet()).CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
+                        if(p != null)
+                        {
+                            List<PointF> points = new List<PointF>();
+                            for (double x = xmin; x <= xmax; x += xstep)
+                            {
+                                points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - p.Value.f(x) / ystep)));
+                            }
+                            graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+
             }
-            Pen p = new Pen(Color.Black, 1f);
-            graphics.DrawLine(p, new PointF(0, (float)xaxis), new PointF(panel1.Width, (float)xaxis));
-            graphics.DrawLine(p, new PointF((float)yaxis, 0), new PointF((float)yaxis, panel1.Height));
-            graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
+
         }
 
-        /*private void buttonZoom(object sender, EventArgs e)
-        {
-            Button b = (Button)sender;
-            if(b.Text == "+")
-            {
-                --xmin;
-                ++xmax;
-                --ymin;
-                ++ymax;
-            }
-            else
-            {
-                ++xmin;
-                --xmax;
-                ++ymin;
-                --ymax;
-            }
-            panel1.Refresh();
-        }*/
-
-        private void buttonCreateDataSet_Click(object sender, EventArgs e)
+        private void createDataSet(object sender, EventArgs e)
         {
             FormCreateDataSet form = new FormCreateDataSet();
             if(form.ShowDialog() == DialogResult.OK)
@@ -249,8 +256,8 @@ namespace SoftwareDevelopment2016
                     labelMedian.Text = ((NumericalDataSet)getCurrentDataSet()).getMedian().ToString();
                     labelMode.Text = ((NumericalDataSet)getCurrentDataSet()).getMode().ToString();
                     labelStdDev.Text = ((NumericalDataSet)getCurrentDataSet()).getStandardDeviation().ToString();
-                    labelRange.Text = ((NumericalDataSet)getCurrentDataSet()).getRange().ToString();
                     labelDomain.Text = ((NumericalDataSet)getCurrentDataSet()).getDomain().ToString();
+                    labelRange.Text = ((NumericalDataSet)getCurrentDataSet()).getRange().ToString();
                 }
                 else
                 {
@@ -261,6 +268,7 @@ namespace SoftwareDevelopment2016
                                                                                         dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                     }
                 }
+                this.Refresh();
             } 
         }
         
@@ -347,6 +355,12 @@ namespace SoftwareDevelopment2016
                 {
                     dataGridView.Rows.Add(dp.X, dp.Y);
                 }
+                labelMean.Text = ((NumericalDataSet)getCurrentDataSet()).getMean().ToString();
+                labelMedian.Text = ((NumericalDataSet)getCurrentDataSet()).getMedian().ToString();
+                labelMode.Text = ((NumericalDataSet)getCurrentDataSet()).getMode().ToString();
+                labelStdDev.Text = ((NumericalDataSet)getCurrentDataSet()).getStandardDeviation().ToString();
+                labelDomain.Text = ((NumericalDataSet)getCurrentDataSet()).getDomain().ToString();
+                labelRange.Text = ((NumericalDataSet)getCurrentDataSet()).getRange().ToString();
             }
             else
             {
@@ -356,6 +370,23 @@ namespace SoftwareDevelopment2016
                     dataGridView.Rows.Add(dp.Label, dp.Y);
                 }
             }
+        }
+
+        private void onPlotCheckChange(object sender, EventArgs e)
+        {
+            getCurrentDataSet().IsPlotted = checkBoxPlotPoints.CheckState == CheckState.Checked ? true : false;
+            this.Refresh();
+        }
+
+        private void onRegressionCheckChange(object sender, EventArgs e)
+        {
+            ((NumericalDataSet)getCurrentDataSet()).IsRegressionPlotted = checkBoxPlotRegression.CheckState == CheckState.Checked ? true : false;
+            this.Refresh();
+        }
+
+        private void numericUpDownOrder_ValueChanged(object sender, EventArgs e)
+        {
+            this.Refresh();
         }
     }
 }

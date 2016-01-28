@@ -49,17 +49,21 @@ namespace SoftwareDevelopment2016
     public abstract class DataSet
     {
         public string Name { get; set; }
+        public bool IsPlotted { get; set; }
     }
 
     public class NumericalDataSet : DataSet
     {
 
         public List<NumericPoint> Data { get; set; }
+        public bool IsRegressionPlotted { get; set; }
 
         public NumericalDataSet(string name)
         {
             Data = new List<NumericPoint>();
             Name = name;
+            IsPlotted = false;
+            IsRegressionPlotted = false;
         }
 
         public double? getMean()
@@ -70,7 +74,7 @@ namespace SoftwareDevelopment2016
 
         public double? getMedian()
         {
-            List<double> sorted = (from dp in Data where !dp.isNull() orderby dp.X select dp.X.Value).ToList();
+            List<double> sorted = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
             if(sorted.Count == 0)
             {
                 return null;
@@ -88,6 +92,7 @@ namespace SoftwareDevelopment2016
             }
         }
 
+        //TODO: fix this method (value produced is incorrect)
         public double? getMode()
         {
             List<double> yvals = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
@@ -288,9 +293,10 @@ namespace SoftwareDevelopment2016
         {
             Name = name;
             Data = new List<LabeledPoint>();
+            IsPlotted = false;
         }
 
-        public double getMode()
+        public double? getMode()
         {
             return (from dp in Data where !dp.isNull() select dp.Y).Max().Value;
         }
