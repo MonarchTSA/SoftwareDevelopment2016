@@ -133,7 +133,7 @@ namespace SoftwareDevelopment2016
                     }
                     if(((NumericalDataSet)ds).IsRegressionPlotted)
                     {
-                        Polynomial? p = ((NumericalDataSet)getCurrentDataSet()).CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
+                        Polynomial? p = ((NumericalDataSet)ds).CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
                         if(p != null)
                         {
                             List<PointF> points = new List<PointF>();
@@ -141,7 +141,14 @@ namespace SoftwareDevelopment2016
                             {
                                 points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - p.Value.f(x) / ystep)));
                             }
-                            graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
+                            try
+                            {
+                                graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
+                            } 
+                            catch(OverflowException oe)
+                            {
+                                MessageBox.Show("Something went wrong plotting the regression");
+                            }
                         }
                     }
                 }
@@ -181,9 +188,6 @@ namespace SoftwareDevelopment2016
                         l.Enabled = true;
                     }
                     checkBoxPlotPoints.Enabled = true;
-                    checkBoxPlotRegression.Enabled = true;
-                    labelOrder.Enabled = true;
-                    numericUpDownOrder.Enabled = true;
                 } 
                 else
                 {
@@ -217,6 +221,8 @@ namespace SoftwareDevelopment2016
                     DataSets.Add(new NumericalDataSet(name));
                     dataGridView.Columns[0].HeaderText = "X";
                 }
+                checkBoxPlotPoints.CheckState = CheckState.Unchecked;
+                checkBoxPlotRegression.CheckState = CheckState.Unchecked;
                 dataGridView.Rows.Clear();
             }
         }
@@ -244,10 +250,10 @@ namespace SoftwareDevelopment2016
         {
             if(ValidateEntry(e))
             {
-                if(getCurrentDataSet().GetType() == typeof(NumericalDataSet))
+                if (getCurrentDataSet().GetType() == typeof(NumericalDataSet))
                 {
                     ((NumericalDataSet)getCurrentDataSet()).Data.Clear();
-                    for(int i = 0; i < dataGridView.Rows.Count - 1; ++i)
+                    for (int i = 0; i < dataGridView.Rows.Count - 1; ++i)
                     {
                         ((NumericalDataSet)getCurrentDataSet()).Data.Add(new NumericPoint(dataGridView.Rows[i].Cells[0].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[0].Value),
                                                                                           dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
@@ -261,12 +267,35 @@ namespace SoftwareDevelopment2016
                 }
                 else
                 {
-                    for (int i = 0; i < dataGridView.Rows.Count -1; ++i) 
+                    for (int i = 0; i < dataGridView.Rows.Count - 1; ++i)
                     {
                         ((LabeledDataSet)getCurrentDataSet()).Data.Clear();
                         ((LabeledDataSet)getCurrentDataSet()).Data.Add(new LabeledPoint(dataGridView.Rows[i].Cells[0].Value == null ? null : Convert.ToString(dataGridView.Rows[i].Cells[0].Value),
                                                                                         dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                     }
+                }
+
+                foreach(DataGridViewRow r in dataGridView.Rows)
+                {
+                    if (r.Cells[0].Value == null && r.Cells[1].Value == null && r.Index != dataGridView.Rows.Count-1 )
+                    {
+                        dataGridView.Rows.Remove(r);
+                    }
+                }
+                var list = (from dp in ((NumericalDataSet)getCurrentDataSet()).Data where !dp.isNull() select dp).ToList();
+                if (list.Count >= 2)
+                {
+                    checkBoxPlotRegression.Enabled = true;
+                    labelOrder.Enabled = true;
+                    numericUpDownOrder.Enabled = true;
+                    numericUpDownOrder.Maximum = list.Count - 1;
+                }
+                else
+                {
+                    checkBoxPlotRegression.CheckState = CheckState.Unchecked;
+                    checkBoxPlotRegression.Enabled = false;
+                    labelOrder.Enabled = false;
+                    numericUpDownOrder.Enabled = false;
                 }
                 this.Refresh();
             } 
