@@ -14,58 +14,65 @@ namespace SoftwareDevelopment2016
     public partial class FormMain : Form
     {
         public List<DataSet> DataSets { get; set; }
-        private int currentDataSetIndex;
+        private int CurrentDataSetIndex;
 
-        private List<Label> dividers = new List<Label>();
-        private List<Label> descriptiveLabels = new List<Label>();
-        private List<Label> descriptiveLabelText = new List<Label>();
+        private List<Label> Dividers = new List<Label>();
+        private List<Label> DescriptiveLabels = new List<Label>();
+        private List<Label> DescriptiveLableText = new List<Label>();
+
+        private double XMin { get; set; }
+        private double XMax { get; set; }
+        private double YMin { get; set; }
+        private double YMax { get; set; }
 
         public FormMain()
         {
             DataSets = new List<DataSet>();
             InitializeComponent();
+
+            XMin = -2;
+            XMax = 10;
+            YMin = -2;
+            YMax = 6;
             
-            dividers.Add(divider1);
-            dividers.Add(divider2);
-            dividers.Add(divider3);
-            dividers.Add(divider4);
-            dividers.Add(divider5);
-            dividers.Add(divider6);
-            dividers.Add(divider7);
-            dividers.Add(divider8);
+            Dividers.Add(divider1);
+            Dividers.Add(divider2);
+            Dividers.Add(divider3);
+            Dividers.Add(divider4);
+            Dividers.Add(divider5);
+            Dividers.Add(divider6);
+            Dividers.Add(divider7);
+            Dividers.Add(divider8);
 
-            descriptiveLabels.Add(labelMean);
-            descriptiveLabels.Add(labelMedian);
-            descriptiveLabels.Add(labelMode);
-            descriptiveLabels.Add(labelStdDev);
-            descriptiveLabels.Add(labelRange);
-            descriptiveLabels.Add(labelDomain);
+            DescriptiveLabels.Add(labelMean);
+            DescriptiveLabels.Add(labelMedian);
+            DescriptiveLabels.Add(labelMode);
+            DescriptiveLabels.Add(labelStdDev);
+            DescriptiveLabels.Add(labelRange);
+            DescriptiveLabels.Add(labelDomain);
 
-            descriptiveLabelText.Add(labelMeanText);
-            descriptiveLabelText.Add(labelMedianText);
-            descriptiveLabelText.Add(labelModeText);
-            descriptiveLabelText.Add(labelStdDevText);
-            descriptiveLabelText.Add(labelRangeText);
-            descriptiveLabelText.Add(labelDomainText);
+            DescriptiveLableText.Add(labelMeanText);
+            DescriptiveLableText.Add(labelMedianText);
+            DescriptiveLableText.Add(labelModeText);
+            DescriptiveLableText.Add(labelStdDevText);
+            DescriptiveLableText.Add(labelRangeText);
+            DescriptiveLableText.Add(labelDomainText);
         }
 
         private DataSet GetCurrentDataSet()
         {
-            return DataSets[currentDataSetIndex];
+            return DataSets[CurrentDataSetIndex];
         }
 
         private void DrawPlot(object sender, PaintEventArgs e)
         {
             System.Drawing.Graphics graphics = panel1.CreateGraphics();
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            double xmin = -2;
-            double xmax = 10;
-            double ymin = -2;
-            double ymax = 6;
-            double xstep = (xmax - xmin) / panel1.Width;
-            double ystep = (ymax - ymin) / panel1.Height;
-            double xaxis = ymax / ystep;
-            double yaxis = -xmin / xstep;
+
+            double xstep = (XMax - XMin) / panel1.Width;
+            double ystep = (YMax - YMin) / panel1.Height;
+            double xaxis = YMax / ystep;
+            double yaxis = -XMin / xstep;
 
             graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, (float)xaxis), new PointF(panel1.Width, (float)xaxis));
             graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, panel1.Height));
@@ -85,7 +92,7 @@ namespace SoftwareDevelopment2016
                     if (p != null)
                     {
                         List<PointF> points = new List<PointF>();
-                        for (double x = xmin; x <= xmax; x += xstep)
+                        for (double x = XMin; x <= XMax; x += xstep)
                         {
                             points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - p.Value.f(x) / ystep)));
                         }
@@ -112,23 +119,24 @@ namespace SoftwareDevelopment2016
                 string name = form.DataSetName;
                 if (comboBoxDataSets.Items.Count == 0)
                 {
-                    currentDataSetIndex = index;
+                    CurrentDataSetIndex = index;
                     comboBoxDataSets.Items.Add(name);
                     comboBoxDataSets.Enabled = true;
                     dataGridView.Enabled = true;
-                    foreach(Label d in dividers)
+                    foreach(Label d in Dividers)
                     {
                         d.Enabled = true;
                     }
-                    foreach(Label l in descriptiveLabels)
+                    foreach(Label l in DescriptiveLabels)
                     {
                         l.Enabled = true;
                     }
-                    foreach (Label l in descriptiveLabelText)
+                    foreach (Label l in DescriptiveLableText)
                     {
                         l.Enabled = true;
                     }
                     checkBoxPlotPoints.Enabled = true;
+                    plotToolStripMenuItem.Enabled = true;
                 } 
                 else
                 {
@@ -139,14 +147,14 @@ namespace SoftwareDevelopment2016
                         {
                             comboBoxDataSets.Items.Insert(i, name);
                             index = i;
-                            currentDataSetIndex = index;
+                            CurrentDataSetIndex = index;
                             break;
                         }
                         if(i == comboBoxDataSets.Items.Count - 1)
                         {
                             comboBoxDataSets.Items.Add(name);
                             index = comboBoxDataSets.Items.Count - 1;
-                            currentDataSetIndex = index;
+                            CurrentDataSetIndex = index;
                             break;
                         }
                     }
@@ -256,7 +264,7 @@ namespace SoftwareDevelopment2016
 
         private void OnDataSetChange(object sender, EventArgs e)
         {
-            currentDataSetIndex = comboBoxDataSets.SelectedIndex;
+            CurrentDataSetIndex = comboBoxDataSets.SelectedIndex;
             dataGridView.Rows.Clear();
             foreach (DataPoint dp in GetCurrentDataSet().Data)
             {
@@ -289,10 +297,14 @@ namespace SoftwareDevelopment2016
 
         private void OnEditWindow(object sender, EventArgs e)
         {
-            FormEditWindow form = new FormEditWindow(-2, 10, -2, 6);
+            FormEditWindow form = new FormEditWindow(XMin, XMax, YMin, YMax);
             if (form.ShowDialog() == DialogResult.OK)
             {
-
+                XMin = form.XMin;
+                XMax = form.XMax;
+                YMin = form.YMin;
+                YMax = form.YMax;
+                this.Refresh();
             }
         }
     }

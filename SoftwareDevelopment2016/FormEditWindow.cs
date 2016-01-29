@@ -58,6 +58,11 @@ namespace SoftwareDevelopment2016
                 }
                 else
                 {
+                    XMin = (double)xmin;
+                    XMax = (double)xmax;
+                    YMin = (double)ymin;
+                    YMax = (double)ymax;
+
                     this.DialogResult = DialogResult.OK;
                 }
             }
