@@ -52,28 +52,28 @@ namespace SoftwareDevelopment2016
         private void button1_Click(object sender, EventArgs e)
         {
 
-            NumericalDataSet ds = new NumericalDataSet("test");
-            ds.Data.Add(new NumericPoint(-1,-1));
-            ds.Data.Add(new NumericPoint(0, 3));
-            ds.Data.Add(new NumericPoint(1, 2.5));
-            ds.Data.Add(new NumericPoint(2, 5));
-            ds.Data.Add(new NumericPoint(3, 4));
-            ds.Data.Add(new NumericPoint(5, 2));
-            ds.Data.Add(new NumericPoint(7, 5));
-            ds.Data.Add(new NumericPoint(9, 4));
+            DataSet ds = new DataSet("test");
+            ds.Data.Add(new DataPoint(-1,-1));
+            ds.Data.Add(new DataPoint(0, 3));
+            ds.Data.Add(new DataPoint(1, 2.5));
+            ds.Data.Add(new DataPoint(2, 5));
+            ds.Data.Add(new DataPoint(3, 4));
+            ds.Data.Add(new DataPoint(5, 2));
+            ds.Data.Add(new DataPoint(7, 5));
+            ds.Data.Add(new DataPoint(9, 4));
 
-            NumericalDataSet ds1 = new NumericalDataSet("test");
-            ds1.Data.Add(new NumericPoint(-1, -1));
-            ds1.Data.Add(new NumericPoint(0, 3));
-            ds1.Data.Add(new NumericPoint(1, 2.5));
-            ds1.Data.Add(new NumericPoint(2, 5));
-            ds1.Data.Add(new NumericPoint(3, 4));
-            ds1.Data.Add(new NumericPoint(5, 2));
-            ds1.Data.Add(new NumericPoint(7, 5));
-            ds1.Data.Add(new NumericPoint(9, 4));
+            DataSet ds1 = new DataSet("test");
+            ds1.Data.Add(new DataPoint(-1, -1));
+            ds1.Data.Add(new DataPoint(0, 3));
+            ds1.Data.Add(new DataPoint(1, 2.5));
+            ds1.Data.Add(new DataPoint(2, 5));
+            ds1.Data.Add(new DataPoint(3, 4));
+            ds1.Data.Add(new DataPoint(5, 2));
+            ds1.Data.Add(new DataPoint(7, 5));
+            ds1.Data.Add(new DataPoint(9, 4));
             //ds1.CalculateNthPolynomialRegression(4);
             Console.WriteLine((from dp in ds1.Data from fdp in ds1.Data select dp.Y - fdp.Y).Sum());
-            foreach(NumericPoint dp in ds.Data)
+            foreach(DataPoint dp in ds.Data)
             {
 
             }
@@ -93,15 +93,15 @@ namespace SoftwareDevelopment2016
         private void button1_Click_1(object sender, EventArgs e)
         {
             //Sample test data set
-            NumericalDataSet ds = new NumericalDataSet("test");
-            ds.Data.Add(new NumericPoint(-1, -1    ));
-            ds.Data.Add(new NumericPoint(0, 3));
-            ds.Data.Add(new NumericPoint(1, 2.5));
-            ds.Data.Add(new NumericPoint(2, 5));
-            ds.Data.Add(new NumericPoint(3, 4));
-            ds.Data.Add(new NumericPoint(5, 2));
-            ds.Data.Add(new NumericPoint(7, 5));
-            ds.Data.Add(new NumericPoint(9, 4));            
+            DataSet ds = new DataSet("test");
+            ds.Data.Add(new DataPoint(-1, -1    ));
+            ds.Data.Add(new DataPoint(0, 3));
+            ds.Data.Add(new DataPoint(1, 2.5));
+            ds.Data.Add(new DataPoint(2, 5));
+            ds.Data.Add(new DataPoint(3, 4));
+            ds.Data.Add(new DataPoint(5, 2));
+            ds.Data.Add(new DataPoint(7, 5));
+            ds.Data.Add(new DataPoint(9, 4));            
 
         }
 
@@ -122,44 +122,35 @@ namespace SoftwareDevelopment2016
             graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, panel1.Height));
             foreach(DataSet ds in DataSets)
             {
-                if(ds.GetType() == typeof(NumericalDataSet))
+                if (ds.IsPlotted)
                 {
-                    if(ds.IsPlotted)
+                    foreach (DataPoint dp in (from a in ds.Data where !a.isNull() select a))
                     {
-                        foreach(NumericPoint dp in (from a in ((NumericalDataSet)ds).Data where !a.isNull() select a))
-                        {
-                            PointF p =  new PointF((float)(yaxis + dp.X / xstep), (float)(xaxis - dp.Y / ystep));
-                            graphics.FillEllipse(new SolidBrush(Color.Blue), p.X - 2, p.Y - 2, 4, 4);
-                        }
+                        PointF p = new PointF((float)(yaxis + dp.X / xstep), (float)(xaxis - dp.Y / ystep));
+                        graphics.FillEllipse(new SolidBrush(Color.Blue), p.X - 2, p.Y - 2, 4, 4);
                     }
-                    if(((NumericalDataSet)ds).IsRegressionPlotted)
+                }
+                if (ds.IsRegressionPlotted)
+                {
+                    Polynomial? p = ds.CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
+                    if (p != null)
                     {
-                        Polynomial? p = ((NumericalDataSet)ds).CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
-                        if(p != null)
+                        List<PointF> points = new List<PointF>();
+                        for (double x = xmin; x <= xmax; x += xstep)
                         {
-                            List<PointF> points = new List<PointF>();
-                            for (double x = xmin; x <= xmax; x += xstep)
-                            {
-                                points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - p.Value.f(x) / ystep)));
-                            }
-                            try
-                            {
-                                graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
-                            } 
-                            catch(OverflowException oe)
-                            {
-                                MessageBox.Show("Something went wrong plotting the regression");
-                            }
+                            points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - p.Value.f(x) / ystep)));
+                        }
+                        try
+                        {
+                            graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
+                        }
+                        catch (OverflowException oe)
+                        {
+                            MessageBox.Show("Something went wrong plotting the regression");
                         }
                     }
                 }
-                else
-                {
-
-                }
-
             }
-
         }
 
         private void CreateDataSet(object sender, EventArgs e)
@@ -169,7 +160,6 @@ namespace SoftwareDevelopment2016
             {
                 int index = 0;
                 string name = form.DataSetName;
-                bool labeled = form.Labeled;
                 if (comboBoxDataSets.Items.Count == 0)
                 {
                     currentDataSetIndex = index;
@@ -212,16 +202,7 @@ namespace SoftwareDevelopment2016
                     }
                 }
                 comboBoxDataSets.SelectedIndex = index;
-                if(labeled)
-                {
-                    DataSets.Add(new LabeledDataSet(name));
-                    dataGridView.Columns[0].HeaderText = "Label";
-                }
-                else
-                {
-                    DataSets.Add(new NumericalDataSet(name));
-                    dataGridView.Columns[0].HeaderText = "X";
-                }
+                DataSets.Add(new DataSet(name));
                 checkBoxPlotPoints.CheckState = CheckState.Unchecked;
                 checkBoxPlotRegression.CheckState = CheckState.Unchecked;
                 dataGridView.Rows.Clear();
@@ -251,39 +232,27 @@ namespace SoftwareDevelopment2016
         {
             if(ValidateEntry(e))
             {
-                if (GetCurrentDataSet().GetType() == typeof(NumericalDataSet))
+                GetCurrentDataSet().Data.Clear();
+                for (int i = 0; i < dataGridView.Rows.Count - 1; ++i)
                 {
-                    ((NumericalDataSet)GetCurrentDataSet()).Data.Clear();
-                    for (int i = 0; i < dataGridView.Rows.Count - 1; ++i)
-                    {
-                        ((NumericalDataSet)GetCurrentDataSet()).Data.Add(new NumericPoint(dataGridView.Rows[i].Cells[0].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[0].Value),
-                                                                                          dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
-                    }
-                    labelMean.Text = ((NumericalDataSet)GetCurrentDataSet()).getMean().ToString();
-                    labelMedian.Text = ((NumericalDataSet)GetCurrentDataSet()).getMedian().ToString();
-                    labelMode.Text = ((NumericalDataSet)GetCurrentDataSet()).getMode().ToString();
-                    labelStdDev.Text = ((NumericalDataSet)GetCurrentDataSet()).getStandardDeviation().ToString();
-                    labelDomain.Text = ((NumericalDataSet)GetCurrentDataSet()).getDomain().ToString();
-                    labelRange.Text = ((NumericalDataSet)GetCurrentDataSet()).getRange().ToString();
+                    GetCurrentDataSet().Data.Add(new DataPoint(dataGridView.Rows[i].Cells[0].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[0].Value),
+                                                                  dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                 }
-                else
-                {
-                    for (int i = 0; i < dataGridView.Rows.Count - 1; ++i)
-                    {
-                        ((LabeledDataSet)GetCurrentDataSet()).Data.Clear();
-                        ((LabeledDataSet)GetCurrentDataSet()).Data.Add(new LabeledPoint(dataGridView.Rows[i].Cells[0].Value == null ? null : Convert.ToString(dataGridView.Rows[i].Cells[0].Value),
-                                                                                        dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
-                    }
-                }
+                labelMean.Text = GetCurrentDataSet().getMean().ToString();
+                labelMedian.Text = GetCurrentDataSet().getMedian().ToString();
+                labelMode.Text = GetCurrentDataSet().getMode().ToString();
+                labelStdDev.Text = GetCurrentDataSet().getStandardDeviation().ToString();
+                labelDomain.Text = GetCurrentDataSet().getDomain().ToString();
+                labelRange.Text = GetCurrentDataSet().getRange().ToString();
 
-                foreach(DataGridViewRow r in dataGridView.Rows)
+                foreach (DataGridViewRow r in dataGridView.Rows)
                 {
                     if (r.Cells[0].Value == null && r.Cells[1].Value == null && r.Index != dataGridView.Rows.Count-1 )
                     {
                         dataGridView.Rows.Remove(r);
                     }
                 }
-                var list = (from dp in ((NumericalDataSet)GetCurrentDataSet()).Data where !dp.isNull() select dp).ToList();
+                var list = (from dp in GetCurrentDataSet().Data where !dp.isNull() select dp).ToList();
                 if (list.Count >= 2)
                 {
                     checkBoxPlotRegression.Enabled = true;
@@ -306,69 +275,34 @@ namespace SoftwareDevelopment2016
         {
             if (dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
-                if (GetCurrentDataSet().GetType() == typeof(NumericalDataSet))
+                double temp;
+                if (!Double.TryParse(dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out temp))
                 {
-                    double temp;
-                    if(!Double.TryParse(dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out temp))
+                    dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
+                    bool rowIsEmpty = true;
+                    foreach (DataGridViewCell cell in dataGridView.Rows[e.RowIndex].Cells)
                     {
-                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
-                        bool rowIsEmpty = true;
-                        foreach (DataGridViewCell cell in dataGridView.Rows[e.RowIndex].Cells)
+                        if (cell.Value != null)
                         {
-                            if (cell.Value != null)
-                            {
-                                rowIsEmpty = false;
-                                break;
-                            }
+                            rowIsEmpty = false;
+                            break;
                         }
-                        if (rowIsEmpty)
-                        {
-                            dataGridView.CancelEdit();
-                            try
-                            {
-                                dataGridView.Rows.Remove(dataGridView.Rows[e.RowIndex]);
-                            }
-                            catch
-                            {
-                                MessageBox.Show("Something went wrong. Try again.", "Error");
-                            }
-                        }
-                        SystemSounds.Asterisk.Play();
-                        MessageBox.Show("Please enter only numbers.");
-                        return false; ;
                     }
-                }
-                else
-                {
-                    double temp;
-                    if(e.ColumnIndex != 0 && (!Double.TryParse(dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out temp)))
+                    if (rowIsEmpty)
                     {
-                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
-                        bool rowIsEmpty = true;
-                        foreach (DataGridViewCell cell in dataGridView.Rows[e.RowIndex].Cells)
+                        dataGridView.CancelEdit();
+                        try
                         {
-                            if (cell.Value != null)
-                            {
-                                rowIsEmpty = false;
-                                break;
-                            }
+                            dataGridView.Rows.Remove(dataGridView.Rows[e.RowIndex]);
                         }
-                        if (rowIsEmpty)
+                        catch
                         {
-                            dataGridView.CancelEdit();
-                            try
-                            {
-                                dataGridView.Rows.Remove(dataGridView.Rows[e.RowIndex]);
-                            }
-                            catch
-                            {
-                                MessageBox.Show("Something went wrong. Try again.", "Error");
-                            }
+                            MessageBox.Show("Something went wrong. Try again.", "Error");
                         }
-                        SystemSounds.Asterisk.Play();
-                        MessageBox.Show("Please enter only numbers.");
-                        return false;
                     }
+                    SystemSounds.Asterisk.Play();
+                    MessageBox.Show("Please enter only numbers.");
+                    return false; ;
                 }
             }
             return true;
@@ -378,28 +312,16 @@ namespace SoftwareDevelopment2016
         {
             currentDataSetIndex = comboBoxDataSets.SelectedIndex;
             dataGridView.Rows.Clear();
-            if(GetCurrentDataSet().GetType() == typeof(NumericalDataSet))
+            foreach (DataPoint dp in GetCurrentDataSet().Data)
             {
-                dataGridView.Columns[0].HeaderText = "X";
-                foreach(NumericPoint dp in ((NumericalDataSet)GetCurrentDataSet()).Data)
-                {
-                    dataGridView.Rows.Add(dp.X, dp.Y);
-                }
-                labelMean.Text = ((NumericalDataSet)GetCurrentDataSet()).getMean().ToString();
-                labelMedian.Text = ((NumericalDataSet)GetCurrentDataSet()).getMedian().ToString();
-                labelMode.Text = ((NumericalDataSet)GetCurrentDataSet()).getMode().ToString();
-                labelStdDev.Text = ((NumericalDataSet)GetCurrentDataSet()).getStandardDeviation().ToString();
-                labelDomain.Text = ((NumericalDataSet)GetCurrentDataSet()).getDomain().ToString();
-                labelRange.Text = ((NumericalDataSet)GetCurrentDataSet()).getRange().ToString();
+                dataGridView.Rows.Add(dp.X, dp.Y);
             }
-            else
-            {
-                dataGridView.Columns[0].HeaderText = "Label";
-                foreach (LabeledPoint dp in ((LabeledDataSet)GetCurrentDataSet()).Data)
-                {
-                    dataGridView.Rows.Add(dp.Label, dp.Y);
-                }
-            }
+            labelMean.Text = GetCurrentDataSet().getMean().ToString();
+            labelMedian.Text = GetCurrentDataSet().getMedian().ToString();
+            labelMode.Text = GetCurrentDataSet().getMode().ToString();
+            labelStdDev.Text = GetCurrentDataSet().getStandardDeviation().ToString();
+            labelDomain.Text = GetCurrentDataSet().getDomain().ToString();
+            labelRange.Text = GetCurrentDataSet().getRange().ToString();
         }
 
         private void OnPlotCheckChange(object sender, EventArgs e)
@@ -410,7 +332,7 @@ namespace SoftwareDevelopment2016
 
         private void OnRegressionCheckChange(object sender, EventArgs e)
         {
-            ((NumericalDataSet)GetCurrentDataSet()).IsRegressionPlotted = checkBoxPlotRegression.CheckState == CheckState.Checked ? true : false;
+            GetCurrentDataSet().IsRegressionPlotted = checkBoxPlotRegression.CheckState == CheckState.Checked ? true : false;
             this.Refresh();
         }
 

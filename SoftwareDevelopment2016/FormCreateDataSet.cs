@@ -16,11 +16,9 @@ namespace SoftwareDevelopment2016
         {
             InitializeComponent();
             DataSetName = "";
-            Labeled = false;
         }
 
         public String DataSetName { get; set; }
-        public bool Labeled { get; set; }
 
         private void buttonClick(object sender, EventArgs e)
         {
@@ -31,7 +29,6 @@ namespace SoftwareDevelopment2016
                 {
                     this.DialogResult = DialogResult.OK;
                     DataSetName = textBoxName.Text;
-                    Labeled = checkBoxLabel.CheckState == CheckState.Checked ? true : false;
                 }
                 else
                 {

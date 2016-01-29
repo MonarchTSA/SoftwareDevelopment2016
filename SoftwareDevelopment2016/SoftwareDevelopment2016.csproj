@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataPoint.cs" />
     <Compile Include="DataSet.cs" />
     <Compile Include="FormCreateDataSet.cs">
       <SubType>Form</SubType>

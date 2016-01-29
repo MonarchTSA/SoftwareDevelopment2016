@@ -6,7 +6,27 @@ using System.Threading.Tasks;
 
 namespace SoftwareDevelopment2016
 {
-
+    public struct DataPoint
+    {
+        public double? X { get; set; }
+        public double? Y { get; set; }
+        public DataPoint(double? x, double? y)
+        {
+            X = x;
+            Y = y;
+        }
+        public bool isNull()
+        {
+            if (X == null || Y == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
     public struct Interval
     {
         public double Min { get; set; }
@@ -26,10 +46,10 @@ namespace SoftwareDevelopment2016
     {
         //a0 + a1x + a2x^2 + a3x^3 + ... + anx^n
         public List<double> Coefficients;
-        public Polynomial(params double[] coefficients) 
+        public Polynomial(params double[] coefficients)
         {
             Coefficients = new List<double>();
-            foreach(double d in coefficients)
+            foreach (double d in coefficients)
             {
                 Coefficients.Add(d);
             }
@@ -38,7 +58,7 @@ namespace SoftwareDevelopment2016
         public double f(double x)
         {
             double sum = 0;
-            for(int i = 0; i < Coefficients.Count; ++i)
+            for (int i = 0; i < Coefficients.Count; ++i)
             {
                 sum += Coefficients[i] * Math.Pow(x, i);
             }
@@ -46,21 +66,22 @@ namespace SoftwareDevelopment2016
         }
     }
 
-    public abstract class DataSet
+    /*public abstract class DataSet
     {
         public string Name { get; set; }
         public bool IsPlotted { get; set; }
-    }
+    }*/
 
-    public class NumericalDataSet : DataSet
+    public class DataSet
     {
-
-        public List<NumericPoint> Data { get; set; }
+        public String Name { get; set; }
+        public List<DataPoint> Data { get; set; }
+        public bool IsPlotted { get; set; }
         public bool IsRegressionPlotted { get; set; }
 
-        public NumericalDataSet(string name)
+        public DataSet(string name)
         {
-            Data = new List<NumericPoint>();
+            Data = new List<DataPoint>();
             Name = name;
             IsPlotted = false;
             IsRegressionPlotted = false;
@@ -75,10 +96,10 @@ namespace SoftwareDevelopment2016
         public double? getMedian()
         {
             List<double> sorted = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
-            if(sorted.Count == 0)
+            if (sorted.Count == 0)
             {
                 return null;
-            } 
+            }
             else
             {
                 if (sorted.Count % 2 == 0)
@@ -96,10 +117,10 @@ namespace SoftwareDevelopment2016
         public double? getMode()
         {
             List<double> yvals = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
-            if(yvals.Count == 0)
+            if (yvals.Count == 0)
             {
                 return null;
-            } 
+            }
             else
             {
                 int maxCount = 0, currentCount = 1;
@@ -135,10 +156,10 @@ namespace SoftwareDevelopment2016
         public Interval? getDomain()
         {
             var list = from dp in Data where !dp.isNull() select dp.X;
-            if(list.ToList().Count == 0)
+            if (list.ToList().Count == 0)
             {
                 return null;
-            } 
+            }
             else
             {
                 return new Interval(list.Min().Value, list.Max().Value);
@@ -154,7 +175,7 @@ namespace SoftwareDevelopment2016
             }
             else
             {
-                
+
                 return new Interval(list.Min().Value, list.Max().Value);
             }
         }
@@ -174,17 +195,17 @@ namespace SoftwareDevelopment2016
 
         public Polynomial? CalculateNthPolynomialRegression(int order)
         {
-            if(Data.Count == 0)
+            if (Data.Count == 0)
             {
                 return null;
-            } 
+            }
             else
             {
                 //Calculate the sums to be used in the matrix
                 double[] sums = new double[order * 2 + 1];
                 for (int i = 0; i < order * 2 + 1; ++i)
                 {
-                    foreach (NumericPoint dp in (from dp in Data where !dp.isNull() select dp))
+                    foreach (DataPoint dp in (from dp in Data where !dp.isNull() select dp))
                     {
                         sums[i] += Math.Pow(dp.X.Value, i);
                     }
@@ -193,7 +214,7 @@ namespace SoftwareDevelopment2016
                 double[] augments = new double[order + 1];
                 for (int i = 0; i < order + 1; ++i)
                 {
-                    foreach (NumericPoint dp in (from dp in Data where !dp.isNull() select dp))
+                    foreach (DataPoint dp in (from dp in Data where !dp.isNull() select dp))
                     {
                         augments[i] += dp.Y.Value * Math.Pow(dp.X.Value, i);
                     }
@@ -234,24 +255,24 @@ namespace SoftwareDevelopment2016
                 return new Polynomial(solutions);
             }
         }
-        
+
         private double Determinant(double[,] matrix, int size)
         {
-            if(size == 2)
+            if (size == 2)
             {
                 return matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
             }
             else
             {
                 double determinant = 0;
-                for(int n = 0; n < size; ++n)
+                for (int n = 0; n < size; ++n)
                 {
                     double[,] newMatrix = new double[size - 1, size - 1];
-                    for(int i = 0; i < size-1; ++i)
+                    for (int i = 0; i < size - 1; ++i)
                     {
-                        for(int j = 0; j < size-1; j++)
+                        for (int j = 0; j < size - 1; j++)
                         {
-                            if(j >= n)
+                            if (j >= n)
                             {
                                 newMatrix[i, j] = matrix[i + 1, j + 1];
                             }
@@ -264,7 +285,7 @@ namespace SoftwareDevelopment2016
                     //Add
                     if (n % 2 == 0)
                     {
-                        determinant += matrix[0,n] * Determinant(newMatrix, size - 1);
+                        determinant += matrix[0, n] * Determinant(newMatrix, size - 1);
                     }
                     //Subtract
                     else
@@ -282,10 +303,9 @@ namespace SoftwareDevelopment2016
             list[element1] = list[element2];
             list[element2] = temp;
         }
-
     }
-
-    public class LabeledDataSet : DataSet
+}
+    /*public class LabeledDataSet : DataSet
     {
         public List<LabeledPoint> Data { get; set; }
 
@@ -315,3 +335,4 @@ namespace SoftwareDevelopment2016
         }
     }
 }
+*/
