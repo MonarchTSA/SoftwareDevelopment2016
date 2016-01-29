@@ -15,6 +15,7 @@ namespace SoftwareDevelopment2016
     {
         public List<DataSet> DataSets { get; set; }
         private int currentDataSetIndex;
+
         private List<Label> dividers = new List<Label>();
         private List<Label> descriptiveLabels = new List<Label>();
         private List<Label> descriptiveLabelText = new List<Label>();
@@ -104,7 +105,7 @@ namespace SoftwareDevelopment2016
 
         }
 
-        private void drawPlot(object sende = null, PaintEventArgs e = null)
+        private void DrawPlot(object sender, PaintEventArgs e)
         {
             System.Drawing.Graphics graphics = panel1.CreateGraphics();
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -161,7 +162,7 @@ namespace SoftwareDevelopment2016
 
         }
 
-        private void createDataSet(object sender, EventArgs e)
+        private void CreateDataSet(object sender, EventArgs e)
         {
             FormCreateDataSet form = new FormCreateDataSet();
             if(form.ShowDialog() == DialogResult.OK)
@@ -241,36 +242,36 @@ namespace SoftwareDevelopment2016
             }
         }
 
-        private DataSet getCurrentDataSet()
+        private DataSet GetCurrentDataSet()
         {
             return DataSets[currentDataSetIndex];
         }
 
-        private void onCellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void OnCellEdit(object sender, DataGridViewCellEventArgs e)
         {
             if(ValidateEntry(e))
             {
-                if (getCurrentDataSet().GetType() == typeof(NumericalDataSet))
+                if (GetCurrentDataSet().GetType() == typeof(NumericalDataSet))
                 {
-                    ((NumericalDataSet)getCurrentDataSet()).Data.Clear();
+                    ((NumericalDataSet)GetCurrentDataSet()).Data.Clear();
                     for (int i = 0; i < dataGridView.Rows.Count - 1; ++i)
                     {
-                        ((NumericalDataSet)getCurrentDataSet()).Data.Add(new NumericPoint(dataGridView.Rows[i].Cells[0].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[0].Value),
+                        ((NumericalDataSet)GetCurrentDataSet()).Data.Add(new NumericPoint(dataGridView.Rows[i].Cells[0].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[0].Value),
                                                                                           dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                     }
-                    labelMean.Text = ((NumericalDataSet)getCurrentDataSet()).getMean().ToString();
-                    labelMedian.Text = ((NumericalDataSet)getCurrentDataSet()).getMedian().ToString();
-                    labelMode.Text = ((NumericalDataSet)getCurrentDataSet()).getMode().ToString();
-                    labelStdDev.Text = ((NumericalDataSet)getCurrentDataSet()).getStandardDeviation().ToString();
-                    labelDomain.Text = ((NumericalDataSet)getCurrentDataSet()).getDomain().ToString();
-                    labelRange.Text = ((NumericalDataSet)getCurrentDataSet()).getRange().ToString();
+                    labelMean.Text = ((NumericalDataSet)GetCurrentDataSet()).getMean().ToString();
+                    labelMedian.Text = ((NumericalDataSet)GetCurrentDataSet()).getMedian().ToString();
+                    labelMode.Text = ((NumericalDataSet)GetCurrentDataSet()).getMode().ToString();
+                    labelStdDev.Text = ((NumericalDataSet)GetCurrentDataSet()).getStandardDeviation().ToString();
+                    labelDomain.Text = ((NumericalDataSet)GetCurrentDataSet()).getDomain().ToString();
+                    labelRange.Text = ((NumericalDataSet)GetCurrentDataSet()).getRange().ToString();
                 }
                 else
                 {
                     for (int i = 0; i < dataGridView.Rows.Count - 1; ++i)
                     {
-                        ((LabeledDataSet)getCurrentDataSet()).Data.Clear();
-                        ((LabeledDataSet)getCurrentDataSet()).Data.Add(new LabeledPoint(dataGridView.Rows[i].Cells[0].Value == null ? null : Convert.ToString(dataGridView.Rows[i].Cells[0].Value),
+                        ((LabeledDataSet)GetCurrentDataSet()).Data.Clear();
+                        ((LabeledDataSet)GetCurrentDataSet()).Data.Add(new LabeledPoint(dataGridView.Rows[i].Cells[0].Value == null ? null : Convert.ToString(dataGridView.Rows[i].Cells[0].Value),
                                                                                         dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                     }
                 }
@@ -282,7 +283,7 @@ namespace SoftwareDevelopment2016
                         dataGridView.Rows.Remove(r);
                     }
                 }
-                var list = (from dp in ((NumericalDataSet)getCurrentDataSet()).Data where !dp.isNull() select dp).ToList();
+                var list = (from dp in ((NumericalDataSet)GetCurrentDataSet()).Data where !dp.isNull() select dp).ToList();
                 if (list.Count >= 2)
                 {
                     checkBoxPlotRegression.Enabled = true;
@@ -305,7 +306,7 @@ namespace SoftwareDevelopment2016
         {
             if (dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
-                if (getCurrentDataSet().GetType() == typeof(NumericalDataSet))
+                if (GetCurrentDataSet().GetType() == typeof(NumericalDataSet))
                 {
                     double temp;
                     if(!Double.TryParse(dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out temp))
@@ -373,49 +374,54 @@ namespace SoftwareDevelopment2016
             return true;
         }
 
-        private void onDataSetChange(object sender, EventArgs e)
+        private void OnDataSetChange(object sender, EventArgs e)
         {
             currentDataSetIndex = comboBoxDataSets.SelectedIndex;
             dataGridView.Rows.Clear();
-            if(getCurrentDataSet().GetType() == typeof(NumericalDataSet))
+            if(GetCurrentDataSet().GetType() == typeof(NumericalDataSet))
             {
                 dataGridView.Columns[0].HeaderText = "X";
-                foreach(NumericPoint dp in ((NumericalDataSet)getCurrentDataSet()).Data)
+                foreach(NumericPoint dp in ((NumericalDataSet)GetCurrentDataSet()).Data)
                 {
                     dataGridView.Rows.Add(dp.X, dp.Y);
                 }
-                labelMean.Text = ((NumericalDataSet)getCurrentDataSet()).getMean().ToString();
-                labelMedian.Text = ((NumericalDataSet)getCurrentDataSet()).getMedian().ToString();
-                labelMode.Text = ((NumericalDataSet)getCurrentDataSet()).getMode().ToString();
-                labelStdDev.Text = ((NumericalDataSet)getCurrentDataSet()).getStandardDeviation().ToString();
-                labelDomain.Text = ((NumericalDataSet)getCurrentDataSet()).getDomain().ToString();
-                labelRange.Text = ((NumericalDataSet)getCurrentDataSet()).getRange().ToString();
+                labelMean.Text = ((NumericalDataSet)GetCurrentDataSet()).getMean().ToString();
+                labelMedian.Text = ((NumericalDataSet)GetCurrentDataSet()).getMedian().ToString();
+                labelMode.Text = ((NumericalDataSet)GetCurrentDataSet()).getMode().ToString();
+                labelStdDev.Text = ((NumericalDataSet)GetCurrentDataSet()).getStandardDeviation().ToString();
+                labelDomain.Text = ((NumericalDataSet)GetCurrentDataSet()).getDomain().ToString();
+                labelRange.Text = ((NumericalDataSet)GetCurrentDataSet()).getRange().ToString();
             }
             else
             {
                 dataGridView.Columns[0].HeaderText = "Label";
-                foreach (LabeledPoint dp in ((LabeledDataSet)getCurrentDataSet()).Data)
+                foreach (LabeledPoint dp in ((LabeledDataSet)GetCurrentDataSet()).Data)
                 {
                     dataGridView.Rows.Add(dp.Label, dp.Y);
                 }
             }
         }
 
-        private void onPlotCheckChange(object sender, EventArgs e)
+        private void OnPlotCheckChange(object sender, EventArgs e)
         {
-            getCurrentDataSet().IsPlotted = checkBoxPlotPoints.CheckState == CheckState.Checked ? true : false;
+            GetCurrentDataSet().IsPlotted = checkBoxPlotPoints.CheckState == CheckState.Checked ? true : false;
             this.Refresh();
         }
 
-        private void onRegressionCheckChange(object sender, EventArgs e)
+        private void OnRegressionCheckChange(object sender, EventArgs e)
         {
-            ((NumericalDataSet)getCurrentDataSet()).IsRegressionPlotted = checkBoxPlotRegression.CheckState == CheckState.Checked ? true : false;
+            ((NumericalDataSet)GetCurrentDataSet()).IsRegressionPlotted = checkBoxPlotRegression.CheckState == CheckState.Checked ? true : false;
             this.Refresh();
         }
 
-        private void numericUpDownOrder_ValueChanged(object sender, EventArgs e)
+        private void OnOrderChange(object sender, EventArgs e)
         {
             this.Refresh();
+        }
+
+        private void editWindow(object sender, EventArgs e)
+        {
+
         }
     }
 }
