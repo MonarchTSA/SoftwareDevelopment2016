@@ -53,6 +53,12 @@
     <Compile Include="FormCreateDataSet.Designer.cs">
       <DependentUpon>FormCreateDataSet.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormEditWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEditWindow.Designer.cs">
+      <DependentUpon>FormEditWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormCreateDataSet.resx">
       <DependentUpon>FormCreateDataSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEditWindow.resx">
+      <DependentUpon>FormEditWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

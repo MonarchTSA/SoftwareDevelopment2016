@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.labelEnterName = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
-            this.toolTipLabel = new System.Windows.Forms.ToolTip(this.components);
             this.buttonDone = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -42,7 +40,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelEnterName.AutoSize = true;
-            this.labelEnterName.Location = new System.Drawing.Point(20, 21);
+            this.labelEnterName.Location = new System.Drawing.Point(20, 17);
             this.labelEnterName.Name = "labelEnterName";
             this.labelEnterName.Size = new System.Drawing.Size(153, 13);
             this.labelEnterName.TabIndex = 0;
@@ -53,14 +51,14 @@
             this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxName.Location = new System.Drawing.Point(30, 51);
+            this.textBoxName.Location = new System.Drawing.Point(30, 47);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(130, 20);
             this.textBoxName.TabIndex = 1;
             // 
             // buttonDone
             // 
-            this.buttonDone.Location = new System.Drawing.Point(17, 88);
+            this.buttonDone.Location = new System.Drawing.Point(17, 84);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new System.Drawing.Size(75, 23);
             this.buttonDone.TabIndex = 3;
@@ -71,7 +69,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(98, 88);
+            this.buttonCancel.Location = new System.Drawing.Point(98, 84);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 4;
@@ -106,7 +104,6 @@
 
         private System.Windows.Forms.Label labelEnterName;
         private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.ToolTip toolTipLabel;
         private System.Windows.Forms.Button buttonDone;
         private System.Windows.Forms.Button buttonCancel;
     }

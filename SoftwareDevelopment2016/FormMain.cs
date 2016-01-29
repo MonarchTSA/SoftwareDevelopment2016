@@ -49,60 +49,9 @@ namespace SoftwareDevelopment2016
             descriptiveLabelText.Add(labelDomainText);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private DataSet GetCurrentDataSet()
         {
-
-            DataSet ds = new DataSet("test");
-            ds.Data.Add(new DataPoint(-1,-1));
-            ds.Data.Add(new DataPoint(0, 3));
-            ds.Data.Add(new DataPoint(1, 2.5));
-            ds.Data.Add(new DataPoint(2, 5));
-            ds.Data.Add(new DataPoint(3, 4));
-            ds.Data.Add(new DataPoint(5, 2));
-            ds.Data.Add(new DataPoint(7, 5));
-            ds.Data.Add(new DataPoint(9, 4));
-
-            DataSet ds1 = new DataSet("test");
-            ds1.Data.Add(new DataPoint(-1, -1));
-            ds1.Data.Add(new DataPoint(0, 3));
-            ds1.Data.Add(new DataPoint(1, 2.5));
-            ds1.Data.Add(new DataPoint(2, 5));
-            ds1.Data.Add(new DataPoint(3, 4));
-            ds1.Data.Add(new DataPoint(5, 2));
-            ds1.Data.Add(new DataPoint(7, 5));
-            ds1.Data.Add(new DataPoint(9, 4));
-            //ds1.CalculateNthPolynomialRegression(4);
-            Console.WriteLine((from dp in ds1.Data from fdp in ds1.Data select dp.Y - fdp.Y).Sum());
-            foreach(DataPoint dp in ds.Data)
-            {
-
-            }
-            //label1.Text = "Clicked";
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button1_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            //Sample test data set
-            DataSet ds = new DataSet("test");
-            ds.Data.Add(new DataPoint(-1, -1    ));
-            ds.Data.Add(new DataPoint(0, 3));
-            ds.Data.Add(new DataPoint(1, 2.5));
-            ds.Data.Add(new DataPoint(2, 5));
-            ds.Data.Add(new DataPoint(3, 4));
-            ds.Data.Add(new DataPoint(5, 2));
-            ds.Data.Add(new DataPoint(7, 5));
-            ds.Data.Add(new DataPoint(9, 4));            
-
+            return DataSets[currentDataSetIndex];
         }
 
         private void DrawPlot(object sender, PaintEventArgs e)
@@ -146,14 +95,15 @@ namespace SoftwareDevelopment2016
                         }
                         catch (OverflowException oe)
                         {
-                            MessageBox.Show("Something went wrong plotting the regression");
+                            SystemSounds.Asterisk.Play();
+                            MessageBox.Show("Something went wrong plotting the regression." , "Error" );
                         }
                     }
                 }
             }
         }
 
-        private void CreateDataSet(object sender, EventArgs e)
+        private void OnCreateDataSet(object sender, EventArgs e)
         {
             FormCreateDataSet form = new FormCreateDataSet();
             if(form.ShowDialog() == DialogResult.OK)
@@ -218,14 +168,9 @@ namespace SoftwareDevelopment2016
                 if (DataSets.Count == 0)
                 {
                     SystemSounds.Asterisk.Play();
-                    MessageBox.Show("No class is created. Please create one first.");
+                    MessageBox.Show("No data set is created. Please create one first." , "Error");
                 }
             }
-        }
-
-        private DataSet GetCurrentDataSet()
-        {
-            return DataSets[currentDataSetIndex];
         }
 
         private void OnCellEdit(object sender, DataGridViewCellEventArgs e)
@@ -297,11 +242,12 @@ namespace SoftwareDevelopment2016
                         }
                         catch
                         {
+                            SystemSounds.Asterisk.Play();
                             MessageBox.Show("Something went wrong. Try again.", "Error");
                         }
                     }
                     SystemSounds.Asterisk.Play();
-                    MessageBox.Show("Please enter only numbers.");
+                    MessageBox.Show("Please enter only numbers." , "Erorr");
                     return false; ;
                 }
             }
@@ -341,9 +287,13 @@ namespace SoftwareDevelopment2016
             this.Refresh();
         }
 
-        private void editWindow(object sender, EventArgs e)
+        private void OnEditWindow(object sender, EventArgs e)
         {
+            FormEditWindow form = new FormEditWindow(-2, 10, -2, 6);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
 
+            }
         }
     }
 }

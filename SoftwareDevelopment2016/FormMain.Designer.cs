@@ -297,7 +297,7 @@ namespace SoftwareDevelopment2016
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             this.windowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.windowToolStripMenuItem.Text = "&Window";
-            this.windowToolStripMenuItem.Click += new System.EventHandler(this.editWindow);
+            this.windowToolStripMenuItem.Click += new System.EventHandler(this.OnEditWindow);
             // 
             // helpToolStripMenuItem
             // 
@@ -716,7 +716,7 @@ namespace SoftwareDevelopment2016
             this.buttonCreateDataSet.TabIndex = 8;
             this.buttonCreateDataSet.Text = "Create data set";
             this.buttonCreateDataSet.UseVisualStyleBackColor = true;
-            this.buttonCreateDataSet.Click += new System.EventHandler(this.CreateDataSet);
+            this.buttonCreateDataSet.Click += new System.EventHandler(this.OnCreateDataSet);
             // 
             // FormMain
             // 
