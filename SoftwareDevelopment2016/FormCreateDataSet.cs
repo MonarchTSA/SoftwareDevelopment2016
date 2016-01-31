@@ -40,7 +40,6 @@ namespace SoftwareDevelopment2016
             else
             {
                 this.DialogResult = DialogResult.Cancel;
-                this.Close();
             }
         }
     }

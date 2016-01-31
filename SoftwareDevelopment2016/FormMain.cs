@@ -83,7 +83,23 @@ namespace SoftwareDevelopment2016
                     foreach (DataPoint dp in (from a in ds.Data where !a.isNull() select a))
                     {
                         PointF p = new PointF((float)(yaxis + dp.X / xstep), (float)(xaxis - dp.Y / ystep));
-                        graphics.FillEllipse(new SolidBrush(Color.Blue), p.X - 2, p.Y - 2, 4, 4);
+                        switch(ds.PointShape)
+                        {
+                            case Shape.Square:
+                                graphics.FillRectangle(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize / 2, p.Y - (float)ds.PointSize / 2, (float)ds.PointSize, (float)ds.PointSize);
+                                break;
+                            case Shape.Circle:
+                                graphics.FillEllipse(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize/2, p.Y - (float)ds.PointSize/2, (float)ds.PointSize, (float)ds.PointSize);
+                                break;
+                            case Shape.Diamond:
+                                PointF[] points = new PointF[4];
+                                points[0] = new PointF(p.X, p.Y - (float)ds.PointSize / 2);
+                                points[1] = new PointF(p.X + (float)ds.PointSize / 2, p.Y);
+                                points[2] = new PointF(p.X, p.Y + (float)ds.PointSize / 2);
+                                points[3] = new PointF(p.X - (float)ds.PointSize / 2, p.Y);
+                                graphics.FillPolygon(new SolidBrush(ds.PointColor), points);
+                                break;
+                        }
                     }
                 }
                 if (ds.IsRegressionPlotted)
@@ -304,6 +320,18 @@ namespace SoftwareDevelopment2016
                 XMax = form.XMax;
                 YMin = form.YMin;
                 YMax = form.YMax;
+                this.Refresh();
+            }
+        }
+
+        private void OnEditPlots(object sender, EventArgs e)
+        {
+            FormEditPlot form = new FormEditPlot(GetCurrentDataSet());
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                GetCurrentDataSet().PointColor = form.PointColor;
+                GetCurrentDataSet().PointSize = form.PointSize;
+                GetCurrentDataSet().PointShape = form.PointShape;
                 this.Refresh();
             }
         }

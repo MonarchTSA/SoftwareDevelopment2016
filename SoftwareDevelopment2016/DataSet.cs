@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,19 +66,26 @@ namespace SoftwareDevelopment2016
             return sum;
         }
     }
-
-    /*public abstract class DataSet
+    
+    public enum Shape
     {
-        public string Name { get; set; }
-        public bool IsPlotted { get; set; }
-    }*/
+        Square,
+        Circle,
+        Diamond
+    };
 
     public class DataSet
     {
         public String Name { get; set; }
+
         public List<DataPoint> Data { get; set; }
+
         public bool IsPlotted { get; set; }
         public bool IsRegressionPlotted { get; set; }
+
+        public Color PointColor { get; set; }
+        public double PointSize { get; set; }
+        public Shape PointShape { get; set; }
 
         public DataSet(string name)
         {
@@ -85,6 +93,9 @@ namespace SoftwareDevelopment2016
             Name = name;
             IsPlotted = false;
             IsRegressionPlotted = false;
+            PointColor = Color.Blue;
+            PointSize = 5;
+            PointShape = Shape.Square;
         }
 
         public double? getMean()
