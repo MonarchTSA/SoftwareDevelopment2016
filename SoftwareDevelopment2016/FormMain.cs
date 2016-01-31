@@ -34,7 +34,7 @@ namespace SoftwareDevelopment2016
             XMax = 10;
             YMin = -2;
             YMax = 6;
-            
+
             Dividers.Add(divider1);
             Dividers.Add(divider2);
             Dividers.Add(divider3);
@@ -76,20 +76,20 @@ namespace SoftwareDevelopment2016
 
             graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, (float)xaxis), new PointF(panel1.Width, (float)xaxis));
             graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, panel1.Height));
-            foreach(DataSet ds in DataSets)
+            foreach (DataSet ds in DataSets)
             {
                 if (ds.IsPlotted)
                 {
                     foreach (DataPoint dp in (from a in ds.Data where !a.isNull() select a))
                     {
                         PointF p = new PointF((float)(yaxis + dp.X / xstep), (float)(xaxis - dp.Y / ystep));
-                        switch(ds.PointShape)
+                        switch (ds.PointShape)
                         {
                             case Shape.Square:
                                 graphics.FillRectangle(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize / 2, p.Y - (float)ds.PointSize / 2, (float)ds.PointSize, (float)ds.PointSize);
                                 break;
                             case Shape.Circle:
-                                graphics.FillEllipse(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize/2, p.Y - (float)ds.PointSize/2, (float)ds.PointSize, (float)ds.PointSize);
+                                graphics.FillEllipse(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize / 2, p.Y - (float)ds.PointSize / 2, (float)ds.PointSize, (float)ds.PointSize);
                                 break;
                             case Shape.Diamond:
                                 PointF[] points = new PointF[4];
@@ -119,7 +119,7 @@ namespace SoftwareDevelopment2016
                         catch (OverflowException oe)
                         {
                             SystemSounds.Asterisk.Play();
-                            MessageBox.Show("Something went wrong plotting the regression." , "Error" );
+                            MessageBox.Show("Something went wrong plotting the regression.", "Error");
                         }
                     }
                 }
@@ -129,7 +129,7 @@ namespace SoftwareDevelopment2016
         private void OnCreateDataSet(object sender, EventArgs e)
         {
             FormCreateDataSet form = new FormCreateDataSet();
-            if(form.ShowDialog() == DialogResult.OK)
+            if (form.ShowDialog() == DialogResult.OK)
             {
                 int index = 0;
                 string name = form.DataSetName;
@@ -139,11 +139,11 @@ namespace SoftwareDevelopment2016
                     comboBoxDataSets.Items.Add(name);
                     comboBoxDataSets.Enabled = true;
                     dataGridView.Enabled = true;
-                    foreach(Label d in Dividers)
+                    foreach (Label d in Dividers)
                     {
                         d.Enabled = true;
                     }
-                    foreach(Label l in DescriptiveLabels)
+                    foreach (Label l in DescriptiveLabels)
                     {
                         l.Enabled = true;
                     }
@@ -153,10 +153,10 @@ namespace SoftwareDevelopment2016
                     }
                     checkBoxPlotPoints.Enabled = true;
                     plotToolStripMenuItem.Enabled = true;
-                } 
+                }
                 else
                 {
-                    for(int i = 0; i < comboBoxDataSets.Items.Count; ++i)
+                    for (int i = 0; i < comboBoxDataSets.Items.Count; ++i)
                     {
                         string s = comboBoxDataSets.Items[i].ToString();
                         if (name.CompareTo(s) <= 0)
@@ -166,7 +166,7 @@ namespace SoftwareDevelopment2016
                             CurrentDataSetIndex = index;
                             break;
                         }
-                        if(i == comboBoxDataSets.Items.Count - 1)
+                        if (i == comboBoxDataSets.Items.Count - 1)
                         {
                             comboBoxDataSets.Items.Add(name);
                             index = comboBoxDataSets.Items.Count - 1;
@@ -183,7 +183,7 @@ namespace SoftwareDevelopment2016
                 labelOrder.Enabled = false;
                 numericUpDownOrder.Enabled = false;
                 numericUpDownOrder.Value = 1;
-                foreach(Label l in DescriptiveLabels)
+                foreach (Label l in DescriptiveLabels)
                 {
                     l.Text = "";
                 }
@@ -200,14 +200,14 @@ namespace SoftwareDevelopment2016
                 if (DataSets.Count == 0)
                 {
                     SystemSounds.Asterisk.Play();
-                    MessageBox.Show("No data set is created. Please create one first." , "Error");
+                    MessageBox.Show("No data set is created. Please create one first.", "Error");
                 }
             }
         }
 
         private void OnCellEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if(ValidateEntry(e))
+            if (ValidateEntry(e))
             {
                 GetCurrentDataSet().Data.Clear();
                 for (int i = 0; i < dataGridView.Rows.Count - 1; ++i)
@@ -224,7 +224,7 @@ namespace SoftwareDevelopment2016
 
                 foreach (DataGridViewRow r in dataGridView.Rows)
                 {
-                    if (r.Cells[0].Value == null && r.Cells[1].Value == null && r.Index != dataGridView.Rows.Count-1 )
+                    if (r.Cells[0].Value == null && r.Cells[1].Value == null && r.Index != dataGridView.Rows.Count - 1)
                     {
                         dataGridView.Rows.Remove(r);
                     }
@@ -245,9 +245,9 @@ namespace SoftwareDevelopment2016
                     numericUpDownOrder.Enabled = false;
                 }
                 this.Refresh();
-            } 
+            }
         }
-        
+
         private bool ValidateEntry(DataGridViewCellEventArgs e)
         {
             if (dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
@@ -279,7 +279,7 @@ namespace SoftwareDevelopment2016
                         }
                     }
                     SystemSounds.Asterisk.Play();
-                    MessageBox.Show("Please enter only numbers." , "Erorr");
+                    MessageBox.Show("Please enter only numbers.", "Erorr");
                     return false; ;
                 }
             }
@@ -306,7 +306,7 @@ namespace SoftwareDevelopment2016
             bool isEnabled = (from dp in GetCurrentDataSet().Data where !dp.isNull() select dp).ToList().Count >= 2;
             checkBoxPlotRegression.Enabled = isEnabled;
             labelOrder.Enabled = isEnabled;
-            numericUpDownOrder.Enabled = isEnabled; 
+            numericUpDownOrder.Enabled = isEnabled;
         }
 
         private void OnPlotCheckChange(object sender, EventArgs e)
@@ -344,12 +344,24 @@ namespace SoftwareDevelopment2016
         private void OnEditPlots(object sender, EventArgs e)
         {
             FormEditPlot form = new FormEditPlot(GetCurrentDataSet());
-            if(form.ShowDialog() == DialogResult.OK)
+            if (form.ShowDialog() == DialogResult.OK)
             {
                 GetCurrentDataSet().PointColor = form.PointColor;
                 GetCurrentDataSet().PointSize = form.PointSize;
                 GetCurrentDataSet().PointShape = form.PointShape;
                 this.Refresh();
+            }
+        }
+
+        private void OnKeyPress(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Delete)
+            {
+                foreach(DataGridViewCell c in dataGridView.SelectedCells)
+                {
+                    c.Value = null;
+                    OnCellEdit(dataGridView, new DataGridViewCellEventArgs(c.ColumnIndex, c.RowIndex));
+                }
             }
         }
     }
