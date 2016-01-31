@@ -46,14 +46,16 @@ namespace SoftwareDevelopment2016
     public struct Polynomial
     {
         //a0 + a1x + a2x^2 + a3x^3 + ... + anx^n
-        public List<double> Coefficients;
-        public Polynomial(params double[] coefficients)
+        public List<double> Coefficients { get; set; }
+        public int Order { get; set; }
+        public Polynomial(int order, params double[] coefficients)
         {
             Coefficients = new List<double>();
             foreach (double d in coefficients)
             {
                 Coefficients.Add(d);
             }
+            Order = order;
         }
         //returns f(x)
         public double f(double x)
@@ -80,6 +82,8 @@ namespace SoftwareDevelopment2016
 
         public List<DataPoint> Data { get; set; }
 
+        public Polynomial? Regression { get; set; }
+
         public bool IsPlotted { get; set; }
         public bool IsRegressionPlotted { get; set; }
 
@@ -91,6 +95,7 @@ namespace SoftwareDevelopment2016
         {
             Data = new List<DataPoint>();
             Name = name;
+            Regression = null;
             IsPlotted = false;
             IsRegressionPlotted = false;
             PointColor = Color.Blue;
@@ -98,13 +103,13 @@ namespace SoftwareDevelopment2016
             PointShape = Shape.Square;
         }
 
-        public double? getMean()
+        public double? GetMean()
         {
             var list = (from dp in Data where !dp.isNull() select dp.Y.Value);
             return list.ToList().Count == 0 ? (double?)null : list.Average();
         }
 
-        public double? getMedian()
+        public double? GetMedian()
         {
             List<double> sorted = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
             if (sorted.Count == 0)
@@ -125,7 +130,7 @@ namespace SoftwareDevelopment2016
         }
 
         //TODO: fix this method (value produced is incorrect)
-        public double? getMode()
+        public double? GetMode()
         {
             List<double> yvals = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
             if (yvals.Count == 0)
@@ -164,7 +169,7 @@ namespace SoftwareDevelopment2016
             }
         }
 
-        public Interval? getDomain()
+        public Interval? GetDomain()
         {
             var list = from dp in Data where !dp.isNull() select dp.X;
             if (list.ToList().Count == 0)
@@ -177,7 +182,7 @@ namespace SoftwareDevelopment2016
             }
         }
 
-        public Interval? getRange()
+        public Interval? GetRange()
         {
             var list = from dp in Data where !dp.isNull() select dp.Y;
             if (list.ToList().Count == 0)
@@ -191,9 +196,9 @@ namespace SoftwareDevelopment2016
             }
         }
 
-        public double? getStandardDeviation()
+        public double? GetStandardDeviation()
         {
-            var list = (from dp in Data where !dp.isNull() select Math.Pow((dp.Y - getMean()).Value, 2));
+            var list = (from dp in Data where !dp.isNull() select Math.Pow((dp.Y - GetMean()).Value, 2));
             if (list.ToList().Count == 0)
             {
                 return null;
@@ -204,11 +209,11 @@ namespace SoftwareDevelopment2016
             }
         }
 
-        public Polynomial? CalculateNthPolynomialRegression(int order)
+        public void CalculateNthPolynomialRegression(int order)
         {
             if (Data.Count == 0)
             {
-                return null;
+                Regression = null;
             }
             else
             {
@@ -261,9 +266,7 @@ namespace SoftwareDevelopment2016
                     }
                     solutions[n] = Determinant(newMatrix, order + 1) / determinant;
                 }
-                Polynomial p = new Polynomial(solutions);
-                //Console.WriteLine(CalculateRSquared(p));
-                return new Polynomial(solutions);
+                Regression = new Polynomial(order, solutions);
             }
         }
 
@@ -308,7 +311,7 @@ namespace SoftwareDevelopment2016
             }
         }
 
-        private void swap(List<DataPoint> list, int element1, int element2)
+        private void Swap(List<DataPoint> list, int element1, int element2)
         {
             DataPoint temp = list[element2];
             list[element1] = list[element2];
@@ -316,34 +319,3 @@ namespace SoftwareDevelopment2016
         }
     }
 }
-    /*public class LabeledDataSet : DataSet
-    {
-        public List<LabeledPoint> Data { get; set; }
-
-        public LabeledDataSet(string name)
-        {
-            Name = name;
-            Data = new List<LabeledPoint>();
-            IsPlotted = false;
-        }
-
-        public double? getMode()
-        {
-            return (from dp in Data where !dp.isNull() select dp.Y).Max().Value;
-        }
-
-        public Interval? getRange()
-        {
-            var list = from dp in Data select dp.Y;
-            if(list.Min() == null || list.Max() == null)
-            {
-                return null;
-            }
-            else
-            {
-               return new Interval(list.Min().Value, list.Max().Value);
-            }
-        }
-    }
-}
-*/

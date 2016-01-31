@@ -104,7 +104,7 @@ namespace SoftwareDevelopment2016
                 }
                 if (ds.IsRegressionPlotted)
                 {
-                    Polynomial? p = ds.CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
+                    Polynomial? p = ds.Regression;
                     if (p != null)
                     {
                         List<PointF> points = new List<PointF>();
@@ -179,6 +179,14 @@ namespace SoftwareDevelopment2016
                 DataSets.Add(new DataSet(name));
                 checkBoxPlotPoints.CheckState = CheckState.Unchecked;
                 checkBoxPlotRegression.CheckState = CheckState.Unchecked;
+                checkBoxPlotRegression.Enabled = false;
+                labelOrder.Enabled = false;
+                numericUpDownOrder.Enabled = false;
+                numericUpDownOrder.Value = 1;
+                foreach(Label l in DescriptiveLabels)
+                {
+                    l.Text = "";
+                }
                 dataGridView.Rows.Clear();
             }
         }
@@ -207,12 +215,12 @@ namespace SoftwareDevelopment2016
                     GetCurrentDataSet().Data.Add(new DataPoint(dataGridView.Rows[i].Cells[0].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[0].Value),
                                                                   dataGridView.Rows[i].Cells[1].Value == null ? (double?)null : Convert.ToDouble(dataGridView.Rows[i].Cells[1].Value)));
                 }
-                labelMean.Text = GetCurrentDataSet().getMean().ToString();
-                labelMedian.Text = GetCurrentDataSet().getMedian().ToString();
-                labelMode.Text = GetCurrentDataSet().getMode().ToString();
-                labelStdDev.Text = GetCurrentDataSet().getStandardDeviation().ToString();
-                labelDomain.Text = GetCurrentDataSet().getDomain().ToString();
-                labelRange.Text = GetCurrentDataSet().getRange().ToString();
+                labelMean.Text = GetCurrentDataSet().GetMean().ToString();
+                labelMedian.Text = GetCurrentDataSet().GetMedian().ToString();
+                labelMode.Text = GetCurrentDataSet().GetMode().ToString();
+                labelStdDev.Text = GetCurrentDataSet().GetStandardDeviation().ToString();
+                labelDomain.Text = GetCurrentDataSet().GetDomain().ToString();
+                labelRange.Text = GetCurrentDataSet().GetRange().ToString();
 
                 foreach (DataGridViewRow r in dataGridView.Rows)
                 {
@@ -286,12 +294,19 @@ namespace SoftwareDevelopment2016
             {
                 dataGridView.Rows.Add(dp.X, dp.Y);
             }
-            labelMean.Text = GetCurrentDataSet().getMean().ToString();
-            labelMedian.Text = GetCurrentDataSet().getMedian().ToString();
-            labelMode.Text = GetCurrentDataSet().getMode().ToString();
-            labelStdDev.Text = GetCurrentDataSet().getStandardDeviation().ToString();
-            labelDomain.Text = GetCurrentDataSet().getDomain().ToString();
-            labelRange.Text = GetCurrentDataSet().getRange().ToString();
+            labelMean.Text = GetCurrentDataSet().GetMean().ToString();
+            labelMedian.Text = GetCurrentDataSet().GetMedian().ToString();
+            labelMode.Text = GetCurrentDataSet().GetMode().ToString();
+            labelStdDev.Text = GetCurrentDataSet().GetStandardDeviation().ToString();
+            labelDomain.Text = GetCurrentDataSet().GetDomain().ToString();
+            labelRange.Text = GetCurrentDataSet().GetRange().ToString();
+            numericUpDownOrder.Value = GetCurrentDataSet().Regression != null ? GetCurrentDataSet().Regression.Value.Order : 1;
+            checkBoxPlotPoints.Checked = GetCurrentDataSet().IsPlotted;
+            checkBoxPlotRegression.Checked = GetCurrentDataSet().IsRegressionPlotted;
+            bool isEnabled = (from dp in GetCurrentDataSet().Data where !dp.isNull() select dp).ToList().Count >= 2;
+            checkBoxPlotRegression.Enabled = isEnabled;
+            labelOrder.Enabled = isEnabled;
+            numericUpDownOrder.Enabled = isEnabled; 
         }
 
         private void OnPlotCheckChange(object sender, EventArgs e)
@@ -303,11 +318,13 @@ namespace SoftwareDevelopment2016
         private void OnRegressionCheckChange(object sender, EventArgs e)
         {
             GetCurrentDataSet().IsRegressionPlotted = checkBoxPlotRegression.CheckState == CheckState.Checked ? true : false;
+            GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
             this.Refresh();
         }
 
         private void OnOrderChange(object sender, EventArgs e)
         {
+            GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
             this.Refresh();
         }
 
