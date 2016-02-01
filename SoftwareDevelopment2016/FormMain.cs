@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,6 +27,8 @@ namespace SoftwareDevelopment2016
         private double XMax { get; set; }
         private double YMin { get; set; }
         private double YMax { get; set; }
+
+        private string CurrentFileName { get; set; }
 
         public FormMain()
         {
@@ -57,6 +62,8 @@ namespace SoftwareDevelopment2016
             DescriptiveLableText.Add(labelStdDevText);
             DescriptiveLableText.Add(labelRangeText);
             DescriptiveLableText.Add(labelDomainText);
+
+            CurrentFileName = "";
         }
 
         private DataSet GetCurrentDataSet()
@@ -288,7 +295,7 @@ namespace SoftwareDevelopment2016
 
         private void OnDataSetChange(object sender, EventArgs e)
         {
-            CurrentDataSetIndex = comboBoxDataSets.SelectedIndex;
+            CurrentDataSetIndex = ((ComboBox)sender).SelectedIndex;
             dataGridView.Rows.Clear();
             foreach (DataPoint dp in GetCurrentDataSet().Data)
             {
@@ -353,6 +360,7 @@ namespace SoftwareDevelopment2016
             }
         }
 
+        //could be optimized better
         private void OnKeyPress(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Delete)
@@ -362,6 +370,114 @@ namespace SoftwareDevelopment2016
                     c.Value = null;
                     OnCellEdit(dataGridView, new DataGridViewCellEventArgs(c.ColumnIndex, c.RowIndex));
                 }
+            }
+        }
+
+        private void OnSaveAs(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Data set file (*.ds)|*.ds";
+            if(sfd.ShowDialog() == DialogResult.OK)
+            {
+                CurrentFileName = sfd.FileName;
+                WriteToBinary();
+            }
+        }
+
+        private void OnSave(object sender, EventArgs e)
+        {
+            if(CurrentFileName == "")
+            {
+                OnSaveAs(sender, e);
+            }
+            else
+            {
+                WriteToBinary();
+            }
+        }
+
+        private void WriteToBinary()
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(CurrentFileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            formatter.Serialize(stream, DataSets);
+            stream.Close();
+        }
+
+        private void ReadFromBinary()
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(CurrentFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            try
+            {
+                DataSets = (List<DataSet>)formatter.Deserialize(stream);
+                stream.Close();
+                if (DataSets.Count == 0)
+                {
+                    dataGridView.Enabled = false;
+                    plotToolStripMenuItem.Enabled = false;
+                    comboBoxDataSets.Enabled = false;
+                    checkBoxPlotPoints.Enabled = false;
+                    checkBoxPlotRegression.Enabled = false;
+                    numericUpDownOrder.Enabled = false;
+                    foreach(Label l in DescriptiveLabels)
+                    {
+                        l.Enabled = false;
+                    }
+                    foreach(Label l in DescriptiveLableText)
+                    {
+                        l.Enabled = false;
+                    }
+                    foreach(Label l in Dividers)
+                    {
+                        l.Enabled = false;
+                    }
+
+                }
+                else
+                {
+                    ComboBox c = new ComboBox();
+                    c.Items.Add("");
+                    c.SelectedIndex = 0;
+                    OnDataSetChange(c, null);
+                    foreach(Label l in DescriptiveLabels)
+                    {
+                        l.Enabled = true;
+                    }
+                    foreach(Label l in DescriptiveLableText)
+                    {
+                        l.Enabled = true;
+                    }
+                    foreach(Label l in Dividers)
+                    {
+                        l.Enabled = true;
+                    }
+                    dataGridView.Enabled = true;
+                    checkBoxPlotPoints.Enabled = true;
+                    plotToolStripMenuItem.Enabled = true;
+                    comboBoxDataSets.Enabled = true;
+                    //TODO: alphabetical or not?
+                    foreach(DataSet ds in DataSets)
+                    {
+                        comboBoxDataSets.Items.Add(ds.Name);
+                    }
+                    comboBoxDataSets.SelectedIndex = 0;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There was an error loading your file. The file might be corrupted.", "Error");
+            }
+        }
+
+        private void OnFileOpen(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Data set file (*.ds)|*.ds";
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                CurrentFileName = ofd.FileName;
+                ReadFromBinary();
             }
         }
     }

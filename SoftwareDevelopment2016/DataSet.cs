@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SoftwareDevelopment2016
 {
+    [Serializable()]
     public struct DataPoint
     {
         public double? X { get; set; }
@@ -28,6 +29,7 @@ namespace SoftwareDevelopment2016
             }
         }
     }
+    [Serializable()]
     public struct Interval
     {
         public double Min { get; set; }
@@ -43,6 +45,7 @@ namespace SoftwareDevelopment2016
         }
     }
 
+    [Serializable()]
     public struct Polynomial
     {
         //a0 + a1x + a2x^2 + a3x^3 + ... + anx^n
@@ -68,7 +71,8 @@ namespace SoftwareDevelopment2016
             return sum;
         }
     }
-    
+
+    [Serializable()]
     public enum Shape
     {
         Square,
@@ -76,6 +80,7 @@ namespace SoftwareDevelopment2016
         Diamond
     };
 
+    [Serializable()]
     public class DataSet
     {
         public String Name { get; set; }
