@@ -31,6 +31,7 @@ namespace SoftwareDevelopment2016
         private Bitmap PlotBitmap { get; set; }
 
         private string CurrentFileName { get; set; }
+        private bool IsSaved { get; set; }
 
         public FormMain()
         {
@@ -66,6 +67,7 @@ namespace SoftwareDevelopment2016
             DescriptiveLabelText.Add(labelDomainText);
 
             CurrentFileName = "";
+            IsSaved = true;
 
             PlotBitmap = new Bitmap(panelPlot.Width, panelPlot.Height);
         }
@@ -203,6 +205,7 @@ namespace SoftwareDevelopment2016
                     l.Text = "";
                 }
                 dataGridView.Rows.Clear();
+                IsSaved = false;
             }
         }
 
@@ -259,6 +262,7 @@ namespace SoftwareDevelopment2016
                     labelOrder.Enabled = false;
                     numericUpDownOrder.Enabled = false;
                 }
+                IsSaved = false;
                 this.Refresh();
             }
         }
@@ -328,6 +332,7 @@ namespace SoftwareDevelopment2016
         {
             GetCurrentDataSet().IsPlotted = checkBoxPlotPoints.CheckState == CheckState.Checked ? true : false;
             this.Refresh();
+            IsSaved = false;
         }
 
         private void OnRegressionCheckChange(object sender, EventArgs e)
@@ -335,12 +340,14 @@ namespace SoftwareDevelopment2016
             GetCurrentDataSet().IsRegressionPlotted = checkBoxPlotRegression.CheckState == CheckState.Checked ? true : false;
             GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
             this.Refresh();
+            IsSaved = false;
         }
 
         private void OnOrderChange(object sender, EventArgs e)
         {
             GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
             this.Refresh();
+            IsSaved = false;
         }
 
         private void OnEditWindow(object sender, EventArgs e)
@@ -365,6 +372,7 @@ namespace SoftwareDevelopment2016
                 GetCurrentDataSet().PointSize = form.PointSize;
                 GetCurrentDataSet().PointShape = form.PointShape;
                 this.Refresh();
+                IsSaved = false;
             }
         }
 
@@ -411,6 +419,7 @@ namespace SoftwareDevelopment2016
             Stream stream = new FileStream(CurrentFileName, FileMode.Create, FileAccess.Write, FileShare.None);
             formatter.Serialize(stream, DataSets);
             stream.Close();
+            IsSaved = true;
         }
 
         private void ReadFromBinary()
@@ -448,6 +457,8 @@ namespace SoftwareDevelopment2016
                     ComboBox c = new ComboBox();
                     c.Items.Add("");
                     c.SelectedIndex = 0;
+                    var list = (from dp in GetCurrentDataSet().Data where !dp.isNull() select dp).ToList();
+                    numericUpDownOrder.Maximum = list.Count - 1;
                     OnDataSetChange(c, null);
                     foreach(Label l in DescriptiveLabels)
                     {
@@ -471,8 +482,9 @@ namespace SoftwareDevelopment2016
                     }
                     comboBoxDataSets.SelectedIndex = 0;
                 }
+                IsSaved = true;
             }
-            catch
+            catch(Exception e)
             {
                 MessageBox.Show("There was an error loading your file. The file might be corrupted.", "Error");
             }
@@ -480,6 +492,7 @@ namespace SoftwareDevelopment2016
 
         private void OnFileOpen(object sender, EventArgs e)
         {
+            PromptUserToSave();
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Data set file (*.ds)|*.ds";
             if(ofd.ShowDialog() == DialogResult.OK)
@@ -505,6 +518,8 @@ namespace SoftwareDevelopment2016
 
         private void OnNew(object sender, EventArgs e)
         {
+            PromptUserToSave();
+            CurrentFileName = "";
             comboBoxDataSets.Items.Clear();
             comboBoxDataSets.Enabled = false;
             dataGridView.Enabled = false;
@@ -518,6 +533,7 @@ namespace SoftwareDevelopment2016
             numericUpDownOrder.Enabled = false;
             numericUpDownOrder.Value = 1;
             DataSets.Clear();
+            IsSaved = true;
             this.Refresh();
             foreach(Label l in DescriptiveLabels)
             {
@@ -532,6 +548,19 @@ namespace SoftwareDevelopment2016
             {
                 l.Enabled = false;
             }
+        }
+
+        private void PromptUserToSave()
+        {
+            if(!IsSaved && MessageBox.Show("The current file is not saved. Would you like to save before exiting?","Save",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                OnSave(null, null);
+            }
+        }
+
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            PromptUserToSave();
         }
     }
 }

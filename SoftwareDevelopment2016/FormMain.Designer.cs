@@ -268,7 +268,7 @@ namespace SoftwareDevelopment2016
             // editPlotsToolStripMenuItem
             // 
             this.editPlotsToolStripMenuItem.Name = "editPlotsToolStripMenuItem";
-            this.editPlotsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editPlotsToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.editPlotsToolStripMenuItem.Text = "Edit &Plots";
             this.editPlotsToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.editPlotsToolStripMenuItem.Click += new System.EventHandler(this.OnEditPlots);
@@ -276,14 +276,14 @@ namespace SoftwareDevelopment2016
             // windowToolStripMenuItem
             // 
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.windowToolStripMenuItem.Text = "Edit &Window";
             this.windowToolStripMenuItem.Click += new System.EventHandler(this.OnEditWindow);
             // 
             // exportPlotToolStripMenuItem
             // 
             this.exportPlotToolStripMenuItem.Name = "exportPlotToolStripMenuItem";
-            this.exportPlotToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportPlotToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.exportPlotToolStripMenuItem.Text = "E&xport Plot";
             this.exportPlotToolStripMenuItem.Click += new System.EventHandler(this.OnExportPlot);
             // 
@@ -302,30 +302,30 @@ namespace SoftwareDevelopment2016
             // contentsToolStripMenuItem
             // 
             this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
-            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.contentsToolStripMenuItem.Text = "&Contents";
             // 
             // indexToolStripMenuItem
             // 
             this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-            this.indexToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.indexToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.indexToolStripMenuItem.Text = "&Index";
             // 
             // searchToolStripMenuItem
             // 
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.searchToolStripMenuItem.Text = "&Search";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(119, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
             // panelPlot
@@ -721,6 +721,7 @@ namespace SoftwareDevelopment2016
             this.MinimumSize = new System.Drawing.Size(815, 362);
             this.Name = "FormMain";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.Click += new System.EventHandler(this.OnClick);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
