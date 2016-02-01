@@ -94,7 +94,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(207, 164);
             this.Name = "FormCreateDataSet";
-            this.Text = "Create data set";
+            this.Text = "Enter data set";
             this.ResumeLayout(false);
             this.PerformLayout();
 

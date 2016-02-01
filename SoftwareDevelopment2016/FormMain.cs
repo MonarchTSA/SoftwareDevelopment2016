@@ -145,7 +145,7 @@ namespace SoftwareDevelopment2016
 
         private void OnCreateDataSet(object sender, EventArgs e)
         {
-            FormCreateDataSet form = new FormCreateDataSet();
+            FormCreateDataSet form = new FormCreateDataSet("");
             if (form.ShowDialog() == DialogResult.OK)
             {
                 int index = 0;
@@ -170,6 +170,8 @@ namespace SoftwareDevelopment2016
                     }
                     checkBoxPlotPoints.Enabled = true;
                     plotToolStripMenuItem.Enabled = true;
+                    editDataSetToolStripMenuItem.Enabled = true;
+                    deleteDataSetToolStripMenuItem.Enabled = true;
                 }
                 else
                 {
@@ -561,6 +563,40 @@ namespace SoftwareDevelopment2016
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             PromptUserToSave();
+        }
+
+        private void OnEditDataSet(object sender, EventArgs e)
+        {
+            FormCreateDataSet form = new FormCreateDataSet(GetCurrentDataSet().Name);
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                GetCurrentDataSet().Name = form.DataSetName;
+                int index = 0;
+                string name = form.DataSetName;
+                comboBoxDataSets.Items.RemoveAt(CurrentDataSetIndex);
+                for (int i = 0; i < comboBoxDataSets.Items.Count; ++i)
+                {
+                    
+                    string s = comboBoxDataSets.Items[i].ToString();
+                    if (name.CompareTo(s) <= 0)
+                    {
+                        comboBoxDataSets.Items.Insert(i, name);
+                        index = i;
+                        break;
+                    }
+                    if (i == comboBoxDataSets.Items.Count - 1)
+                    {
+                        comboBoxDataSets.Items.Add(name);
+                        index = comboBoxDataSets.Items.Count - 1;
+                        break;
+                    }
+                }
+                comboBoxDataSets.SelectedIndex = index;
+                var temp = DataSets[CurrentDataSetIndex];
+                DataSets[CurrentDataSetIndex] = DataSets[index];
+                DataSets[index] = temp;
+                CurrentDataSetIndex = index;
+            }
         }
     }
 }

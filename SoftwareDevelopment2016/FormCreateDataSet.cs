@@ -13,10 +13,11 @@ namespace SoftwareDevelopment2016
 {
     public partial class FormCreateDataSet : Form
     {
-        public FormCreateDataSet()
+        public FormCreateDataSet(string name)
         {
             InitializeComponent();
-            DataSetName = "";
+            textBoxName.Text = name;
+            DataSetName = name;
         }
 
         public String DataSetName { get; set; }
