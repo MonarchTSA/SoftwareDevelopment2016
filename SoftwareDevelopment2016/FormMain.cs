@@ -28,6 +28,8 @@ namespace SoftwareDevelopment2016
         private double YMin { get; set; }
         private double YMax { get; set; }
 
+        private Bitmap PlotBitmap { get; set; }
+
         private string CurrentFileName { get; set; }
 
         public FormMain()
@@ -64,6 +66,8 @@ namespace SoftwareDevelopment2016
             DescriptiveLableText.Add(labelDomainText);
 
             CurrentFileName = "";
+
+            PlotBitmap = new Bitmap(panelPlot.Width, panelPlot.Height);
         }
 
         private DataSet GetCurrentDataSet()
@@ -73,64 +77,68 @@ namespace SoftwareDevelopment2016
 
         private void DrawPlot(object sender, PaintEventArgs e)
         {
-            System.Drawing.Graphics graphics = panel1.CreateGraphics();
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-            double xstep = (XMax - XMin) / panel1.Width;
-            double ystep = (YMax - YMin) / panel1.Height;
-            double xaxis = YMax / ystep;
-            double yaxis = -XMin / xstep;
-
-            graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, (float)xaxis), new PointF(panel1.Width, (float)xaxis));
-            graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, panel1.Height));
-            foreach (DataSet ds in DataSets)
+            using (Graphics graphics = Graphics.FromImage(PlotBitmap))
             {
-                if (ds.IsPlotted)
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                graphics.Clear(Color.White);
+
+                double xstep = (XMax - XMin) / panelPlot.Width;
+                double ystep = (YMax - YMin) / panelPlot.Height;
+                double xaxis = YMax / ystep;
+                double yaxis = -XMin / xstep;
+
+                graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, (float)xaxis), new PointF(panelPlot.Width, (float)xaxis));
+                graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, panelPlot.Height));
+                foreach (DataSet ds in DataSets)
                 {
-                    foreach (DataPoint dp in (from a in ds.Data where !a.isNull() select a))
+                    if (ds.IsPlotted)
                     {
-                        PointF p = new PointF((float)(yaxis + dp.X / xstep), (float)(xaxis - dp.Y / ystep));
-                        switch (ds.PointShape)
+                        foreach (DataPoint dp in (from a in ds.Data where !a.isNull() select a))
                         {
-                            case Shape.Square:
-                                graphics.FillRectangle(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize / 2, p.Y - (float)ds.PointSize / 2, (float)ds.PointSize, (float)ds.PointSize);
-                                break;
-                            case Shape.Circle:
-                                graphics.FillEllipse(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize / 2, p.Y - (float)ds.PointSize / 2, (float)ds.PointSize, (float)ds.PointSize);
-                                break;
-                            case Shape.Diamond:
-                                PointF[] points = new PointF[4];
-                                points[0] = new PointF(p.X, p.Y - (float)ds.PointSize / 2);
-                                points[1] = new PointF(p.X + (float)ds.PointSize / 2, p.Y);
-                                points[2] = new PointF(p.X, p.Y + (float)ds.PointSize / 2);
-                                points[3] = new PointF(p.X - (float)ds.PointSize / 2, p.Y);
-                                graphics.FillPolygon(new SolidBrush(ds.PointColor), points);
-                                break;
+                            PointF p = new PointF((float)(yaxis + dp.X / xstep), (float)(xaxis - dp.Y / ystep));
+                            switch (ds.PointShape)
+                            {
+                                case Shape.Square:
+                                    graphics.FillRectangle(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize / 2, p.Y - (float)ds.PointSize / 2, (float)ds.PointSize, (float)ds.PointSize);
+                                    break;
+                                case Shape.Circle:
+                                    graphics.FillEllipse(new SolidBrush(ds.PointColor), p.X - (float)ds.PointSize / 2, p.Y - (float)ds.PointSize / 2, (float)ds.PointSize, (float)ds.PointSize);
+                                    break;
+                                case Shape.Diamond:
+                                    PointF[] points = new PointF[4];
+                                    points[0] = new PointF(p.X, p.Y - (float)ds.PointSize / 2);
+                                    points[1] = new PointF(p.X + (float)ds.PointSize / 2, p.Y);
+                                    points[2] = new PointF(p.X, p.Y + (float)ds.PointSize / 2);
+                                    points[3] = new PointF(p.X - (float)ds.PointSize / 2, p.Y);
+                                    graphics.FillPolygon(new SolidBrush(ds.PointColor), points);
+                                    break;
+                            }
                         }
                     }
-                }
-                if (ds.IsRegressionPlotted)
-                {
-                    Polynomial? p = ds.Regression;
-                    if (p != null)
+                    if (ds.IsRegressionPlotted)
                     {
-                        List<PointF> points = new List<PointF>();
-                        for (double x = XMin; x <= XMax; x += xstep)
+                        Polynomial? p = ds.Regression;
+                        if (p != null)
                         {
-                            points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - p.Value.f(x) / ystep)));
-                        }
-                        try
-                        {
-                            graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
-                        }
-                        catch (OverflowException oe)
-                        {
-                            SystemSounds.Asterisk.Play();
-                            MessageBox.Show("Something went wrong plotting the regression.", "Error");
+                            List<PointF> points = new List<PointF>();
+                            for (double x = XMin; x <= XMax; x += xstep)
+                            {
+                                points.Add(new PointF((float)(yaxis + x / xstep), (float)(xaxis - p.Value.f(x) / ystep)));
+                            }
+                            try
+                            {
+                                graphics.DrawLines(new Pen(Color.Black, 1f), points.ToArray());
+                            }
+                            catch (OverflowException oe)
+                            {
+                                SystemSounds.Asterisk.Play();
+                                MessageBox.Show("Something went wrong plotting the regression.", "Error");
+                            }
                         }
                     }
                 }
             }
+            e.Graphics.DrawImage(PlotBitmap, Point.Empty);
         }
 
         private void OnCreateDataSet(object sender, EventArgs e)
@@ -384,6 +392,7 @@ namespace SoftwareDevelopment2016
             }
         }
 
+        //TODO: Prompt user to save unsaved changes
         private void OnSave(object sender, EventArgs e)
         {
             if(CurrentFileName == "")
@@ -456,7 +465,6 @@ namespace SoftwareDevelopment2016
                     checkBoxPlotPoints.Enabled = true;
                     plotToolStripMenuItem.Enabled = true;
                     comboBoxDataSets.Enabled = true;
-                    //TODO: alphabetical or not?
                     foreach(DataSet ds in DataSets)
                     {
                         comboBoxDataSets.Items.Add(ds.Name);
@@ -478,6 +486,20 @@ namespace SoftwareDevelopment2016
             {
                 CurrentFileName = ofd.FileName;
                 ReadFromBinary();
+            }
+        }
+
+        private void OnExit(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OnExportPlot(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            if(sfd.ShowDialog() == DialogResult.OK)
+            {
+                PlotBitmap.Save(sfd.FileName);
             }
         }
     }
