@@ -609,6 +609,7 @@ namespace SoftwareDevelopment2016
                     checkBoxPlotPoints.Checked = false;
                     checkBoxPlotRegression.Enabled = false;
                     checkBoxPlotRegression.Checked = false;
+                    numericUpDownOrder.Value = 1;
                 }
                 comboBoxDataSets.Items.RemoveAt(CurrentDataSetIndex);
                 DataSets.RemoveAt(CurrentDataSetIndex);
@@ -616,14 +617,30 @@ namespace SoftwareDevelopment2016
                 {
                     --CurrentDataSetIndex;
                 }
-                comboBoxDataSets.SelectedIndex = CurrentDataSetIndex;
                 if (DataSets.Count == 0)
                 {
                     comboBoxDataSets.Enabled = false;
                     dataGridView.Enabled = false;
+                    dataGridView.Rows.Clear();
+                    numericUpDownOrder.Enabled = false;
+                    labelOrder.Enabled = false;
+                    foreach(Label l in DescriptiveLabels)
+                    {
+                        l.Enabled = false;
+                        l.Text = "";
+                    }
+                    foreach(Label l in DescriptiveLabelText)
+                    {
+                        l.Enabled = false;
+                    }
+                    foreach(Label l in Dividers)
+                    {
+                        l.Enabled = false;
+                    }
                 }
                 else
                 {
+                    comboBoxDataSets.SelectedIndex = CurrentDataSetIndex;
                     OnDataSetChange(comboBoxDataSets, null);
                 }
             }

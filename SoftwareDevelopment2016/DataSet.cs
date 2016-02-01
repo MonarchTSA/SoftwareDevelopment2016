@@ -138,40 +138,21 @@ namespace SoftwareDevelopment2016
         public double? GetMode()
         {
             List<double> yvals = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
-            if (yvals.Count == 0)
+            int modeCount = 0;
+            double? mode = null;
+            for(int i = 0; i < yvals.Count - 1; ++i)
             {
-                return null;
-            }
-            else
-            {
-                int maxCount = 0, currentCount = 1;
-                double currentMode = 0, maxMode = 0;
-                for (int i = 0; i < yvals.Count; ++i)
+                if (yvals[i] == yvals[i+1])
                 {
-                    if (i == 0)
-                    {
-                        currentMode = 0;
-                    }
-                    else
-                    {
-                        if (yvals[i] == currentMode)
-                        {
-                            ++currentCount;
-                        }
-                        else
-                        {
-                            currentMode = yvals[i];
-                            currentCount = 1;
-                        }
-                        if (currentCount > maxCount)
-                        {
-                            maxCount = currentCount;
-                            maxMode = yvals[i];
-                        }
-                    }
+                    ++modeCount;
+                    mode = yvals[i];
+                } 
+                else
+                {
+                    modeCount = 0;
                 }
-                return maxMode;
             }
+            return mode;
         }
 
         public Interval? GetDomain()
