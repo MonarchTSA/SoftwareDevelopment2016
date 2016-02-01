@@ -598,5 +598,35 @@ namespace SoftwareDevelopment2016
                 CurrentDataSetIndex = index;
             }
         }
+
+        private void OnDeleteDataSet(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Are you sure you want to delet the current data set?", "Delete" , MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                if(DataSets.Count - 1 == 0)
+                {
+                    checkBoxPlotPoints.Enabled = false;
+                    checkBoxPlotPoints.Checked = false;
+                    checkBoxPlotRegression.Enabled = false;
+                    checkBoxPlotRegression.Checked = false;
+                }
+                comboBoxDataSets.Items.RemoveAt(CurrentDataSetIndex);
+                DataSets.RemoveAt(CurrentDataSetIndex);
+                if(CurrentDataSetIndex != 0)
+                {
+                    --CurrentDataSetIndex;
+                }
+                comboBoxDataSets.SelectedIndex = CurrentDataSetIndex;
+                if (DataSets.Count == 0)
+                {
+                    comboBoxDataSets.Enabled = false;
+                    dataGridView.Enabled = false;
+                }
+                else
+                {
+                    OnDataSetChange(comboBoxDataSets, null);
+                }
+            }
+        }
     }
 }

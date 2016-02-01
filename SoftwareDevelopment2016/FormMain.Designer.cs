@@ -31,9 +31,9 @@ namespace SoftwareDevelopment2016
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +44,9 @@ namespace SoftwareDevelopment2016
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addDataSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editDataSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteDataSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.plotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editPlotsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,9 +89,6 @@ namespace SoftwareDevelopment2016
             this.labelMedianText = new System.Windows.Forms.Label();
             this.labelMeanText = new System.Windows.Forms.Label();
             this.buttonCreateDataSet = new System.Windows.Forms.Button();
-            this.addDataSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editDataSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteDataSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.plotBox.SuspendLayout();
@@ -139,14 +139,14 @@ namespace SoftwareDevelopment2016
             this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OnFileOpen);
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(183, 6);
             // 
             // saveToolStripMenuItem
             // 
@@ -154,7 +154,7 @@ namespace SoftwareDevelopment2016
             this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.OnSave);
             // 
@@ -170,12 +170,12 @@ namespace SoftwareDevelopment2016
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnExit);
             // 
@@ -188,6 +188,32 @@ namespace SoftwareDevelopment2016
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
+            // 
+            // addDataSetToolStripMenuItem
+            // 
+            this.addDataSetToolStripMenuItem.Name = "addDataSetToolStripMenuItem";
+            this.addDataSetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.addDataSetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.addDataSetToolStripMenuItem.Text = "&Create Data Set";
+            this.addDataSetToolStripMenuItem.Click += new System.EventHandler(this.OnCreateDataSet);
+            // 
+            // editDataSetToolStripMenuItem
+            // 
+            this.editDataSetToolStripMenuItem.Enabled = false;
+            this.editDataSetToolStripMenuItem.Name = "editDataSetToolStripMenuItem";
+            this.editDataSetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.editDataSetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.editDataSetToolStripMenuItem.Text = "&Edit Data Set";
+            this.editDataSetToolStripMenuItem.Click += new System.EventHandler(this.OnEditDataSet);
+            // 
+            // deleteDataSetToolStripMenuItem
+            // 
+            this.deleteDataSetToolStripMenuItem.Enabled = false;
+            this.deleteDataSetToolStripMenuItem.Name = "deleteDataSetToolStripMenuItem";
+            this.deleteDataSetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.deleteDataSetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.deleteDataSetToolStripMenuItem.Text = "&Delete Data Set";
+            this.deleteDataSetToolStripMenuItem.Click += new System.EventHandler(this.OnDeleteDataSet);
             // 
             // plotToolStripMenuItem
             // 
@@ -279,37 +305,37 @@ namespace SoftwareDevelopment2016
             // dataGridView
             // 
             this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnX,
             this.ColumnY});
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.Enabled = false;
             this.dataGridView.Location = new System.Drawing.Point(6, 46);
             this.dataGridView.Name = "dataGridView";
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.Size = new System.Drawing.Size(209, 221);
             this.dataGridView.TabIndex = 6;
@@ -644,31 +670,6 @@ namespace SoftwareDevelopment2016
             this.buttonCreateDataSet.Text = "Create data set";
             this.buttonCreateDataSet.UseVisualStyleBackColor = true;
             this.buttonCreateDataSet.Click += new System.EventHandler(this.OnCreateDataSet);
-            // 
-            // addDataSetToolStripMenuItem
-            // 
-            this.addDataSetToolStripMenuItem.Name = "addDataSetToolStripMenuItem";
-            this.addDataSetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.addDataSetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.addDataSetToolStripMenuItem.Text = "&Create Data Set";
-            this.addDataSetToolStripMenuItem.Click += new System.EventHandler(this.OnCreateDataSet);
-            // 
-            // editDataSetToolStripMenuItem
-            // 
-            this.editDataSetToolStripMenuItem.Enabled = false;
-            this.editDataSetToolStripMenuItem.Name = "editDataSetToolStripMenuItem";
-            this.editDataSetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.editDataSetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.editDataSetToolStripMenuItem.Text = "&Edit Data Set";
-            this.editDataSetToolStripMenuItem.Click += new System.EventHandler(this.OnEditDataSet);
-            // 
-            // deleteDaToolStripMenuItem
-            // 
-            this.deleteDataSetToolStripMenuItem.Enabled = false;
-            this.deleteDataSetToolStripMenuItem.Name = "deleteDaToolStripMenuItem";
-            this.deleteDataSetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.deleteDataSetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.deleteDataSetToolStripMenuItem.Text = "&Delete Data Set";
             // 
             // FormMain
             // 
