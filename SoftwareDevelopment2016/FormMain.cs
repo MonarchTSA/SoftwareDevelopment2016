@@ -21,7 +21,7 @@ namespace SoftwareDevelopment2016
 
         private List<Label> Dividers = new List<Label>();
         private List<Label> DescriptiveLabels = new List<Label>();
-        private List<Label> DescriptiveLableText = new List<Label>();
+        private List<Label> DescriptiveLabelText = new List<Label>();
 
         private double XMin { get; set; }
         private double XMax { get; set; }
@@ -58,12 +58,12 @@ namespace SoftwareDevelopment2016
             DescriptiveLabels.Add(labelRange);
             DescriptiveLabels.Add(labelDomain);
 
-            DescriptiveLableText.Add(labelMeanText);
-            DescriptiveLableText.Add(labelMedianText);
-            DescriptiveLableText.Add(labelModeText);
-            DescriptiveLableText.Add(labelStdDevText);
-            DescriptiveLableText.Add(labelRangeText);
-            DescriptiveLableText.Add(labelDomainText);
+            DescriptiveLabelText.Add(labelMeanText);
+            DescriptiveLabelText.Add(labelMedianText);
+            DescriptiveLabelText.Add(labelModeText);
+            DescriptiveLabelText.Add(labelStdDevText);
+            DescriptiveLabelText.Add(labelRangeText);
+            DescriptiveLabelText.Add(labelDomainText);
 
             CurrentFileName = "";
 
@@ -162,7 +162,7 @@ namespace SoftwareDevelopment2016
                     {
                         l.Enabled = true;
                     }
-                    foreach (Label l in DescriptiveLableText)
+                    foreach (Label l in DescriptiveLabelText)
                     {
                         l.Enabled = true;
                     }
@@ -433,7 +433,7 @@ namespace SoftwareDevelopment2016
                     {
                         l.Enabled = false;
                     }
-                    foreach(Label l in DescriptiveLableText)
+                    foreach(Label l in DescriptiveLabelText)
                     {
                         l.Enabled = false;
                     }
@@ -453,7 +453,7 @@ namespace SoftwareDevelopment2016
                     {
                         l.Enabled = true;
                     }
-                    foreach(Label l in DescriptiveLableText)
+                    foreach(Label l in DescriptiveLabelText)
                     {
                         l.Enabled = true;
                     }
@@ -500,6 +500,37 @@ namespace SoftwareDevelopment2016
             if(sfd.ShowDialog() == DialogResult.OK)
             {
                 PlotBitmap.Save(sfd.FileName);
+            }
+        }
+
+        private void OnNew(object sender, EventArgs e)
+        {
+            comboBoxDataSets.Items.Clear();
+            comboBoxDataSets.Enabled = false;
+            dataGridView.Enabled = false;
+            dataGridView.Rows.Clear();
+            plotToolStripMenuItem.Enabled = false;
+            checkBoxPlotPoints.Enabled = false;
+            checkBoxPlotPoints.Checked = false;
+            checkBoxPlotRegression.Enabled = false;
+            checkBoxPlotRegression.Checked = false;
+            labelOrder.Enabled = false;
+            numericUpDownOrder.Enabled = false;
+            numericUpDownOrder.Value = 1;
+            DataSets.Clear();
+            this.Refresh();
+            foreach(Label l in DescriptiveLabels)
+            {
+                l.Enabled = false;
+                l.Text = "";
+            }
+            foreach(Label l in DescriptiveLabelText)
+            {
+                l.Enabled = false;
+            } 
+            foreach(Label l in Dividers)
+            {
+                l.Enabled = false;
             }
         }
     }
