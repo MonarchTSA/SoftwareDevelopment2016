@@ -183,7 +183,7 @@ namespace SoftwareDevelopment2016
                     }
                 }
                 comboBoxDataSets.SelectedIndex = index;
-                DataSets.Add(new DataSet(name));
+                DataSets.Insert(index, new DataSet(name));
                 checkBoxPlotPoints.CheckState = CheckState.Unchecked;
                 checkBoxPlotRegression.CheckState = CheckState.Unchecked;
                 checkBoxPlotRegression.Enabled = false;
