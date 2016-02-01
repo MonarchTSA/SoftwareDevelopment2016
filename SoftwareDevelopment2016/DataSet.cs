@@ -138,21 +138,42 @@ namespace SoftwareDevelopment2016
         public double? GetMode()
         {
             List<double> yvals = (from dp in Data where !dp.isNull() orderby dp.Y select dp.Y.Value).ToList();
-            int modeCount = 0;
-            double? mode = null;
-            for(int i = 0; i < yvals.Count - 1; ++i)
+            if(yvals.Count == 0)
             {
-                if (yvals[i] == yvals[i+1])
+                return null;
+            } 
+            else if(yvals.Count == 1)
+            {
+                return yvals[0];
+            }
+            else
+            { 
+                //value, count'
+                int count = 0;
+                List<Tuple<double, double>> modes = new List<Tuple<double, double>>();
+                modes.Add(new Tuple<double, double>(yvals[0], 1));
+                for(int i = 0; i < yvals.Count - 1; ++i)
                 {
-                    ++modeCount;
-                    mode = yvals[i];
-                } 
+                    if(yvals[i] == yvals[i + 1])
+                    {
+                        modes[count] = new Tuple<double, double>(modes[count].Item1, modes[count].Item2 + 1);
+                    }   
+                    else
+                    {
+                        ++count;
+                        modes.Add(new Tuple<double, double>(yvals[i + 1], 1));
+                    }
+                }
+                var list = (from m in modes orderby m.Item2 descending select m).ToList();
+                if (list[0].Item2 > list[1].Item2)
+                {
+                    return list[0].Item1;
+                }
                 else
                 {
-                    modeCount = 0;
+                    return null;
                 }
             }
-            return mode;
         }
 
         public Interval? GetDomain()
@@ -165,7 +186,7 @@ namespace SoftwareDevelopment2016
             else
             {
                 return new Interval(list.Min().Value, list.Max().Value);
-            }
+            } 
         }
 
         public Interval? GetRange()
