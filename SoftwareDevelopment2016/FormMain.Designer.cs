@@ -51,6 +51,7 @@ namespace SoftwareDevelopment2016
             this.editPlotsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getRegressionEquationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -220,7 +221,8 @@ namespace SoftwareDevelopment2016
             this.plotToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editPlotsToolStripMenuItem,
             this.windowToolStripMenuItem,
-            this.exportPlotToolStripMenuItem});
+            this.exportPlotToolStripMenuItem,
+            this.getRegressionEquationToolStripMenuItem});
             this.plotToolStripMenuItem.Enabled = false;
             this.plotToolStripMenuItem.Name = "plotToolStripMenuItem";
             this.plotToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
@@ -230,7 +232,7 @@ namespace SoftwareDevelopment2016
             // 
             this.editPlotsToolStripMenuItem.Name = "editPlotsToolStripMenuItem";
             this.editPlotsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.editPlotsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.editPlotsToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.editPlotsToolStripMenuItem.Text = "Edit &Plots";
             this.editPlotsToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.editPlotsToolStripMenuItem.Click += new System.EventHandler(this.OnEditPlots);
@@ -239,7 +241,7 @@ namespace SoftwareDevelopment2016
             // 
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             this.windowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.windowToolStripMenuItem.Text = "Edit &Window";
             this.windowToolStripMenuItem.Click += new System.EventHandler(this.OnEditWindow);
             // 
@@ -247,9 +249,17 @@ namespace SoftwareDevelopment2016
             // 
             this.exportPlotToolStripMenuItem.Name = "exportPlotToolStripMenuItem";
             this.exportPlotToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.exportPlotToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.exportPlotToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.exportPlotToolStripMenuItem.Text = "E&xport Plot";
             this.exportPlotToolStripMenuItem.Click += new System.EventHandler(this.OnExportPlot);
+            // 
+            // getRegressionEquationToolStripMenuItem
+            // 
+            this.getRegressionEquationToolStripMenuItem.Name = "getRegressionEquationToolStripMenuItem";
+            this.getRegressionEquationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.getRegressionEquationToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.getRegressionEquationToolStripMenuItem.Text = "Get Regression Equation";
+            this.getRegressionEquationToolStripMenuItem.Click += new System.EventHandler(this.OnGetRegressionEquation);
             // 
             // helpToolStripMenuItem
             // 
@@ -755,6 +765,7 @@ namespace SoftwareDevelopment2016
         private System.Windows.Forms.ToolStripMenuItem addDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteDataSetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem getRegressionEquationToolStripMenuItem;
     }
 }
 

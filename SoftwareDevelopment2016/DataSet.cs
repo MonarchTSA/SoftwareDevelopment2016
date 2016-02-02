@@ -70,6 +70,49 @@ namespace SoftwareDevelopment2016
             }
             return sum;
         }
+        public override string ToString()
+        {
+            if(Coefficients.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                string result = "";
+                if(Coefficients[0] > 0)
+                {
+                    result += "+" + Coefficients[0] + "\n";
+                }
+                else
+                {
+                    result += Coefficients[0] + "\n";
+                }
+                for(int i = 1; i < Coefficients.Count; ++i)
+                {
+                    if(Coefficients[i] != 0)
+                    {
+                        if(Coefficients[i] != 1)
+                        {
+                            if(Coefficients[i] > 0)
+                            {
+                                result += "+" + Coefficients[i] + " ";
+                            }
+                            else
+                            {
+                                result += Coefficients[i] + " ";
+                            }
+                        }
+                        result += "x";
+                        if(i != 1)
+                        {
+                            result += "^" + i;
+                        }
+                        result += "\n";
+                    }
+                }
+                return result.Substring(0, result.Length - 1);
+            }
+        }
     }
 
     [Serializable()]
@@ -165,7 +208,7 @@ namespace SoftwareDevelopment2016
                     }
                 }
                 var list = (from m in modes orderby m.Item2 descending select m).ToList();
-                if (list.Count == 0 || list[0].Item2 > list[1].Item2)
+                if (list.Count == 1 || list[0].Item2 > list[1].Item2)
                 {
                     return list[0].Item1;
                 }

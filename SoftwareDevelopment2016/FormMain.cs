@@ -646,5 +646,13 @@ namespace SoftwareDevelopment2016
                 }
             }
         }
+
+        private void OnGetRegressionEquation(object sender, EventArgs e)
+        {
+            if (GetCurrentDataSet().Regression != null)
+            {
+                MessageBox.Show(GetCurrentDataSet().Regression.Value.ToString(), "Regression", MessageBoxButtons.OK);
+            }
+        }
     }
 }
