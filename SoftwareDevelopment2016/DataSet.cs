@@ -165,7 +165,7 @@ namespace SoftwareDevelopment2016
                     }
                 }
                 var list = (from m in modes orderby m.Item2 descending select m).ToList();
-                if (list[0].Item2 > list[1].Item2)
+                if (list.Count == 0 || list[0].Item2 > list[1].Item2)
                 {
                     return list[0].Item1;
                 }

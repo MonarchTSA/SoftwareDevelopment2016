@@ -265,6 +265,7 @@ namespace SoftwareDevelopment2016
                     numericUpDownOrder.Enabled = false;
                 }
                 IsSaved = false;
+                GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
                 this.Refresh();
             }
         }
