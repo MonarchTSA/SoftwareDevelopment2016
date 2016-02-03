@@ -34,6 +34,9 @@ namespace SoftwareDevelopment2016
 
         private string CurrentFileName { get; set; }
         private bool IsSaved { get; set; }
+        
+        private bool IsDetached { get; set; }
+        private FormPlot FormPlot { get; set; }
 
         public FormMain()
         {
@@ -73,6 +76,8 @@ namespace SoftwareDevelopment2016
             CurrentFileName = "";
             IsSaved = true;
 
+            IsDetached = false;
+
             PlotBitmap = new Bitmap(panelPlot.Width, panelPlot.Height);
         }
 
@@ -83,18 +88,27 @@ namespace SoftwareDevelopment2016
 
         private void DrawPlot(object sender, PaintEventArgs e)
         {
+            e.Graphics.DrawImage(PlotBitmap, Point.Empty);
+        }
+
+        private void DrawPlotBitmap()
+        {
+            float width = IsDetached ? FormPlot.panelPlot.Width : panelPlot.Width;
+            float height = IsDetached ? FormPlot.panelPlot.Height : panelPlot.Height;
+            //PlotBitmap.
             using (Graphics graphics = Graphics.FromImage(PlotBitmap))
             {
                 graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 graphics.Clear(Color.White);
 
-                double xstep = (XMax - XMin) / panelPlot.Width;
-                double ystep = (YMax - YMin) / panelPlot.Height;
+
+                double xstep = (XMax - XMin) / width;
+                double ystep = (YMax - YMin) / height;
                 double xaxis = YMax / ystep;
                 double yaxis = -XMin / xstep;
 
-                graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, (float)xaxis), new PointF(panelPlot.Width, (float)xaxis));
-                graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, panelPlot.Height));
+                graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, (float)xaxis), new PointF(width, (float)xaxis));
+                graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, height));
                 if(yaxis >= 0)
                 {
                     for (double i = yaxis - XTickInterval / xstep; i >= 0; i -= XTickInterval / xstep) 
@@ -102,9 +116,9 @@ namespace SoftwareDevelopment2016
                         graphics.DrawLine(new Pen(Color.Black, 1f) , new PointF((float)i, (float)xaxis - 5), new PointF((float)i, (float)xaxis + 5));
                     }
                 }
-                if(yaxis <= panelPlot.Width)
+                if(yaxis <= width)
                 {
-                    for (double i = yaxis + XTickInterval / xstep; i <= panelPlot.Width; i += XTickInterval / xstep) 
+                    for (double i = yaxis + XTickInterval / xstep; i <= width; i += XTickInterval / xstep) 
                     {
                         graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)i, (float)xaxis - 5), new PointF((float)i, (float)xaxis + 5));
                     }
@@ -116,9 +130,9 @@ namespace SoftwareDevelopment2016
                         graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis - 5, (float)i), new PointF((float)yaxis + 5 , (float)i));
                     }
                 }
-                if(xaxis <= panelPlot.Height)
+                if(xaxis <= height)
                 {
-                    for (double i = xaxis + YTickInterval / ystep; i <= panelPlot.Height; i += YTickInterval / ystep)
+                    for (double i = xaxis + YTickInterval / ystep; i <= height; i += YTickInterval / ystep)
                     {
                         graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis - 5, (float)i), new PointF((float)yaxis + 5, (float)i));
                     }
@@ -172,7 +186,6 @@ namespace SoftwareDevelopment2016
                     }
                 }
             }
-            e.Graphics.DrawImage(PlotBitmap, Point.Empty);
         }
 
         private void OnCreateDataSet(object sender, EventArgs e)
@@ -302,7 +315,7 @@ namespace SoftwareDevelopment2016
                 }
                 IsSaved = false;
                 GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
-                this.Refresh();
+                RefreshPlot();
             }
         }
 
@@ -370,7 +383,7 @@ namespace SoftwareDevelopment2016
         private void OnPlotCheckChange(object sender, EventArgs e)
         {
             GetCurrentDataSet().IsPlotted = checkBoxPlotPoints.CheckState == CheckState.Checked ? true : false;
-            this.Refresh();
+            RefreshPlot();
             IsSaved = false;
         }
 
@@ -378,14 +391,14 @@ namespace SoftwareDevelopment2016
         {
             GetCurrentDataSet().IsRegressionPlotted = checkBoxPlotRegression.CheckState == CheckState.Checked ? true : false;
             GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
-            this.Refresh();
+            RefreshPlot();
             IsSaved = false;
         }
 
         private void OnOrderChange(object sender, EventArgs e)
         {
             GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
-            this.Refresh();
+            RefreshPlot();
             IsSaved = false;
         }
 
@@ -400,7 +413,7 @@ namespace SoftwareDevelopment2016
                 YMax = form.YMax;
                 XTickInterval = form.XTickInterval;
                 YTickInterval = form.YTickInterval;
-                this.Refresh();
+                RefreshPlot();
             }
         }
 
@@ -412,7 +425,7 @@ namespace SoftwareDevelopment2016
                 GetCurrentDataSet().PointColor = form.PointColor;
                 GetCurrentDataSet().PointSize = form.PointSize;
                 GetCurrentDataSet().PointShape = form.PointShape;
-                this.Refresh();
+                RefreshPlot();
                 IsSaved = false;
             }
         }
@@ -577,8 +590,8 @@ namespace SoftwareDevelopment2016
                 numericUpDownOrder.Value = 1;
                 DataSets.Clear();
                 IsSaved = true;
-                this.Refresh();
-                foreach(Label l in DescriptiveLabels)
+                RefreshPlot();
+                foreach (Label l in DescriptiveLabels)
                 {
                     l.Enabled = false;
                     l.Text = "";
@@ -616,6 +629,7 @@ namespace SoftwareDevelopment2016
             }
         }
 
+        //TODO: bug when entering same name
         private void OnEditDataSet(object sender, EventArgs e)
         {
             FormCreateDataSet form = new FormCreateDataSet(GetCurrentDataSet().Name);
@@ -625,34 +639,42 @@ namespace SoftwareDevelopment2016
                 int index = 0;
                 string name = form.DataSetName;
                 comboBoxDataSets.Items.RemoveAt(CurrentDataSetIndex);
-                for (int i = 0; i < comboBoxDataSets.Items.Count; ++i)
+                if(comboBoxDataSets.Items.Count == 0)
                 {
-                    
-                    string s = comboBoxDataSets.Items[i].ToString();
-                    if (name.CompareTo(s) <= 0)
-                    {
-                        comboBoxDataSets.Items.Insert(i, name);
-                        index = i;
-                        break;
-                    }
-                    if (i == comboBoxDataSets.Items.Count - 1)
-                    {
-                        comboBoxDataSets.Items.Add(name);
-                        index = comboBoxDataSets.Items.Count - 1;
-                        break;
-                    }
+                    comboBoxDataSets.Items.Add(name);
+                    comboBoxDataSets.SelectedIndex = 0;
                 }
-                comboBoxDataSets.SelectedIndex = index;
-                var temp = DataSets[CurrentDataSetIndex];
-                DataSets[CurrentDataSetIndex] = DataSets[index];
-                DataSets[index] = temp;
-                CurrentDataSetIndex = index;
+                else
+                {
+                    for (int i = 0; i < comboBoxDataSets.Items.Count; ++i)
+                    {
+                    
+                        string s = comboBoxDataSets.Items[i].ToString();
+                        if (name.CompareTo(s) <= 0)
+                        {
+                            comboBoxDataSets.Items.Insert(i, name);
+                            index = i;
+                            break;
+                        }
+                        if (i == comboBoxDataSets.Items.Count - 1)
+                        {
+                            comboBoxDataSets.Items.Add(name);
+                            index = comboBoxDataSets.Items.Count - 1;
+                            break;
+                        }
+                    }
+                    comboBoxDataSets.SelectedIndex = index;
+                    var temp = DataSets[CurrentDataSetIndex];
+                    DataSets[CurrentDataSetIndex] = DataSets[index];
+                    DataSets[index] = temp;
+                    CurrentDataSetIndex = index;
+                }
             }
         }
 
         private void OnDeleteDataSet(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Are you sure you want to delet the current data set?", "Delete" , MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if(MessageBox.Show("Are you sure you want to delete the current data set?", "Delete" , MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 if(DataSets.Count - 1 == 0)
                 {
@@ -713,7 +735,31 @@ namespace SoftwareDevelopment2016
             XMax = GetCurrentDataSet().GetDomain().Value.Max + x;
             YMin = GetCurrentDataSet().GetRange().Value.Min - y;
             YMax = GetCurrentDataSet().GetRange().Value.Max + y;
-            this.Refresh();
+            RefreshPlot();
+        }
+
+        private void OnDetachPlot(object sender, EventArgs e)
+        {
+            plotBox.Dispose();
+            this.ClientSize =  new Size(dataBox.Location.X * 2 + dataBox.Width, this.ClientSize.Height);
+            IsDetached = true;
+            FormPlot = new FormPlot();
+            FormPlot.Show();
+            RefreshPlot();
+        }
+
+        private void RefreshPlot()
+        {
+            DrawPlotBitmap();
+            if(IsDetached)
+            {
+                FormPlot.PlotBitmap = PlotBitmap;
+                FormPlot.Refresh();
+            }
+            else
+            {
+                this.Refresh();
+            }
         }
     }
 }

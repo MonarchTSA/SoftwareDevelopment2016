@@ -91,6 +91,7 @@ namespace SoftwareDevelopment2016
             this.labelMedianText = new System.Windows.Forms.Label();
             this.labelMeanText = new System.Windows.Forms.Label();
             this.buttonCreateDataSet = new System.Windows.Forms.Button();
+            this.detachPlotFromWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.plotBox.SuspendLayout();
@@ -223,6 +224,7 @@ namespace SoftwareDevelopment2016
             this.editPlotsToolStripMenuItem,
             this.windowToolStripMenuItem,
             this.exportPlotToolStripMenuItem,
+            this.detachPlotFromWindowToolStripMenuItem,
             this.getRegressionEquationToolStripMenuItem,
             this.zoomToPointsToolStripMenuItem});
             this.plotToolStripMenuItem.Enabled = false;
@@ -234,7 +236,7 @@ namespace SoftwareDevelopment2016
             // 
             this.editPlotsToolStripMenuItem.Name = "editPlotsToolStripMenuItem";
             this.editPlotsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.editPlotsToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.editPlotsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.editPlotsToolStripMenuItem.Text = "Edit &Plots";
             this.editPlotsToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.editPlotsToolStripMenuItem.Click += new System.EventHandler(this.OnEditPlots);
@@ -243,7 +245,7 @@ namespace SoftwareDevelopment2016
             // 
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             this.windowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.windowToolStripMenuItem.Text = "Edit &Window";
             this.windowToolStripMenuItem.Click += new System.EventHandler(this.OnEditWindow);
             // 
@@ -251,7 +253,7 @@ namespace SoftwareDevelopment2016
             // 
             this.exportPlotToolStripMenuItem.Name = "exportPlotToolStripMenuItem";
             this.exportPlotToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.exportPlotToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.exportPlotToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.exportPlotToolStripMenuItem.Text = "E&xport Plot";
             this.exportPlotToolStripMenuItem.Click += new System.EventHandler(this.OnExportPlot);
             // 
@@ -260,8 +262,8 @@ namespace SoftwareDevelopment2016
             this.getRegressionEquationToolStripMenuItem.Enabled = false;
             this.getRegressionEquationToolStripMenuItem.Name = "getRegressionEquationToolStripMenuItem";
             this.getRegressionEquationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.getRegressionEquationToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.getRegressionEquationToolStripMenuItem.Text = "Get Regression Equation";
+            this.getRegressionEquationToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.getRegressionEquationToolStripMenuItem.Text = "Get &Regression Equation";
             this.getRegressionEquationToolStripMenuItem.Click += new System.EventHandler(this.OnGetRegressionEquation);
             // 
             // zoomToPointsToolStripMenuItem
@@ -269,7 +271,7 @@ namespace SoftwareDevelopment2016
             this.zoomToPointsToolStripMenuItem.Enabled = false;
             this.zoomToPointsToolStripMenuItem.Name = "zoomToPointsToolStripMenuItem";
             this.zoomToPointsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.zoomToPointsToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.zoomToPointsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.zoomToPointsToolStripMenuItem.Text = "&Zoom To Points";
             this.zoomToPointsToolStripMenuItem.Click += new System.EventHandler(this.OnZoomToPoints);
             // 
@@ -693,6 +695,14 @@ namespace SoftwareDevelopment2016
             this.buttonCreateDataSet.UseVisualStyleBackColor = true;
             this.buttonCreateDataSet.Click += new System.EventHandler(this.OnCreateDataSet);
             // 
+            // detachPlotFromWindowToolStripMenuItem
+            // 
+            this.detachPlotFromWindowToolStripMenuItem.Name = "detachPlotFromWindowToolStripMenuItem";
+            this.detachPlotFromWindowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.detachPlotFromWindowToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.detachPlotFromWindowToolStripMenuItem.Text = "Detac&h Plot From Window";
+            this.detachPlotFromWindowToolStripMenuItem.Click += new System.EventHandler(this.OnDetachPlot);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -705,7 +715,6 @@ namespace SoftwareDevelopment2016
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximumSize = new System.Drawing.Size(815, 362);
-            this.MinimumSize = new System.Drawing.Size(815, 362);
             this.Name = "FormMain";
             this.Text = "Plotter";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
@@ -780,6 +789,7 @@ namespace SoftwareDevelopment2016
         private System.Windows.Forms.ToolStripMenuItem deleteDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getRegressionEquationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomToPointsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem detachPlotFromWindowToolStripMenuItem;
     }
 }
 
