@@ -289,6 +289,8 @@ namespace SoftwareDevelopment2016
                     labelOrder.Enabled = true;
                     numericUpDownOrder.Enabled = true;
                     numericUpDownOrder.Maximum = list.Count - 1;
+                    getRegressionEquationToolStripMenuItem.Enabled = true;
+                    zoomToPointsToolStripMenuItem.Enabled = true;
                 }
                 else
                 {
@@ -296,6 +298,8 @@ namespace SoftwareDevelopment2016
                     checkBoxPlotRegression.Enabled = false;
                     labelOrder.Enabled = false;
                     numericUpDownOrder.Enabled = false;
+                    getRegressionEquationToolStripMenuItem.Enabled = false;
+                    zoomToPointsToolStripMenuItem.Enabled = false;
                 }
                 IsSaved = false;
                 GetCurrentDataSet().CalculateNthPolynomialRegression((int)numericUpDownOrder.Value);
@@ -591,7 +595,6 @@ namespace SoftwareDevelopment2016
             }
         }
 
-        //TODO: Cancel
         private bool PromptUserToSave()
         {
             DialogResult result = MessageBox.Show("The current file is not saved. Would you like to save before exiting?", "Save", MessageBoxButtons.YesNoCancel);
@@ -701,6 +704,17 @@ namespace SoftwareDevelopment2016
             {
                 MessageBox.Show(GetCurrentDataSet().Regression.Value.ToString(), "Regression", MessageBoxButtons.OK);
             }
+        }
+
+        private void OnZoomToPoints(object sender, EventArgs e)
+        {
+            double x = GetCurrentDataSet().GetDomain().Value.GetLength() * 0.1 / 0.9;
+            double y = GetCurrentDataSet().GetRange().Value.GetLength() * 0.1 / 0.9;
+            XMin = GetCurrentDataSet().GetDomain().Value.Min - x;
+            XMax = GetCurrentDataSet().GetDomain().Value.Max + x;
+            YMin = GetCurrentDataSet().GetRange().Value.Min - y;
+            YMax = GetCurrentDataSet().GetRange().Value.Max + y;
+            this.Refresh();
         }
     }
 }

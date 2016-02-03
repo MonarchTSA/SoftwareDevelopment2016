@@ -39,6 +39,10 @@ namespace SoftwareDevelopment2016
             Min = min;
             Max = max;
         }
+        public double GetLength()
+        {
+            return Max - Min;
+        }
         public override string ToString()
         {
             return "[" + Min + ", " + Max + "]";

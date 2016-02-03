@@ -52,6 +52,7 @@ namespace SoftwareDevelopment2016
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getRegressionEquationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -222,7 +223,8 @@ namespace SoftwareDevelopment2016
             this.editPlotsToolStripMenuItem,
             this.windowToolStripMenuItem,
             this.exportPlotToolStripMenuItem,
-            this.getRegressionEquationToolStripMenuItem});
+            this.getRegressionEquationToolStripMenuItem,
+            this.zoomToPointsToolStripMenuItem});
             this.plotToolStripMenuItem.Enabled = false;
             this.plotToolStripMenuItem.Name = "plotToolStripMenuItem";
             this.plotToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
@@ -255,11 +257,21 @@ namespace SoftwareDevelopment2016
             // 
             // getRegressionEquationToolStripMenuItem
             // 
+            this.getRegressionEquationToolStripMenuItem.Enabled = false;
             this.getRegressionEquationToolStripMenuItem.Name = "getRegressionEquationToolStripMenuItem";
             this.getRegressionEquationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.getRegressionEquationToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.getRegressionEquationToolStripMenuItem.Text = "Get Regression Equation";
             this.getRegressionEquationToolStripMenuItem.Click += new System.EventHandler(this.OnGetRegressionEquation);
+            // 
+            // zoomToPointsToolStripMenuItem
+            // 
+            this.zoomToPointsToolStripMenuItem.Enabled = false;
+            this.zoomToPointsToolStripMenuItem.Name = "zoomToPointsToolStripMenuItem";
+            this.zoomToPointsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.zoomToPointsToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.zoomToPointsToolStripMenuItem.Text = "&Zoom To Points";
+            this.zoomToPointsToolStripMenuItem.Click += new System.EventHandler(this.OnZoomToPoints);
             // 
             // helpToolStripMenuItem
             // 
@@ -766,6 +778,7 @@ namespace SoftwareDevelopment2016
         private System.Windows.Forms.ToolStripMenuItem editDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getRegressionEquationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zoomToPointsToolStripMenuItem;
     }
 }
 
