@@ -81,7 +81,6 @@ namespace SoftwareDevelopment2016
             return DataSets[CurrentDataSetIndex];
         }
 
-        //TODO: Zoom to points
         private void DrawPlot(object sender, PaintEventArgs e)
         {
             using (Graphics graphics = Graphics.FromImage(PlotBitmap))

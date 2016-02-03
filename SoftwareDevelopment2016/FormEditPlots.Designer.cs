@@ -137,11 +137,11 @@
             // labelEditPlots
             // 
             this.labelEditPlots.AutoSize = true;
-            this.labelEditPlots.Location = new System.Drawing.Point(98, 21);
+            this.labelEditPlots.Location = new System.Drawing.Point(67, 21);
             this.labelEditPlots.Name = "labelEditPlots";
-            this.labelEditPlots.Size = new System.Drawing.Size(48, 13);
+            this.labelEditPlots.Size = new System.Drawing.Size(115, 13);
             this.labelEditPlots.TabIndex = 9;
-            this.labelEditPlots.Text = "Edit plot:";
+            this.labelEditPlots.Text = "Edit the plot properties:";
             // 
             // colorSamplePanel
             // 
@@ -168,8 +168,9 @@
             this.Controls.Add(this.labelSize);
             this.Controls.Add(this.buttonColor);
             this.Controls.Add(this.labelColor);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormEditPlot";
-            this.Text = "FormEditPlots";
+            this.Text = "Edit plot";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -702,11 +702,12 @@ namespace SoftwareDevelopment2016
             this.Controls.Add(this.plotBox);
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.Color.Black;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximumSize = new System.Drawing.Size(815, 362);
             this.MinimumSize = new System.Drawing.Size(815, 362);
             this.Name = "FormMain";
-            this.Text = "Form1";
+            this.Text = "Plotter";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.Click += new System.EventHandler(this.OnClick);
             this.menuStrip1.ResumeLayout(false);

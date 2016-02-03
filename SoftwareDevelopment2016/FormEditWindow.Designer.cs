@@ -205,8 +205,9 @@
             this.Controls.Add(this.labelMax);
             this.Controls.Add(this.numericUpDownXMin);
             this.Controls.Add(this.labelXMin);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormEditWindow";
-            this.Text = "FormEditWindow";
+            this.Text = "Edit window";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownXMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownXMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYMin)).EndInit();
