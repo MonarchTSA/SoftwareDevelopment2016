@@ -529,13 +529,15 @@ namespace SoftwareDevelopment2016
 
         private void OnFileOpen(object sender, EventArgs e)
         {
-            PromptUserToSave();
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Data set file (*.ds)|*.ds";
-            if(ofd.ShowDialog() == DialogResult.OK)
+            if(PromptUserToSave())
             {
-                CurrentFileName = ofd.FileName;
-                ReadFromBinary();
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "Data set file (*.ds)|*.ds";
+                if(ofd.ShowDialog() == DialogResult.OK)
+                {
+                    CurrentFileName = ofd.FileName;
+                    ReadFromBinary();
+                }
             }
         }
 
@@ -555,50 +557,61 @@ namespace SoftwareDevelopment2016
 
         private void OnNew(object sender, EventArgs e)
         {
-            PromptUserToSave();
-            CurrentFileName = "";
-            comboBoxDataSets.Items.Clear();
-            comboBoxDataSets.Enabled = false;
-            dataGridView.Enabled = false;
-            dataGridView.Rows.Clear();
-            plotToolStripMenuItem.Enabled = false;
-            checkBoxPlotPoints.Enabled = false;
-            checkBoxPlotPoints.Checked = false;
-            checkBoxPlotRegression.Enabled = false;
-            checkBoxPlotRegression.Checked = false;
-            labelOrder.Enabled = false;
-            numericUpDownOrder.Enabled = false;
-            numericUpDownOrder.Value = 1;
-            DataSets.Clear();
-            IsSaved = true;
-            this.Refresh();
-            foreach(Label l in DescriptiveLabels)
+            if(PromptUserToSave())
             {
-                l.Enabled = false;
-                l.Text = "";
-            }
-            foreach(Label l in DescriptiveLabelText)
-            {
-                l.Enabled = false;
-            } 
-            foreach(Label l in Dividers)
-            {
-                l.Enabled = false;
+                CurrentFileName = "";
+                comboBoxDataSets.Items.Clear();
+                comboBoxDataSets.Enabled = false;
+                dataGridView.Enabled = false;
+                dataGridView.Rows.Clear();
+                plotToolStripMenuItem.Enabled = false;
+                checkBoxPlotPoints.Enabled = false;
+                checkBoxPlotPoints.Checked = false;
+                checkBoxPlotRegression.Enabled = false;
+                checkBoxPlotRegression.Checked = false;
+                labelOrder.Enabled = false;
+                numericUpDownOrder.Enabled = false;
+                numericUpDownOrder.Value = 1;
+                DataSets.Clear();
+                IsSaved = true;
+                this.Refresh();
+                foreach(Label l in DescriptiveLabels)
+                {
+                    l.Enabled = false;
+                    l.Text = "";
+                }
+                foreach(Label l in DescriptiveLabelText)
+                {
+                    l.Enabled = false;
+                } 
+                foreach(Label l in Dividers)
+                {
+                    l.Enabled = false;
+                }
             }
         }
 
         //TODO: Cancel
-        private void PromptUserToSave()
+        private bool PromptUserToSave()
         {
-            if(!IsSaved && MessageBox.Show("The current file is not saved. Would you like to save before exiting?","Save",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            DialogResult result = MessageBox.Show("The current file is not saved. Would you like to save before exiting?", "Save", MessageBoxButtons.YesNoCancel);
+            if(result == DialogResult.Cancel)
+            {
+                return false;
+            }
+            else if (!IsSaved && result == DialogResult.Yes)
             {
                 OnSave(null, null);
             }
+            return true;
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            PromptUserToSave();
+            if(!PromptUserToSave())
+            {
+                e.Cancel = true;
+            }
         }
 
         private void OnEditDataSet(object sender, EventArgs e)
