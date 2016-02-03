@@ -18,14 +18,18 @@ namespace SoftwareDevelopment2016
         public double XMax { get; set; }
         public double YMin { get; set; }
         public double YMax { get; set; }
+        public double XTickInterval { get; set; }
+        public double YTickInterval { get; set; }
 
-        public FormEditWindow(double xmin, double xmax, double ymin, double ymax)
+        public FormEditWindow(double xmin, double xmax, double ymin, double ymax, double xtickinterval, double ytickinterval)
         {
             InitializeComponent();
             XMin = xmin;
             XMax = xmax;
             YMin = ymin;
             YMax = ymax;
+            XTickInterval = xtickinterval;
+            YTickInterval = ytickinterval;
 
             numericUpDownXMax.Maximum = Decimal.MaxValue;
             numericUpDownXMax.Minimum = Decimal.MinValue;
@@ -35,11 +39,17 @@ namespace SoftwareDevelopment2016
             numericUpDownYMax.Minimum = Decimal.MinValue;
             numericUpDownYMin.Maximum = Decimal.MaxValue;
             numericUpDownYMin.Minimum = Decimal.MinValue;
+            numericUpDownXTickInterval.Maximum = Decimal.MaxValue;
+            numericUpDownXTickInterval.Minimum = 1;
+            numericUpDownYTickInterval.Maximum = Decimal.MaxValue;
+            numericUpDownYTickInterval.Minimum = 1;
 
             numericUpDownXMin.Value = (decimal)XMin;
             numericUpDownXMax.Value = (decimal)XMax;
             numericUpDownYMin.Value = (decimal)YMin;
             numericUpDownYMax.Value = (decimal)YMax;
+            numericUpDownXTickInterval.Value = (decimal)XTickInterval;
+            numericUpDownYTickInterval.Value = (decimal)YTickInterval;
         }
 
         private void OnButtonClick(object sender, EventArgs e)
@@ -62,6 +72,8 @@ namespace SoftwareDevelopment2016
                     XMax = (double)xmax;
                     YMin = (double)ymin;
                     YMax = (double)ymax;
+                    XTickInterval = (double)numericUpDownXTickInterval.Value;
+                    YTickInterval = (double)numericUpDownYTickInterval.Value;
 
                     this.DialogResult = DialogResult.OK;
                 }

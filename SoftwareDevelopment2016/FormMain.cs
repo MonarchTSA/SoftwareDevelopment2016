@@ -27,6 +27,8 @@ namespace SoftwareDevelopment2016
         private double XMax { get; set; }
         private double YMin { get; set; }
         private double YMax { get; set; }
+        private double XTickInterval { get; set; }
+        private double YTickInterval { get; set; }
 
         private Bitmap PlotBitmap { get; set; }
 
@@ -42,6 +44,8 @@ namespace SoftwareDevelopment2016
             XMax = 10;
             YMin = -2;
             YMax = 6;
+            XTickInterval = 1;
+            YTickInterval = 1;
 
             Dividers.Add(divider1);
             Dividers.Add(divider2);
@@ -77,6 +81,7 @@ namespace SoftwareDevelopment2016
             return DataSets[CurrentDataSetIndex];
         }
 
+        //TODO: Zoom to points
         private void DrawPlot(object sender, PaintEventArgs e)
         {
             using (Graphics graphics = Graphics.FromImage(PlotBitmap))
@@ -91,6 +96,34 @@ namespace SoftwareDevelopment2016
 
                 graphics.DrawLine(new Pen(Color.Black, 1f), new PointF(0, (float)xaxis), new PointF(panelPlot.Width, (float)xaxis));
                 graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis, 0), new PointF((float)yaxis, panelPlot.Height));
+                if(yaxis >= 0)
+                {
+                    for (double i = yaxis - XTickInterval / xstep; i >= 0; i -= XTickInterval / xstep) 
+                    {
+                        graphics.DrawLine(new Pen(Color.Black, 1f) , new PointF((float)i, (float)xaxis - 5), new PointF((float)i, (float)xaxis + 5));
+                    }
+                }
+                if(yaxis <= panelPlot.Width)
+                {
+                    for (double i = yaxis + XTickInterval / xstep; i <= panelPlot.Width; i += XTickInterval / xstep) 
+                    {
+                        graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)i, (float)xaxis - 5), new PointF((float)i, (float)xaxis + 5));
+                    }
+                }
+                if(xaxis >= 0)
+                {
+                    for (double i = xaxis - YTickInterval / ystep; i >= 0; i -= YTickInterval / ystep) 
+                    {
+                        graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis - 5, (float)i), new PointF((float)yaxis + 5 , (float)i));
+                    }
+                }
+                if(xaxis <= panelPlot.Height)
+                {
+                    for (double i = xaxis + YTickInterval / ystep; i <= panelPlot.Height; i += YTickInterval / ystep)
+                    {
+                        graphics.DrawLine(new Pen(Color.Black, 1f), new PointF((float)yaxis - 5, (float)i), new PointF((float)yaxis + 5, (float)i));
+                    }
+                }
                 foreach (DataSet ds in DataSets)
                 {
                     if (ds.IsPlotted)
@@ -355,13 +388,15 @@ namespace SoftwareDevelopment2016
 
         private void OnEditWindow(object sender, EventArgs e)
         {
-            FormEditWindow form = new FormEditWindow(XMin, XMax, YMin, YMax);
+            FormEditWindow form = new FormEditWindow(XMin, XMax, YMin, YMax, XTickInterval, YTickInterval);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 XMin = form.XMin;
                 XMax = form.XMax;
                 YMin = form.YMin;
                 YMax = form.YMax;
+                XTickInterval = form.XTickInterval;
+                YTickInterval = form.YTickInterval;
                 this.Refresh();
             }
         }
@@ -403,7 +438,6 @@ namespace SoftwareDevelopment2016
             }
         }
 
-        //TODO: Prompt user to save unsaved changes
         private void OnSave(object sender, EventArgs e)
         {
             if(CurrentFileName == "")
@@ -553,6 +587,7 @@ namespace SoftwareDevelopment2016
             }
         }
 
+        //TODO: Cancel
         private void PromptUserToSave()
         {
             if(!IsSaved && MessageBox.Show("The current file is not saved. Would you like to save before exiting?","Save",MessageBoxButtons.YesNo) == DialogResult.Yes)
