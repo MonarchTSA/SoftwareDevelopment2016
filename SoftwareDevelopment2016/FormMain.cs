@@ -490,6 +490,7 @@ namespace SoftwareDevelopment2016
             {
                 DataSets = (List<DataSet>)formatter.Deserialize(stream);
                 stream.Close();
+                comboBoxDataSets.Items.Clear();
                 if (DataSets.Count == 0)
                 {
                     dataGridView.Enabled = false;
@@ -498,7 +499,15 @@ namespace SoftwareDevelopment2016
                     checkBoxPlotPoints.Enabled = false;
                     checkBoxPlotRegression.Enabled = false;
                     numericUpDownOrder.Enabled = false;
-                    foreach(Label l in DescriptiveLabels)
+                    plotToolStripMenuItem.Enabled = false;
+                    editPlotsToolStripMenuItem.Enabled = false;
+                    windowToolStripMenuItem.Enabled = false;
+                    exportPlotToolStripMenuItem.Enabled = false;
+                    attachPlotFromWindowToolStripMenuItem.Enabled = false;
+                    deleteDataSetToolStripMenuItem.Enabled = false;
+                    editDataSetToolStripMenuItem.Enabled = false;
+
+                    foreach (Label l in DescriptiveLabels)
                     {
                         l.Enabled = false;
                     }
@@ -536,11 +545,23 @@ namespace SoftwareDevelopment2016
                     checkBoxPlotPoints.Enabled = true;
                     plotToolStripMenuItem.Enabled = true;
                     comboBoxDataSets.Enabled = true;
-                    foreach(DataSet ds in DataSets)
+                    plotToolStripMenuItem.Enabled = true;
+                    editPlotsToolStripMenuItem.Enabled = true;
+                    windowToolStripMenuItem.Enabled = true;
+                    exportPlotToolStripMenuItem.Enabled = true;
+                    attachPlotFromWindowToolStripMenuItem.Enabled = true;
+                    editDataSetToolStripMenuItem.Enabled = true;
+                    deleteDataSetToolStripMenuItem.Enabled = true;
+                    foreach (DataSet ds in DataSets)
                     {
                         comboBoxDataSets.Items.Add(ds.Name);
                     }
                     comboBoxDataSets.SelectedIndex = 0;
+                    if((from dp in GetCurrentDataSet().Data where !dp.isNull() select dp).ToList().Count > 0)
+                    {
+                        getRegressionEquationToolStripMenuItem.Enabled = true;
+                        zoomToPointsToolStripMenuItem.Enabled = true;
+                    }
                 }
                 IsSaved = true;
             }
