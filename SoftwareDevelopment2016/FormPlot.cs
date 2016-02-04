@@ -14,16 +14,24 @@ namespace SoftwareDevelopment2016
     {
 
         public Bitmap PlotBitmap;
+        public static FormMain FormMain;
 
-        public FormPlot()
+        public FormPlot(FormMain form)
         {
             InitializeComponent();
             PlotBitmap = new Bitmap(225, 225);
+            FormMain = form;
         }
 
         private void DrawPlot(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(PlotBitmap, Point.Empty);
+        }
+
+        private void OnResize(object sender, EventArgs e)
+        {
+            FormMain.DrawPlotBitmap();
+            FormMain.RefreshPlot();
         }
     }
 }

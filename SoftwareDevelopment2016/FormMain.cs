@@ -91,11 +91,12 @@ namespace SoftwareDevelopment2016
             e.Graphics.DrawImage(PlotBitmap, Point.Empty);
         }
 
-        private void DrawPlotBitmap()
+        public void DrawPlotBitmap()
         {
             float width = IsDetached ? FormPlot.panelPlot.Width : panelPlot.Width;
             float height = IsDetached ? FormPlot.panelPlot.Height : panelPlot.Height;
             //PlotBitmap.
+            PlotBitmap = new Bitmap((int)width, (int)height);
             using (Graphics graphics = Graphics.FromImage(PlotBitmap))
             {
                 graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -716,6 +717,7 @@ namespace SoftwareDevelopment2016
                     comboBoxDataSets.SelectedIndex = CurrentDataSetIndex;
                     OnDataSetChange(comboBoxDataSets, null);
                 }
+                RefreshPlot();
             }
         }
 
@@ -743,12 +745,12 @@ namespace SoftwareDevelopment2016
             plotBox.Dispose();
             this.ClientSize =  new Size(dataBox.Location.X * 2 + dataBox.Width, this.ClientSize.Height);
             IsDetached = true;
-            FormPlot = new FormPlot();
+            FormPlot = new FormPlot(this);
             FormPlot.Show();
             RefreshPlot();
         }
 
-        private void RefreshPlot()
+        public void RefreshPlot()
         {
             DrawPlotBitmap();
             if(IsDetached)

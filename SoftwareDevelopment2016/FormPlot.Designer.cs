@@ -52,6 +52,7 @@
             this.Controls.Add(this.panelPlot);
             this.Name = "FormPlot";
             this.Text = "FormPlot";
+            this.Resize += new System.EventHandler(this.OnResize);
             this.ResumeLayout(false);
 
         }
