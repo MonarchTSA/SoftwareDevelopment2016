@@ -772,12 +772,18 @@ namespace SoftwareDevelopment2016
 
         private void OnZoomToPoints(object sender, EventArgs e)
         {
-            double x = GetCurrentDataSet().GetDomain().Value.GetLength() * 0.1 / 0.9;
-            double y = GetCurrentDataSet().GetRange().Value.GetLength() * 0.1 / 0.9;
-            XMin = GetCurrentDataSet().GetDomain().Value.Min - x;
-            XMax = GetCurrentDataSet().GetDomain().Value.Max + x;
-            YMin = GetCurrentDataSet().GetRange().Value.Min - y;
-            YMax = GetCurrentDataSet().GetRange().Value.Max + y;
+            var list1 = (from ds in DataSets select ds.GetDomain().Value.Min).ToList();
+            var list2 = (from ds in DataSets select ds.GetDomain().Value.Max).ToList();
+            var list3 = (from ds in DataSets select ds.GetRange().Value.Min).ToList();
+            var list4 = (from ds in DataSets select ds.GetRange().Value.Max).ToList();
+            Interval domain = new Interval((from ds in DataSets select ds.GetDomain().Value.Min).ToList().Min(), (from ds in DataSets select ds.GetDomain().Value.Max).ToList().Max());
+            Interval range = new Interval((from ds in DataSets select ds.GetRange().Value.Min).ToList().Min(), (from ds in DataSets select ds.GetRange().Value.Max).ToList().Max());
+            double x = domain.GetLength() * 0.1 / 0.9;
+            double y = range.GetLength() * 0.1 / 0.9;
+            XMin = domain.Min - x;
+            XMax = domain.Max + x;
+            YMin = range.Min - y;
+            YMax = range.Max + y;
             RefreshPlot();
         }
 
