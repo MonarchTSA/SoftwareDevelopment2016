@@ -829,5 +829,10 @@ namespace SoftwareDevelopment2016
             this.Size = new Size(815, 362);
             RefreshPlot();
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Made by the Monarch Teslas for the Software Development competition at the 2016 Colorado TSA State Conference.\n\nCredits:\nJustin Cai\nCalvin Mak\nEvan Sours\nSamantha Johnson" , "About");
+        }
     }
 }
