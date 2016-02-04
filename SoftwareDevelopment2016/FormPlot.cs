@@ -21,6 +21,7 @@ namespace SoftwareDevelopment2016
             InitializeComponent();
             PlotBitmap = new Bitmap(225, 225);
             FormMain = form;
+         
         }
 
         private void DrawPlot(object sender, PaintEventArgs e)

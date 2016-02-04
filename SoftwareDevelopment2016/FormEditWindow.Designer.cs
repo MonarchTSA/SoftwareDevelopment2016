@@ -207,6 +207,7 @@
             this.Controls.Add(this.labelXMin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormEditWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit window";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownXMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownXMax)).EndInit();

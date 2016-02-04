@@ -79,6 +79,8 @@ namespace SoftwareDevelopment2016
             IsDetached = false;
 
             PlotBitmap = new Bitmap(panelPlot.Width, panelPlot.Height);
+
+            RefreshPlot();
         }
 
         private DataSet GetCurrentDataSet()
@@ -747,6 +749,7 @@ namespace SoftwareDevelopment2016
             IsDetached = true;
             FormPlot = new FormPlot(this);
             FormPlot.Show();
+            FormPlot.Location = new Point(this.Location.X + this.Size.Width + 20, this.Location.Y);
             RefreshPlot();
         }
 

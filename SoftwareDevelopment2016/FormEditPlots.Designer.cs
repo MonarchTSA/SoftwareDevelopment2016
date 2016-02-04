@@ -170,6 +170,7 @@
             this.Controls.Add(this.labelColor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormEditPlot";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit plot";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSize)).EndInit();
             this.ResumeLayout(false);

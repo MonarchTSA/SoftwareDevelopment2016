@@ -50,8 +50,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.panelPlot);
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "FormPlot";
-            this.Text = "FormPlot";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Plotter";
             this.Resize += new System.EventHandler(this.OnResize);
             this.ResumeLayout(false);
 
