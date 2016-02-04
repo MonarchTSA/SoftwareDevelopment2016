@@ -218,6 +218,10 @@ namespace SoftwareDevelopment2016
                     }
                     checkBoxPlotPoints.Enabled = true;
                     plotToolStripMenuItem.Enabled = true;
+                    editPlotsToolStripMenuItem.Enabled = true;
+                    windowToolStripMenuItem.Enabled = true;
+                    exportPlotToolStripMenuItem.Enabled = true;
+                    attachPlotFromWindowToolStripMenuItem.Enabled = true;
                     editDataSetToolStripMenuItem.Enabled = true;
                     deleteDataSetToolStripMenuItem.Enabled = true;
                 }
@@ -591,6 +595,13 @@ namespace SoftwareDevelopment2016
                 labelOrder.Enabled = false;
                 numericUpDownOrder.Enabled = false;
                 numericUpDownOrder.Value = 1;
+                plotToolStripMenuItem.Enabled = false;
+                editPlotsToolStripMenuItem.Enabled = false;
+                windowToolStripMenuItem.Enabled = false;
+                exportPlotToolStripMenuItem.Enabled = false;
+                attachPlotFromWindowToolStripMenuItem.Enabled = false;
+                deleteDataSetToolStripMenuItem.Enabled = false;
+                editDataSetToolStripMenuItem.Enabled = false;
                 DataSets.Clear();
                 IsSaved = true;
                 RefreshPlot();
@@ -700,7 +711,14 @@ namespace SoftwareDevelopment2016
                     dataGridView.Rows.Clear();
                     numericUpDownOrder.Enabled = false;
                     labelOrder.Enabled = false;
-                    foreach(Label l in DescriptiveLabels)
+                    plotToolStripMenuItem.Enabled = false;
+                    editPlotsToolStripMenuItem.Enabled = false;
+                    windowToolStripMenuItem.Enabled = false;
+                    exportPlotToolStripMenuItem.Enabled = false;
+                    attachPlotFromWindowToolStripMenuItem.Enabled = false;
+                    deleteDataSetToolStripMenuItem.Enabled = false;
+                    editDataSetToolStripMenuItem.Enabled = false;
+                    foreach (Label l in DescriptiveLabels)
                     {
                         l.Enabled = false;
                         l.Text = "";
@@ -744,13 +762,22 @@ namespace SoftwareDevelopment2016
 
         private void OnDetachPlot(object sender, EventArgs e)
         {
-            plotBox.Dispose();
-            this.ClientSize =  new Size(dataBox.Location.X * 2 + dataBox.Width, this.ClientSize.Height);
-            IsDetached = true;
-            FormPlot = new FormPlot(this);
-            FormPlot.Show();
-            FormPlot.Location = new Point(this.Location.X + this.Size.Width + 20, this.Location.Y);
-            RefreshPlot();
+            if(!IsDetached)
+            {
+                plotBox.Hide();
+                this.ClientSize =  new Size(dataBox.Location.X * 2 + dataBox.Width, this.ClientSize.Height);
+                IsDetached = true;
+                FormPlot = new FormPlot(this);
+                FormPlot.Show();
+                FormPlot.Location = new Point(this.Location.X + this.Size.Width + 20, this.Location.Y);
+                RefreshPlot();
+                attachPlotFromWindowToolStripMenuItem.Text = "Reattach Plot To Window";
+            }
+            else
+            {
+                ReattachPlot();
+                attachPlotFromWindowToolStripMenuItem.Text = "Detach Plot From Window";
+            }
         }
 
         public void RefreshPlot()
@@ -765,6 +792,15 @@ namespace SoftwareDevelopment2016
             {
                 this.Refresh();
             }
+        }
+
+        public void ReattachPlot()
+        {
+            IsDetached = false;
+            FormPlot.Dispose();
+            plotBox.Show();
+            this.Size = new Size(815, 362);
+            RefreshPlot();
         }
     }
 }

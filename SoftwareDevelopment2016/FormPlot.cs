@@ -34,5 +34,17 @@ namespace SoftwareDevelopment2016
             FormMain.DrawPlotBitmap();
             FormMain.RefreshPlot();
         }
+
+        private void OnClosing(object sender, FormClosingEventArgs e)
+        {
+            FormMain.ReattachPlot();
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Middle)
+            {
+            }
+        }
     }
 }

@@ -51,7 +51,7 @@ namespace SoftwareDevelopment2016
             this.editPlotsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.detachPlotFromWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.attachPlotFromWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getRegressionEquationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -224,7 +224,7 @@ namespace SoftwareDevelopment2016
             this.editPlotsToolStripMenuItem,
             this.windowToolStripMenuItem,
             this.exportPlotToolStripMenuItem,
-            this.detachPlotFromWindowToolStripMenuItem,
+            this.attachPlotFromWindowToolStripMenuItem,
             this.getRegressionEquationToolStripMenuItem,
             this.zoomToPointsToolStripMenuItem});
             this.plotToolStripMenuItem.Enabled = false;
@@ -234,6 +234,7 @@ namespace SoftwareDevelopment2016
             // 
             // editPlotsToolStripMenuItem
             // 
+            this.editPlotsToolStripMenuItem.Enabled = false;
             this.editPlotsToolStripMenuItem.Name = "editPlotsToolStripMenuItem";
             this.editPlotsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.editPlotsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
@@ -243,6 +244,7 @@ namespace SoftwareDevelopment2016
             // 
             // windowToolStripMenuItem
             // 
+            this.windowToolStripMenuItem.Enabled = false;
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             this.windowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
             this.windowToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
@@ -251,19 +253,21 @@ namespace SoftwareDevelopment2016
             // 
             // exportPlotToolStripMenuItem
             // 
+            this.exportPlotToolStripMenuItem.Enabled = false;
             this.exportPlotToolStripMenuItem.Name = "exportPlotToolStripMenuItem";
             this.exportPlotToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.exportPlotToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.exportPlotToolStripMenuItem.Text = "E&xport Plot";
             this.exportPlotToolStripMenuItem.Click += new System.EventHandler(this.OnExportPlot);
             // 
-            // detachPlotFromWindowToolStripMenuItem
+            // attachPlotFromWindowToolStripMenuItem
             // 
-            this.detachPlotFromWindowToolStripMenuItem.Name = "detachPlotFromWindowToolStripMenuItem";
-            this.detachPlotFromWindowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.detachPlotFromWindowToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
-            this.detachPlotFromWindowToolStripMenuItem.Text = "Detac&h Plot From Window";
-            this.detachPlotFromWindowToolStripMenuItem.Click += new System.EventHandler(this.OnDetachPlot);
+            this.attachPlotFromWindowToolStripMenuItem.Enabled = false;
+            this.attachPlotFromWindowToolStripMenuItem.Name = "attachPlotFromWindowToolStripMenuItem";
+            this.attachPlotFromWindowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.attachPlotFromWindowToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.attachPlotFromWindowToolStripMenuItem.Text = "Detac&h Plot From Window";
+            this.attachPlotFromWindowToolStripMenuItem.Click += new System.EventHandler(this.OnDetachPlot);
             // 
             // getRegressionEquationToolStripMenuItem
             // 
@@ -298,30 +302,30 @@ namespace SoftwareDevelopment2016
             // contentsToolStripMenuItem
             // 
             this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
-            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.contentsToolStripMenuItem.Text = "&Contents";
             // 
             // indexToolStripMenuItem
             // 
             this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-            this.indexToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.indexToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.indexToolStripMenuItem.Text = "&Index";
             // 
             // searchToolStripMenuItem
             // 
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.searchToolStripMenuItem.Text = "&Search";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(119, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
             // panelPlot
@@ -791,7 +795,7 @@ namespace SoftwareDevelopment2016
         private System.Windows.Forms.ToolStripMenuItem deleteDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getRegressionEquationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomToPointsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem detachPlotFromWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem attachPlotFromWindowToolStripMenuItem;
     }
 }
 

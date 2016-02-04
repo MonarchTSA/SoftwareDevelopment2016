@@ -43,6 +43,7 @@
             this.panelPlot.Size = new System.Drawing.Size(225, 225);
             this.panelPlot.TabIndex = 0;
             this.panelPlot.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawPlot);
+            this.panelPlot.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
             // 
             // FormPlot
             // 
@@ -54,6 +55,7 @@
             this.Name = "FormPlot";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Plotter";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.Resize += new System.EventHandler(this.OnResize);
             this.ResumeLayout(false);
 
