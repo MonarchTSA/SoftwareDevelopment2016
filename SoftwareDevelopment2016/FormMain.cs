@@ -378,6 +378,7 @@ namespace SoftwareDevelopment2016
             labelStdDev.Text = GetCurrentDataSet().GetStandardDeviation().ToString();
             labelDomain.Text = GetCurrentDataSet().GetDomain().ToString();
             labelRange.Text = GetCurrentDataSet().GetRange().ToString();
+            numericUpDownOrder.Maximum = (from dp in GetCurrentDataSet().Data where !dp.isNull() select dp).Count() - 1;
             numericUpDownOrder.Value = GetCurrentDataSet().Regression != null ? GetCurrentDataSet().Regression.Value.Order : 1;
             checkBoxPlotPoints.Checked = GetCurrentDataSet().IsPlotted;
             checkBoxPlotRegression.Checked = GetCurrentDataSet().IsRegressionPlotted;
@@ -563,6 +564,7 @@ namespace SoftwareDevelopment2016
                         zoomToPointsToolStripMenuItem.Enabled = true;
                     }
                 }
+                RefreshPlot();
                 IsSaved = true;
             }
             catch(Exception e)
@@ -593,7 +595,8 @@ namespace SoftwareDevelopment2016
         private void OnExportPlot(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            if(sfd.ShowDialog() == DialogResult.OK)
+            sfd.Filter = "Image Files(*.PNG;*.BMP;*.JPG;*.GIF)|*.PNG;*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
                 PlotBitmap.Save(sfd.FileName);
             }
@@ -832,7 +835,7 @@ namespace SoftwareDevelopment2016
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Made by the Monarch Teslas for the Software Development competition at the 2016 Colorado TSA State Conference.\n\nCredits:\nJustin Cai\nCalvin Mak\nEvan Sours\nSamantha Johnson" , "About");
+            MessageBox.Show("Made by the Monarch Teslas for the Software Development competition at the 2016 Colorado TSA State Conference.\n\nCredits:\nJustin Cai\nCalvin Mak\nNathan Hand\nSamantha Johnson\nDavid Park\nMichael Katona" , "About");
         }
     }
 }
