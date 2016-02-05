@@ -56,7 +56,7 @@
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "FormPlot";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Plotter";
+            this.Text = "Tesla Graph Plus";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.Resize += new System.EventHandler(this.OnResize);
             this.ResumeLayout(false);

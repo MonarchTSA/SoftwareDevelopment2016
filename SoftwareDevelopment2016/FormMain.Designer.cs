@@ -684,7 +684,7 @@ namespace SoftwareDevelopment2016
             this.MaximumSize = new System.Drawing.Size(815, 362);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Plotter";
+            this.Text = "Tesla Graph Plus";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.Click += new System.EventHandler(this.OnClick);
             this.menuStrip1.ResumeLayout(false);
